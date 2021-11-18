@@ -10,11 +10,13 @@ public class Team {
     private int teamNumber;
     private String teamName;
     private ArrayList<User> teamMembers;
+    private ArrayList<User> suspendedMembers;
     private User teamLeader;
     private Scoreboard scoreboard;
     private RoadMap roadMap;
     private ChatRoom chatRoom;
     private ArrayList<Task> allTasks;
+    private ArrayList<Notification> notifications;
 
     public Team(String teamName, User teamLeader) {
         this.teamName = teamName;
@@ -24,6 +26,8 @@ public class Team {
         pendingTeams.add(this);
         this.teamMembers = new ArrayList<>();
         this.allTasks = new ArrayList<>();
+        this.suspendedMembers = new ArrayList<>();
+        this.notifications = new ArrayList<>();
     }
 
     public void setScoreboard(Scoreboard scoreboard) {
@@ -44,6 +48,10 @@ public class Team {
 
     public static ArrayList<Team> getPendingTeams() {
         return pendingTeams;
+    }
+
+    public ArrayList<Notification> getNotifications() {
+        return notifications;
     }
 
     public int getTeamNumber() {

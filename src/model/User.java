@@ -15,6 +15,8 @@ public class User {
     private String email;
     private String role;
     private ArrayList<Log> allLogs;
+    private ArrayList<Task> allTasksForUser;
+    private ArrayList<Notification> notifications;
 
     public User(String userName, String password,
                 String email) {
@@ -25,6 +27,8 @@ public class User {
         idCreator++;
         users.add(this);
         this.allLogs = new ArrayList<>();
+        this.allTasksForUser = new ArrayList<>();
+        this.notifications = new ArrayList<>();
     }
 
     public void setFullName(String fullName) {
@@ -41,6 +45,10 @@ public class User {
 
     public ArrayList<Log> getAllLogs() {
         return allLogs;
+    }
+
+    public ArrayList<Notification> getNotifications() {
+        return notifications;
     }
 
     public String getFullName() {
