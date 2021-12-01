@@ -31,4 +31,7 @@ public class View {
     public void printMenu(User user){
 
     }
+    public static void print(String string){
+        System.out.println(string);
+    }
 }
