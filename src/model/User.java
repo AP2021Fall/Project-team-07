@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 public class User {
 
@@ -17,6 +18,8 @@ public class User {
     private ArrayList<Log> allLogs;
     private ArrayList<Task> allTasksForUser;
     private ArrayList<Notification> notifications;
+    private ArrayList<Team> userTeams;
+    private HashMap<Team,Date> joiningDate;
 
     public User(String userName, String password,
                 String email) {
@@ -29,6 +32,8 @@ public class User {
         this.allLogs = new ArrayList<>();
         this.allTasksForUser = new ArrayList<>();
         this.notifications = new ArrayList<>();
+        this.userTeams = new ArrayList<>();
+        this.joiningDate = new HashMap<>();
     }
 
     public void setFullName(String fullName) {

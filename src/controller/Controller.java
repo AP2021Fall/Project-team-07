@@ -30,6 +30,9 @@ public class Controller {
     }
 
     public int showTeams(User user){
+        // same in profileMenu and TeamMenu
+        // from the newest to the oldest
+
         return 0;
     }
 
@@ -38,6 +41,7 @@ public class Controller {
     }
 
     public ArrayList<User> sortUsersByDate(User user){
+
         return null;
     }
 
@@ -101,9 +105,9 @@ public class Controller {
         return 0;
     }
 
-    public ArrayList<Category> updateColumns(ArrayList<Category> oldColumns, Category category){
-        return null;
-    }
+    //public ArrayList<Category> updateColumns(ArrayList<Category> oldColumns, Category category){
+    //    return null;
+    //}
 
     public int goToNextCategory(User user, String command){
         return 0;
