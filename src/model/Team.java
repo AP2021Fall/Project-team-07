@@ -10,6 +10,7 @@ public class Team {
     private int teamNumber;
     private String teamName;
     private ArrayList<User> teamMembers;
+
     private ArrayList<User> suspendedMembers;
     private User teamLeader;
     private Scoreboard scoreboard;
@@ -17,10 +18,13 @@ public class Team {
     private ChatRoom chatRoom;
     private ArrayList<Task> allTasks;
     private ArrayList<Notification> notifications;
+    private Date creationDate;
 
-    public Team(String teamName, User teamLeader) {
+
+    public Team(String teamName, User teamLeader, Date creationDate) {
         this.teamName = teamName;
         this.teamLeader = teamLeader;
+        this.creationDate = creationDate;
         this.teamNumber = teamNumberCreator;
         teamNumberCreator++;
         pendingTeams.add(this);
