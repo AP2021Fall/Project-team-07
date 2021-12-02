@@ -7,6 +7,7 @@ import java.util.*;
 import java.util.regex.Matcher;
 
 public class Controller {
+    public static final Controller controller  = new  Controller();
 
     public int register(String command){
         return 0;
@@ -29,7 +30,35 @@ public class Controller {
     }
 
     public ArrayList<String> showTeams(User user){
-        return null;
+        ArrayList<String> result = new ArrayList<>();
+        HashMap<Team, Date> joiningDate = sortJoiningDates(user.getJoiningDate());
+        HashMap<Date, ArrayList<Team>> data = new HashMap<>();
+        for (Map.Entry<Team, Date> unit : joiningDate.entrySet()) {
+            ArrayList<Team> teams;
+            teams = data.get(unit.getValue());
+            if (teams == null) {
+                teams = new ArrayList<>();
+                teams.add(unit.getKey());
+                data.put(unit.getValue(), teams);
+            } else {
+                teams.add(unit.getKey());
+            }
+        }
+        ArrayList<Date> check = new ArrayList<Date>();
+        for (Map.Entry<Team, Date> unit : joiningDate.entrySet()) {
+            if (check.contains(unit.getValue())) continue;
+            check.add(unit.getValue());
+            ArrayList<Team> teams = data.get(unit.getValue());
+            ArrayList<String> names = new ArrayList<>();
+            for (Team team : teams){
+                names.add(team.getTeamName());
+            }
+            Collections.sort(names);
+            for (String name  : names) {
+                result.add(name);
+            }
+        }
+        return result;
     }
 
     public int showTeam(User user, String command){
@@ -169,8 +198,40 @@ public class Controller {
         return 0;
     }
 
-    public int showScoreBoard(User user, Team team){
-        return 0;
+    public ArrayList<String> showScoreBoard(User user, Team team){
+        HashMap<User,Integer> scores = sortBoard
+                (team.getScoreboard().getScores());
+        ArrayList<String> result = new ArrayList<>();
+        HashMap<Integer, ArrayList<User>> data = new HashMap<>();
+        for (Map.Entry<User,Integer> unit : scores.entrySet()) {
+            ArrayList<User> users;
+            users = data.get(unit.getValue());
+            if (users == null) {
+                users = new ArrayList<>();
+                users.add(unit.getKey());
+                data.put(unit.getValue(), users);
+            } else {
+                users.add(unit.getKey());
+            }
+        }
+        ArrayList<Integer> check = new ArrayList<Integer>();
+        for (Map.Entry<User, Integer> unit : scores.entrySet()) {
+            if (check.contains(unit.getValue())) continue;
+            check.add(unit.getValue());
+            ArrayList<User> users = data.get(unit.getValue());
+            ArrayList<String> names = new ArrayList<>();
+            for (User user1 : users){
+                names.add(user1.getUserName());
+            }
+            Collections.sort(names);
+            for (String name  : names) {
+                User user1 = User.getUserByUsername(name);
+                int score = scores.get(user1);
+                result.add(name+" : "+score);
+            }
+        }
+        return result;
+
     }
 
     public int sendNotificationForUser(User sender, User receiver, String command){
@@ -210,7 +271,21 @@ public class Controller {
     }
 
     public HashMap<User, Integer> sortBoard(HashMap<User, Integer> hashMap){
-        return null;
+        List<Map.Entry<User, Integer>> valueList =
+                new LinkedList<Map.Entry<User, Integer>>(hashMap.entrySet());
+        Comparator comparator = new Comparator<Map.Entry<User, Integer>>() {
+            public int compare(Map.Entry<User, Integer> operand1, Map.Entry<User, Integer> operand2) {
+                return (operand2.getValue()).compareTo(operand1.getValue());
+            }
+        };
+        Collections.sort(valueList, comparator);
+
+        HashMap<User, Integer> sorted = new LinkedHashMap<User, Integer>();
+        for (Map.Entry<User, Integer> unit : valueList) {
+            sorted.put(unit.getKey(), unit.getValue());
+        }
+        return sorted;
+
     }
 
     public HashMap<Task, Integer> sortRoadMap(HashMap<Task, Integer> hashMap){
