@@ -15,6 +15,9 @@ public class TeamMenu extends Menu{
     public void runTeamMenu(Team team){
 
     }
+    public void showTeams(){
+
+    }
 
     public void showScoreBoard(Team team){
 

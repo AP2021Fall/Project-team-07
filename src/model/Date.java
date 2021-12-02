@@ -14,11 +14,14 @@ public class Date {
         this.date = date;
     }
     public String getDate() {
-        return date;
+        return this.date;
     }
-    public static int getDaysBetween(Date inputDate1, Date inputDate2) {
+    public LocalDate getLocalDate(){return this.localDate;}
+    public static Integer getDaysBetween(Date inputDate1, Date inputDate2) {
         long daysBetween = DAYS.between(inputDate1.localDate, inputDate2.localDate);
-        return (int) (daysBetween);
+        int result = (int) (daysBetween);
+        return result;
+
     }
 
     public static Date getNDaysAfter(Date inputDate1, int n) {

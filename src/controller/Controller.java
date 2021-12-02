@@ -1,10 +1,9 @@
 package controller;
 
+import model.Date;
 import model.*;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
+import java.util.*;
 import java.util.regex.Matcher;
 
 public class Controller {
@@ -29,11 +28,8 @@ public class Controller {
         return 0;
     }
 
-    public int showTeams(User user){
-        // same in profileMenu and TeamMenu
-        // from the newest to the oldest
-
-        return 0;
+    public ArrayList<String> showTeams(User user){
+        return null;
     }
 
     public int showTeam(User user, String command){
@@ -219,6 +215,26 @@ public class Controller {
 
     public HashMap<Task, Integer> sortRoadMap(HashMap<Task, Integer> hashMap){
         return null;
+    }
+
+    public HashMap<Team,Date> sortJoiningDates (HashMap<Team,Date> hashMap){
+        // a random date for comparing to other dates
+        Date comparingDate = new Date("1300/01/01");
+        List<Map.Entry<Team, Date>> valueList =
+                new LinkedList<Map.Entry<Team, Date>>(hashMap.entrySet());
+        Comparator comparator = new Comparator<Map.Entry<Team, Date>>() {
+            public int compare(Map.Entry<Team, Date> operand1, Map.Entry<Team, Date> operand2) {
+                return (Date.getDaysBetween(operand2.getValue(),comparingDate)).compareTo
+                        (Date.getDaysBetween(operand1.getValue(),comparingDate));
+            }
+        };
+        Collections.sort(valueList, comparator);
+
+        HashMap<Team, Date> sorted = new LinkedHashMap<Team, Date>();
+        for (Map.Entry<Team, Date> unit : valueList) {
+            sorted.put(unit.getKey(), unit.getValue());
+        }
+        return sorted;
     }
 
     public Matcher getCommandMatcher(String pattern, String input){
