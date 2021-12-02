@@ -10,11 +10,25 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.*;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Controller {
     public static final Controller controller  = new  Controller();
 
-    public int register(String command){
+    public int register(String username, String password1, String password2, String email){
+        if(isUsernameAvailable(username)){
+            return 1;
+        }
+        else if(!password1.equals(password2)){
+            return 2;
+        }
+        else if(isEmailAvailable(email)){
+            return 3;
+        }
+        else if(!getCommandMatcher("[A-Za-z0-9.]+(@gmail.com|@yahoo.com)", email).matches()){
+            return 4;
+        }
+        User user = new User(username, password1, email);
         return 0;
     }
 
@@ -366,12 +380,21 @@ public class Controller {
     }
 
     public Matcher getCommandMatcher(String pattern, String input){
-        return null;
+        Pattern pattern1 = Pattern.compile(pattern);
+        return pattern1.matcher(input);
     }
 
     private boolean isUsernameAvailable(String command) {
         for (User user : User.getUsers()) {
             if (user.getUserName().equals(command))
+                return true;
+        }
+        return false;
+    }
+
+    private boolean isEmailAvailable(String command) {
+        for (User user : User.getUsers()) {
+            if (user.getEmail().equals(command))
                 return true;
         }
         return false;
