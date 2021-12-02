@@ -19,7 +19,7 @@ public class User {
     private ArrayList<Task> allTasksForUser;
     private ArrayList<Notification> notifications;
     private ArrayList<Team> userTeams;
-    private HashMap<Team,Date> joiningDate;
+    private HashMap<Team, Date> joiningDate;
 
     public User(String userName, String password,
                 String email) {
@@ -78,5 +78,17 @@ public class User {
 
     public String getRole() {
         return role;
+    }
+
+    public ArrayList<Task> getAllTasksForUser() {
+        return allTasksForUser;
+    }
+
+    public static ArrayList<User> getUsers() {
+        return users;
+    }
+
+    public ArrayList<Team> getUserTeams() {
+        return userTeams;
     }
 }

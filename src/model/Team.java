@@ -33,11 +33,16 @@ public class Team {
         this.suspendedMembers = new ArrayList<>();
         this.notifications = new ArrayList<>();
     }
-    public static Team getTeamByName(String teamName, ArrayList<Team> teams){
-        for (Team team : teams){
+
+    public static Team getTeamByName(String teamName, ArrayList<Team> teams) {
+        for (Team team : teams) {
             if (team.teamName.equals(teamName)) return team;
         }
         return null;
+    }
+
+    public void setTeamLeader(User teamLeader) {
+        this.teamLeader = teamLeader;
     }
 
     public void setScoreboard(Scoreboard scoreboard) {
@@ -94,5 +99,9 @@ public class Team {
 
     public ArrayList<Task> getAllTasks() {
         return allTasks;
+    }
+
+    public ArrayList<User> getSuspendedMembers() {
+        return suspendedMembers;
     }
 }
