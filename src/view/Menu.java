@@ -4,7 +4,7 @@ import model.User;
 
 public class Menu {
 
-    private User user;
+    protected User user;
 
     public Menu(User user) {
         this.user = user;

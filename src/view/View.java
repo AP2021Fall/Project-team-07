@@ -2,7 +2,10 @@ package view;
 
 import model.User;
 
+import java.util.Scanner;
+
 public class View {
+    public static Scanner scanner = new Scanner(System.in);
 
     public void run(){
 

@@ -19,7 +19,7 @@ public class User {
     private ArrayList<Task> allTasksForUser;
     private ArrayList<Notification> notifications;
     private ArrayList<Team> userTeams;
-    private HashMap<Team, Date> joiningDate;
+    private HashMap<Team, model.Date> joiningDate;
 
     public User(String userName, String password,
                 String email) {
@@ -34,6 +34,35 @@ public class User {
         this.notifications = new ArrayList<>();
         this.userTeams = new ArrayList<>();
         this.joiningDate = new HashMap<>();
+    }
+    public static User getUserByUsername(String userName){
+        for (User user : users) {
+            if (user.userName.equals(userName))
+                return user;
+
+        }
+        return null;
+
+    }
+
+    public static ArrayList<User> getUsers() {
+        return users;
+    }
+
+    public int getCreationId() {
+        return creationId;
+    }
+
+    public ArrayList<Task> getAllTasksForUser() {
+        return allTasksForUser;
+    }
+
+    public ArrayList<Team> getUserTeams() {
+        return userTeams;
+    }
+
+    public HashMap<Team, model.Date> getJoiningDate() {
+        return joiningDate;
     }
 
     public void setFullName(String fullName) {
@@ -78,17 +107,5 @@ public class User {
 
     public String getRole() {
         return role;
-    }
-
-    public ArrayList<Task> getAllTasksForUser() {
-        return allTasksForUser;
-    }
-
-    public static ArrayList<User> getUsers() {
-        return users;
-    }
-
-    public ArrayList<Team> getUserTeams() {
-        return userTeams;
     }
 }
