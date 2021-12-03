@@ -28,11 +28,23 @@ public class Controller {
         else if(!getCommandMatcher("[A-Za-z0-9.]+(@gmail.com|@yahoo.com)", email).matches()){
             return 4;
         }
-        User user = new User(username, password1, email);
+        new User(username, password1, email);
         return 0;
     }
 
-    public int logIn(String command){
+    public int logIn(String username, String password){
+        if(!isUsernameAvailable(username)){
+            return 1;
+        }
+        else if(!password.equals(User.getUserByUsername(username).getPassword())){
+            return 2;
+        }
+        String role = User.getUserByUsername(username).getRole();
+        switch (role) {
+            case "Member" -> View.runMemberMenu(User.getUserByUsername(username));
+            case "Leader" -> View.runLeaderMenu(User.getUserByUsername(username));
+            case "System Admin" -> View.runAdminMenu(User.getUserByUsername(username));
+        }
         return 0;
     }
 
