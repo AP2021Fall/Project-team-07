@@ -6,6 +6,7 @@ public class Team {
 
     private static ArrayList<Team> acceptedTeams = new ArrayList<>();
     private static ArrayList<Team> pendingTeams = new ArrayList<>();
+    private static ArrayList<Team> allTeams = new ArrayList<>();
     private static int teamNumberCreator = 1;
     private int teamNumber;
     private String teamName;
@@ -103,5 +104,9 @@ public class Team {
 
     public ArrayList<User> getSuspendedMembers() {
         return suspendedMembers;
+    }
+
+    public static ArrayList<Team> getAllTeams() {
+        return allTeams;
     }
 }

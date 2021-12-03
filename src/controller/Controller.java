@@ -2,8 +2,10 @@ package controller;
 
 import model.Date;
 import model.*;
+import view.TeamMenu;
 import view.View;
 
+import java.net.Proxy;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -13,30 +15,26 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Controller {
-    public static final Controller controller  = new  Controller();
+    public static final Controller controller = new Controller();
 
-    public int register(String username, String password1, String password2, String email){
-        if(isUsernameAvailable(username)){
+    public int register(String username, String password1, String password2, String email) {
+        if (isUsernameAvailable(username)) {
             return 1;
-        }
-        else if(!password1.equals(password2)){
+        } else if (!password1.equals(password2)) {
             return 2;
-        }
-        else if(isEmailAvailable(email)){
+        } else if (isEmailAvailable(email)) {
             return 3;
-        }
-        else if(!getCommandMatcher("[A-Za-z0-9.]+(@gmail.com|@yahoo.com)", email).matches()){
+        } else if (!getCommandMatcher("[A-Za-z0-9.]+(@gmail.com|@yahoo.com)", email).matches()) {
             return 4;
         }
         new User(username, password1, email);
         return 0;
     }
 
-    public int logIn(String username, String password){
-        if(!isUsernameAvailable(username)){
+    public int logIn(String username, String password) {
+        if (!isUsernameAvailable(username)) {
             return 1;
-        }
-        else if(!password.equals(User.getUserByUsername(username).getPassword())){
+        } else if (!password.equals(User.getUserByUsername(username).getPassword())) {
             return 2;
         }
         String role = User.getUserByUsername(username).getRole();
@@ -48,19 +46,19 @@ public class Controller {
         return 0;
     }
 
-    public int printMenu(User user){
+    public int printMenu(User user) {
         return 0;
     }
 
-    public int changePassword(User user, String command){
+    public int changePassword(User user, String command) {
         return 0;
     }
 
-    public int changeUserName(User user, String command){
+    public int changeUserName(User user, String command) {
         return 0;
     }
 
-    public ArrayList<String> showTeams(User user){
+    public ArrayList<String> showTeams(User user) {
         ArrayList<String> result = new ArrayList<>();
         HashMap<Team, Date> joiningDate = sortJoiningDates(user.getJoiningDate());
         HashMap<Date, ArrayList<Team>> data = new HashMap<>();
@@ -81,83 +79,83 @@ public class Controller {
             check.add(unit.getValue());
             ArrayList<Team> teams = data.get(unit.getValue());
             ArrayList<String> names = new ArrayList<>();
-            for (Team team : teams){
+            for (Team team : teams) {
                 names.add(team.getTeamName());
             }
             Collections.sort(names);
-            for (String name  : names) {
+            for (String name : names) {
                 result.add(name);
             }
         }
         return result;
     }
 
-    public int showTeam(User user, String command){
+    public int showTeam(User user, String command) {
         return 0;
     }
 
-    public ArrayList<User> sortUsersByDate(User user){
+    public ArrayList<User> sortUsersByDate(User user) {
 
         return null;
     }
 
-    public int getDaysBetween(Date date1, Date date2){
+    public int getDaysBetween(Date date1, Date date2) {
         return 0;
     }
 
-    public int editTaskTitle(Task task, String command){
+    public int editTaskTitle(Task task, String command) {
         return 0;
     }
 
-    public int editTaskDescription(Task task, String command){
+    public int editTaskDescription(Task task, String command) {
         return 0;
     }
 
-    public int editTaskPriority(Task task, String command){
+    public int editTaskPriority(Task task, String command) {
         return 0;
     }
 
-    public int editTaskDeadline(Task task, String command){
+    public int editTaskDeadline(Task task, String command) {
         return 0;
     }
 
-    public int editAssignedUsers(Task task, String command){
+    public int editAssignedUsers(Task task, String command) {
         return 0;
     }
 
-    public void sendMessage(User user, ChatRoom chatRoom, String command){
+    public void sendMessage(User user, ChatRoom chatRoom, String command) {
 
     }
 
-    public ArrayList<String> showTasks(Team team){
+    public ArrayList<String> showTasks(Team team) {
         return null;
     }
 
-    public String showTask(Task task){
+    public String showTask(Task task) {
         return null;
     }
 
-    public int makeBoard(User user, String command){
+    public int makeBoard(User user, String command) {
         return 0;
     }
 
-    public int removeBoard(User user, String command){
+    public int removeBoard(User user, String command) {
         return 0;
     }
 
-    public int boardDone(User user, String command){
+    public int boardDone(User user, String command) {
         return 0;
     }
 
-    public int boardAddTask(User user, String command){
+    public int boardAddTask(User user, String command) {
         return 0;
     }
 
-    public int boardAssignMember(User user, String command){
+    public int boardAssignMember(User user, String command) {
         return 0;
     }
 
-    public int forceCategory(User user, String command){
+    public int forceCategory(User user, String command) {
         return 0;
     }
 
@@ -165,23 +163,23 @@ public class Controller {
     //    return null;
     //}
 
-    public int goToNextCategory(User user, String command){
+    public int goToNextCategory(User user, String command) {
         return 0;
     }
 
-    public boolean checkDeadline(Task task, Date date){
+    public boolean checkDeadline(Task task, Date date) {
         return true;
     }
 
-    public int showDoneOrFailed(User user, String command){
+    public int showDoneOrFailed(User user, String command) {
         return 0;
     }
 
-    public int updateDeadline(User user, String command){
+    public int updateDeadline(User user, String command) {
         return 0;
     }
 
-    public int boardShow(Board board, String command){
+    public int boardShow(Board board, String command) {
         return 0;
     }
 
@@ -204,15 +202,32 @@ public class Controller {
         return 0;
     }
 
-    public int showSpecialTeam(User user, String command){
-        return 0;
+    public Team showSpecialTeam(User user, String command) {
+        Team selectTeam = null;
+        for (Team team : Team.getAcceptedTeams()) {
+            if (command.equals(String.valueOf(team.getTeamNumber())) || command.equals(team.getTeamName()))
+                selectTeam = team;
+        }
+        return selectTeam;
     }
 
-    public int creatTeam(User user, String command){
-        return 0;
+    public int creatTeam(User user, String command) {
+        Team team = Team.getTeamByName(command, Team.getAllTeams());
+        if (team != null)
+            return 1;
+        else if (!getCommandMatcher("((?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{5,12})",command).matches())
+            return 2;
+        else if (getCommandMatcher("\\d",command.split("")[0]).matches())
+            return 2;
+        else {
+            Date now= new Date(LocalDate.now().toString());
+            new Team(command,user,now);
+            return 3;
+        }
+
     }
 
-    public int creatTask(User user, Team team, String command){
+    public int creatTask(User user, Team team, String command) {
         return 0;
     }
 
@@ -277,12 +292,12 @@ public class Controller {
         }
     }
 
-    public ArrayList<String> showScoreBoard(User user, Team team){
-        HashMap<User,Integer> scores = sortBoard
+    public ArrayList<String> showScoreBoard(User user, Team team) {
+        HashMap<User, Integer> scores = sortBoard
                 (team.getScoreboard().getScores());
         ArrayList<String> result = new ArrayList<>();
         HashMap<Integer, ArrayList<User>> data = new HashMap<>();
-        for (Map.Entry<User,Integer> unit : scores.entrySet()) {
+        for (Map.Entry<User, Integer> unit : scores.entrySet()) {
             ArrayList<User> users;
             users = data.get(unit.getValue());
             if (users == null) {
@@ -299,57 +314,70 @@ public class Controller {
             check.add(unit.getValue());
             ArrayList<User> users = data.get(unit.getValue());
             ArrayList<String> names = new ArrayList<>();
-            for (User user1 : users){
+            for (User user1 : users) {
                 names.add(user1.getUserName());
             }
             Collections.sort(names);
-            for (String name  : names) {
+            for (String name : names) {
                 User user1 = User.getUserByUsername(name);
                 int score = scores.get(user1);
-                result.add(name+" : "+score);
+                result.add(name + " : " + score);
             }
         }
         return result;
 
     }
 
-    public int sendNotificationForUser(User sender, User receiver, String command){
+    public int sendNotificationForUser(User sender, String receiver, String command) {
+        if (!isUsernameAvailable(receiver))
+            return 1;
+        else {
+            User receiverUser = findUser(receiver);
+            receiverUser.getNotifications().add(new Notification(command, sender, 0));
+            return 2;
+        }
+    }
+
+    //Will only be sent to accepted teams
+    public int sendNotificationForTeam(User sender, String team, String command) {
+        Team receiverTeam = Team.getTeamByName(team, Team.getAcceptedTeams());
+        if (receiverTeam == null)
+            return 1;
+        else {
+            receiverTeam.getNotifications().add(new Notification(command, sender, 1));
+            return 2;
+        }
+    }
+
+    public int showProfile(User user) {
         return 0;
     }
 
-    public int sendNotificationForTeam(User sender, Team team, String command){
+    public int banUser(User user) {
         return 0;
     }
 
-    public int showProfile(User user){
+    public int changeRole(User user, String command) {
         return 0;
     }
 
-    public int banUser(User user){
+    public int sendNotificationForAll(String command) {
         return 0;
     }
 
-    public int changeRole(User user, String command){
+    public int showPendingTeams() {
         return 0;
     }
 
-    public int sendNotificationForAll(String command){
+    public int acceptTeam(String command) {
         return 0;
     }
 
-    public int showPendingTeams(){
+    public int rejectTeam(String command) {
         return 0;
     }
 
-    public int acceptTeam(String command){
-        return 0;
-    }
-
-    public int rejectTeam(String command){
-        return 0;
-    }
-
-    public HashMap<User, Integer> sortBoard(HashMap<User, Integer> hashMap){
+    public HashMap<User, Integer> sortBoard(HashMap<User, Integer> hashMap) {
         List<Map.Entry<User, Integer>> valueList =
                 new LinkedList<Map.Entry<User, Integer>>(hashMap.entrySet());
         Comparator comparator = new Comparator<Map.Entry<User, Integer>>() {
@@ -367,19 +395,19 @@ public class Controller {
 
     }
 
-    public HashMap<Task, Integer> sortRoadMap(HashMap<Task, Integer> hashMap){
+    public HashMap<Task, Integer> sortRoadMap(HashMap<Task, Integer> hashMap) {
         return null;
     }
 
-    public HashMap<Team,Date> sortJoiningDates (HashMap<Team,Date> hashMap){
+    public HashMap<Team, Date> sortJoiningDates(HashMap<Team, Date> hashMap) {
         // a random date for comparing to other dates
         Date comparingDate = new Date("1300/01/01");
         List<Map.Entry<Team, Date>> valueList =
                 new LinkedList<Map.Entry<Team, Date>>(hashMap.entrySet());
         Comparator comparator = new Comparator<Map.Entry<Team, Date>>() {
             public int compare(Map.Entry<Team, Date> operand1, Map.Entry<Team, Date> operand2) {
-                return (Date.getDaysBetween(operand2.getValue(),comparingDate)).compareTo
-                        (Date.getDaysBetween(operand1.getValue(),comparingDate));
+                return (Date.getDaysBetween(operand2.getValue(), comparingDate)).compareTo
+                        (Date.getDaysBetween(operand1.getValue(), comparingDate));
             }
         };
         Collections.sort(valueList, comparator);
@@ -391,7 +419,7 @@ public class Controller {
         return sorted;
     }
 
-    public Matcher getCommandMatcher(String pattern, String input){
+    public Matcher getCommandMatcher(String pattern, String input) {
         Pattern pattern1 = Pattern.compile(pattern);
         return pattern1.matcher(input);
     }

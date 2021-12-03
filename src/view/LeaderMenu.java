@@ -7,17 +7,39 @@ import model.User;
 import java.util.ArrayList;
 
 public class LeaderMenu {
-    Controller controller = new Controller();
 
     public static void showTeams(User user) {
-
+        ArrayList<String> teams = Controller.controller.showTeams(user);
+        int rank = 1;
+        if (teams.size() == 0)
+            View.print("There is no team for you!");
+        else {
+            for (String team : teams) {
+                View.print("" + rank + "- " + team);
+                rank++;
+            }
+        }
     }
 
+    //The team must also be sent
     public static void showSpecialTeam(User user, String command) {
-
+        Team team = Controller.controller.showSpecialTeam(user, command);
+        if (team == null)
+            View.print("Team not found!");
+        else {
+            TeamMenu teamMenu = new TeamMenu(user);
+            teamMenu.runTeamMenu();
+        }
     }
 
     public static void creatTeam(User user, String command) {
+        int status = Controller.controller.creatTeam(user, command);
+        if(status==1)
+            View.print("There is another team with this name!");
+        else if (status==2)
+            View.print("Team name is invalid!");
+        else if (status==3)
+            View.print("Team created successfully! Waiting For Admin’s confirmation…");
 
     }
 
@@ -34,16 +56,14 @@ public class LeaderMenu {
     }
 
     public static void showMembers(User user, Team team) {
-        Controller controller = new Controller();
-        ArrayList<String> names = controller.showMembers(user, team);
+        ArrayList<String> names = Controller.controller.showMembers(user, team);
         for (String name : names) {
             View.print(name);
         }
     }
 
     public static void addMember(User user, Team team, String command) {
-        Controller controller = new Controller();
-        int status = controller.addMember(user, team, command);
+        int status = Controller.controller.addMember(user, team, command);
         if (status == 1)
             View.print("No user exists with this username !");
         else if (status == 2) {
@@ -52,8 +72,7 @@ public class LeaderMenu {
     }
 
     public static void deleteMember(User user, Team team, String command) {
-        Controller controller = new Controller();
-        int status = controller.deleteMember(user, team, command);
+        int status = Controller.controller.deleteMember(user, team, command);
         if (status == 1)
             View.print("No user exists with this username!");
         else if (status == 2) {
@@ -62,8 +81,7 @@ public class LeaderMenu {
     }
 
     public static void suspendMember(User user, Team team, String command) {
-        Controller controller = new Controller();
-        int status = controller.suspendMember(user, team, command);
+        int status = Controller.controller.suspendMember(user, team, command);
         if (status == 1)
             View.print("No user exists with this username!");
         else if (status == 2) {
@@ -73,8 +91,7 @@ public class LeaderMenu {
     }
 
     public static void promoteMember(User user, Team team, String command) {
-        Controller controller = new Controller();
-        int status = controller.promoteMember(user, team, command);
+        int status = Controller.controller.promoteMember(user, team, command);
         if (status == 1)
             View.print("No user exists with this username!");
         else if (status == 2) {
@@ -83,8 +100,7 @@ public class LeaderMenu {
     }
 
     public static void assignMember(User user, Team team, String command1, String command2) {
-        Controller controller = new Controller();
-        int status = controller.assignMember(user, team, command1, command2);
+        int status = Controller.controller.assignMember(user, team, command1, command2);
         if (status == 1)
             View.print("No user exists with this username!");
         else if (status == 2) {
@@ -97,13 +113,24 @@ public class LeaderMenu {
 
     public static void showScoreBoard(User user, Team team) {
 
-    }
-
-    public static void sendNotificationForUser(User sender, User receiver, String command) {
 
     }
 
-    public static void sendNotificationForTeam(User sender, Team team, String command) {
+    public static void sendNotificationForUser(User sender, String receiver, String command) {
+        int status = Controller.controller.sendNotificationForUser(sender, receiver, command);
+        if (status == 1)
+            View.print("No user exists with this username!");
+        else if (status == 2) {
+            //View.print("The notification was sent to the user successfully");
+        }
+    }
 
+    public static void sendNotificationForTeam(User sender, String team, String command) {
+        int status = Controller.controller.sendNotificationForTeam(sender, team, command);
+        if (status == 1)
+            View.print("No team exists with this name !");
+        else if (status == 2) {
+            //View.print("The notification was sent to the team successfully");
+        }
     }
 }
