@@ -104,24 +104,75 @@ public class Controller {
         return 0;
     }
 
-    public int editTaskTitle(Task task, String command) {
-        return 0;
+    public int editTaskTitle(User user, Task task, String command) {
+        if (!user.getRole().equals("Leader"))
+            return 0;
+        else {
+            task.setTitle(command);
+            return 1;
+        }
     }
 
-    public int editTaskDescription(Task task, String command) {
-        return 0;
+    public int editTaskDescription(User user, Task task, String command) {
+        if (!user.getRole().equals("Leader"))
+            return 0;
+        else {
+            task.setDescription(command);
+            return 1;
+        }
     }
 
-    public int editTaskPriority(Task task, String command) {
-        return 0;
+    public int editTaskPriority(User user, Task task, String command) {
+        if (!user.getRole().equals("Leader"))
+            return 0;
+        else {
+            task.setPriority(command);
+            return 1;
+        }
     }
 
-    public int editTaskDeadline(Task task, String command) {
-        return 0;
+    public int editTaskDeadline(User user, Task task, String command) throws ParseException {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd|HH:mm");
+        Matcher matcher = getCommandMatcher("([\\d]{4})-([\\d]{2})-([\\d]{2})[|]([\\d]{2}):([\\d]{2})", command);
+        matcher.matches();
+        if (!user.getRole().equals("Leader"))
+            return 0;
+        else if (Integer.parseInt(matcher.group(2)) > 12 ||
+                Integer.parseInt(matcher.group(2)) < 0 ||
+                (Integer.parseInt(matcher.group(2)) > 6 && Integer.parseInt(matcher.group(3)) > 30) ||
+                (Integer.parseInt(matcher.group(2)) <= 6 && Integer.parseInt(matcher.group(3)) > 31) ||
+                Integer.parseInt(matcher.group(4)) > 24 ||
+                Integer.parseInt(matcher.group(5)) > 60
+        )
+            return 1;
+        else if (formatter.parse(command).before(task.getDeadline()))
+            return 1;
+        else {
+            task.setDeadline(formatter.parse(command));
+            return 2;
+        }
     }
 
-    public int editAssignedUsers(Task task, String command) {
-        return 0;
+    public int removeAssignedUsers(User user, Task task, User userForEdit) {
+        if (!user.getRole().equals("Leader"))
+            return 0;
+        else if (userForEdit == null)
+            return 1;
+        else {
+            task.getAssignedUser().remove(userForEdit);
+            return 2;
+        }
+    }
+
+    public int addAssignedUsers(User user, Task task, User userForEdit) {
+        if (!user.getRole().equals("Leader"))
+            return 0;
+        else if (userForEdit == null)
+            return 1;
+        else {
+            task.getAssignedUser().add(userForEdit);
+            return 2;
+        }
     }
 
     public void sendMessage(User user, ChatRoom chatRoom, String command) {
@@ -247,7 +298,7 @@ public class Controller {
         }
         Matcher matcher = getCommandMatcher("([\\d]{4})-([\\d]{2})-([\\d]{2})[|]([\\d]{2}):([\\d]{2})", dateOfCreation);
         matcher.matches();
-        Matcher matcher2 = getCommandMatcher("([\\d]{4})-([\\d]{2})-([\\d]{2})[|]([\\d]{2}):([\\d]{2})", dateOfCreation);
+        Matcher matcher2 = getCommandMatcher("([\\d]{4})-([\\d]{2})-([\\d]{2})[|]([\\d]{2}):([\\d]{2})", deadline);
         matcher2.matches();
         if (isTaskAlready) {
             return 1;
@@ -494,6 +545,14 @@ public class Controller {
         return pattern1.matcher(input);
     }
 
+    public User findAssignedUsers(Team team, String command) {
+        for (User user : team.getTeamMembers()) {
+            if (user.getUserName().equals(command))
+                return user;
+        }
+        return null;
+    }
+
     private boolean isUsernameAvailable(String command) {
         for (User user : User.getUsers()) {
             if (user.getUserName().equals(command))
@@ -517,6 +576,7 @@ public class Controller {
         }
         return null;
     }
+
 
     private Task findTask(Team team, String command) {
         for (Task task : team.getAllTasks()) {

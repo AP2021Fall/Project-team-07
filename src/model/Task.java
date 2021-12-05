@@ -28,6 +28,16 @@ public class Task {
         this.comments = new ArrayList<>();
     }
 
+    public static Task getTaskById(Team team, String id) {
+        for (Task task : team.getAllTasks()) {
+            if (task.getCreationId() == Integer.parseInt(id))
+                return task;
+
+        }
+        return null;
+
+    }
+
     public void setDeadline(Date deadline) {
         this.deadline = deadline;
     }
@@ -74,5 +84,9 @@ public class Task {
 
     public ArrayList<Message> getComments() {
         return comments;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }
