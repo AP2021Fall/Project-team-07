@@ -1,12 +1,19 @@
 package view;
 
 import controller.Controller;
+import model.Task;
 import model.Team;
 import model.User;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class LeaderMenu {
+
+    public static void runTeamMenu(User user, Team team) {
+
+    }
 
     public static void showTeams(User user) {
         ArrayList<String> teams = Controller.controller.showTeams(user);
@@ -34,24 +41,40 @@ public class LeaderMenu {
 
     public static void creatTeam(User user, String command) {
         int status = Controller.controller.creatTeam(user, command);
-        if(status==1)
+        if (status == 1)
             View.print("There is another team with this name!");
-        else if (status==2)
+        else if (status == 2)
             View.print("Team name is invalid!");
-        else if (status==3)
+        else if (status == 3)
             View.print("Team created successfully! Waiting For Admin’s confirmation…");
 
     }
 
-    public static void runTeamMenu(User user, Team team) {
-
-    }
 
     public static void showAllTasks(User user, Team team) {
-
+        ArrayList<Task> tasks = Controller.controller.showTasksForLeader(user, team);
+        for (Task task : tasks) {
+            View.print("" + task.getDateOfCreation() + " " + task.getPriority() + " " + task.getDeadline());
+            if (task.getAssignedUser().size() != 0) {
+                View.print("------------Related users------------");
+                for (User user1 : task.getAssignedUser()) {
+                    View.print(user1.getUserName());
+                }
+            }
+        }
     }
 
-    public static void creatTask(User user, Team team, String command) {
+    public static void creatTask(User user, Team team, String title, String dateOfCreation, String deadline) throws ParseException {
+        int status = Controller.controller.creatTask(user, team, title, dateOfCreation, deadline);
+        if (status == 1) {
+            View.print("There is another task with this title!");
+        } else if (status == 2) {
+            View.print("Invalid start date!");
+        } else if (status == 3) {
+            View.print("Invalid deadline!");
+        } else if (status == 4) {
+            View.print("Task created successfully!");
+        }
 
     }
 
@@ -112,8 +135,12 @@ public class LeaderMenu {
     }
 
     public static void showScoreBoard(User user, Team team) {
-
-
+        ArrayList<User> forPrint = Controller.controller.showScoreBoardForLeader(user, team);
+        int rank = 1;
+        View.print("Rank Username Score");
+        for (User user1 : forPrint) {
+            View.print("" + rank + " " + user1.getUserName() + " " + user1.getScore());
+        }
     }
 
     public static void sendNotificationForUser(User sender, String receiver, String command) {

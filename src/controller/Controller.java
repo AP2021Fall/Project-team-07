@@ -6,6 +6,7 @@ import view.TeamMenu;
 import view.View;
 
 import java.net.Proxy;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -215,20 +216,65 @@ public class Controller {
         Team team = Team.getTeamByName(command, Team.getAllTeams());
         if (team != null)
             return 1;
-        else if (!getCommandMatcher("((?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{5,12})",command).matches())
+        else if (!getCommandMatcher("((?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{5,12})", command).matches())
             return 2;
-        else if (getCommandMatcher("\\d",command.split("")[0]).matches())
+        else if (getCommandMatcher("\\d", command.split("")[0]).matches())
             return 2;
         else {
-            Date now= new Date(LocalDate.now().toString());
-            new Team(command,user,now);
+            Date now = new Date(LocalDate.now().toString());
+            new Team(command, user, now);
             return 3;
         }
 
     }
 
-    public int creatTask(User user, Team team, String command) {
-        return 0;
+    public ArrayList<Task> showTasksForLeader(User user, Team team) {
+        ArrayList<Task> tasks = new ArrayList<>();
+        for (Task task : team.getAllTasks()) {
+            tasks.add(task);
+        }
+        return tasks;
+    }
+
+    public int creatTask(User user, Team team, String title, String dateOfCreation, String deadline) throws ParseException {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd|HH:mm");
+        boolean isTaskAlready = false;
+        for (Task task : team.getAllTasks()) {
+            if (title.equals(task.getTitle())) {
+                isTaskAlready = true;
+                break;
+            }
+        }
+        Matcher matcher = getCommandMatcher("([\\d]{4})-([\\d]{2})-([\\d]{2})[|]([\\d]{2}):([\\d]{2})", dateOfCreation);
+        matcher.matches();
+        Matcher matcher2 = getCommandMatcher("([\\d]{4})-([\\d]{2})-([\\d]{2})[|]([\\d]{2}):([\\d]{2})", dateOfCreation);
+        matcher2.matches();
+        if (isTaskAlready) {
+            return 1;
+        } else if (!matcher.matches()) {
+            return 2;
+        } else if (Integer.parseInt(matcher.group(2)) > 12 ||
+                Integer.parseInt(matcher.group(2)) < 0 ||
+                (Integer.parseInt(matcher.group(2)) > 6 && Integer.parseInt(matcher.group(3)) > 30) ||
+                (Integer.parseInt(matcher.group(2)) <= 6 && Integer.parseInt(matcher.group(3)) > 31) ||
+                Integer.parseInt(matcher.group(4)) > 24 ||
+                Integer.parseInt(matcher.group(5)) > 60
+        )
+            return 2;
+        else if (!matcher2.matches()) {
+            return 3;
+        } else if (Integer.parseInt(matcher2.group(2)) > 12 ||
+                Integer.parseInt(matcher2.group(2)) < 0 ||
+                (Integer.parseInt(matcher2.group(2)) > 6 && Integer.parseInt(matcher2.group(3)) > 30) ||
+                (Integer.parseInt(matcher2.group(2)) <= 6 && Integer.parseInt(matcher2.group(3)) > 31) ||
+                Integer.parseInt(matcher2.group(4)) > 24 ||
+                Integer.parseInt(matcher2.group(5)) > 60
+        )
+            return 3;
+        else {
+            team.getAllTasks().add(new Task(title, formatter.parse(dateOfCreation), formatter.parse(deadline), team));
+            return 4;
+        }
     }
 
     public ArrayList<String> showMembers(User user, Team team) {
@@ -326,6 +372,30 @@ public class Controller {
         }
         return result;
 
+    }
+
+    public ArrayList<User> showScoreBoardForLeader(User user, Team team) {
+        ArrayList<Integer> score = new ArrayList<>();
+        ArrayList<User> sort = new ArrayList<>();
+        for (User user1 : team.getTeamMembers()) {
+            score.add(user1.getScore());
+        }
+        Collections.sort(score);
+        int number = 1;
+        for (Integer score1 : score) {
+            if (number > 1) {
+                number--;
+                continue;
+
+            }
+            for (User user1 : team.getTeamMembers()) {
+                if (user1.getScore() == score1) {
+                    sort.add(user1);
+                    number++;
+                }
+            }
+        }
+        return sort;
     }
 
     public int sendNotificationForUser(User sender, String receiver, String command) {

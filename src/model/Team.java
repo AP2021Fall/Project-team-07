@@ -29,6 +29,7 @@ public class Team {
         this.teamNumber = teamNumberCreator;
         teamNumberCreator++;
         pendingTeams.add(this);
+        allTeams.add(this);
         this.teamMembers = new ArrayList<>();
         this.allTasks = new ArrayList<>();
         this.suspendedMembers = new ArrayList<>();

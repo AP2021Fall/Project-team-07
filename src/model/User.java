@@ -15,6 +15,7 @@ public class User {
     private String password;
     private String email;
     private String role;
+    private int score;
     private ArrayList<Log> allLogs;
     private ArrayList<Task> allTasksForUser;
     private ArrayList<Notification> notifications;
@@ -35,7 +36,8 @@ public class User {
         this.userTeams = new ArrayList<>();
         this.joiningDate = new HashMap<>();
     }
-    public static User getUserByUsername(String userName){
+
+    public static User getUserByUsername(String userName) {
         for (User user : users) {
             if (user.userName.equals(userName))
                 return user;
@@ -43,6 +45,10 @@ public class User {
         }
         return null;
 
+    }
+
+    public int getScore() {
+        return score;
     }
 
     public static ArrayList<User> getUsers() {
