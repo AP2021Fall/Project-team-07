@@ -27,7 +27,10 @@ public class TeamMenu extends Menu {
             String input = View.scanner.nextLine().trim();
             if (Controller.controller.getCommandMatcher("Scoreboard --show"
                     , input).matches()) showScoreBoard(team);
-            // here for continue
+            else if (Controller.controller.getCommandMatcher("Roadmap --show"
+                    , input).matches()) showRoadMap(team);
+            else if (Controller.controller.getCommandMatcher("Chatroom --show"
+                    , input).matches()) showChatRoom(team);
         }
     }
 
@@ -36,7 +39,7 @@ public class TeamMenu extends Menu {
         while (true) {
             String input = View.scanner.nextLine().trim();
             Matcher matcher = Controller.controller.getCommandMatcher
-                    ("^Enter Team ([^ ]+)$", input);
+                    ("^Enter team ([^ ]+)$", input);
             if (matcher.matches()) {
                 String name = matcher.group(1);
                 team = Team.getTeamByName(name, user.getUserTeams());
@@ -71,11 +74,17 @@ public class TeamMenu extends Menu {
     }
 
     public void showRoadMap(Team team) {
-
+        ArrayList<String> forPrint = Controller.controller.showRoadMap(super.user, team);
+        for (String print : forPrint) {
+            View.print(print);
+        }
     }
 
     public void showChatRoom(Team team) {
-
+        ArrayList<String> forPrint = Controller.controller.showChatRoom(team);
+        for (String print : forPrint) {
+            View.print(print);
+        }
     }
 
     public void showTasks(Team team) {

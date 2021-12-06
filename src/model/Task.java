@@ -1,7 +1,6 @@
 package model;
-
+import model.Date;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Task {
 
@@ -10,6 +9,7 @@ public class Task {
     private String title;
     private String description;
     private String priority;
+    // model.date
     private Date dateOfCreation;
     private Date deadline;
     private ArrayList<User> assignedUser;
@@ -26,6 +26,7 @@ public class Task {
         idCreator++;
         this.assignedUser = new ArrayList<>();
         this.comments = new ArrayList<>();
+        this.team.getRoadMap().getCreationDates().put(this,dateOfCreation);
     }
 
     public static Task getTaskById(Team team, String id) {

@@ -8,9 +8,6 @@ import view.View;
 import java.net.Proxy;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -235,6 +232,15 @@ public class Controller {
         return 0;
     }
 
+    public ArrayList<String> showChatRoom(Team team) {
+        ArrayList<String> result = new ArrayList<>();
+        for (Message message : team.getChatRoom().getAllMassages()) {
+            result.add(message.getSender().getUserName() + " : \"" + message.getText() + "\"");
+        }
+        return result;
+    }
+
+
     public ArrayList<java.util.Date> showDeadLines(User user) {
 
         ArrayList<java.util.Date> allTaskDate = new ArrayList<>();
@@ -405,6 +411,7 @@ public class Controller {
                 users.add(unit.getKey());
             }
         }
+
         ArrayList<Integer> check = new ArrayList<Integer>();
         for (Map.Entry<User, Integer> unit : scores.entrySet()) {
             if (check.contains(unit.getValue())) continue;
@@ -423,6 +430,44 @@ public class Controller {
         }
         return result;
 
+    }
+
+    public ArrayList<String> showRoadMap(User user, Team team) {
+        ArrayList<String> result = new ArrayList<>();
+        if (team.getRoadMap().getCreationDates().isEmpty()) {
+            result.add("no task yet");
+            return result;
+        }
+        HashMap<Task, Date> creationDates = sortRoadMap(team.getRoadMap().getCreationDates());
+        HashMap<Date, ArrayList<Task>> data = new HashMap<>();
+
+        for (Map.Entry<Task, Date> unit : creationDates.entrySet()) {
+            ArrayList<Task> tasks;
+            tasks = data.get(unit.getValue());
+            if (tasks == null) {
+                tasks = new ArrayList<>();
+                tasks.add(unit.getKey());
+                data.put(unit.getValue(), tasks);
+            } else {
+                tasks.add(unit.getKey());
+            }
+        }
+
+        ArrayList<Date> check = new ArrayList<Date>();
+        for (Map.Entry<Task, Date> unit : creationDates.entrySet()) {
+            if (check.contains(unit.getValue())) continue;
+            check.add(unit.getValue());
+            ArrayList<Task> tasks = data.get(unit.getValue());
+            ArrayList<String> titles = new ArrayList<>();
+            for (Task task : tasks) {
+                titles.add(task.getTitle() + " : " + team.getRoadMap().getTasksStatus().get(task) + " % done");
+            }
+            Collections.sort(titles);
+            for (String title : titles) {
+                result.add(title);
+            }
+        }
+        return result;
     }
 
     public ArrayList<User> showScoreBoardForLeader(User user, Team team) {
@@ -516,8 +561,24 @@ public class Controller {
 
     }
 
-    public HashMap<Task, Integer> sortRoadMap(HashMap<Task, Integer> hashMap) {
-        return null;
+    public HashMap<Task, Date> sortRoadMap(HashMap<Task, Date> hashMap) {
+        // a random date for comparing to other dates
+        Date comparingDate = new Date("1300/01/01");
+        List<Map.Entry<Task, Date>> valueList =
+                new LinkedList<Map.Entry<Task, Date>>(hashMap.entrySet());
+        Comparator comparator = new Comparator<Map.Entry<Task, Date>>() {
+            public int compare(Map.Entry<Task, Date> operand1, Map.Entry<Task, Date> operand2) {
+                return (Date.getDaysBetween(operand2.getValue(), comparingDate)).compareTo
+                        (Date.getDaysBetween(operand1.getValue(), comparingDate));
+            }
+        };
+        Collections.sort(valueList, comparator);
+
+        HashMap<Task, Date> sorted = new LinkedHashMap<Task, Date>();
+        for (Map.Entry<Task, Date> unit : valueList) {
+            sorted.put(unit.getKey(), unit.getValue());
+        }
+        return sorted;
     }
 
     public HashMap<Team, Date> sortJoiningDates(HashMap<Team, Date> hashMap) {

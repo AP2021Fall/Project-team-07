@@ -41,10 +41,8 @@ public class User {
         for (User user : users) {
             if (user.userName.equals(userName))
                 return user;
-
         }
         return null;
-
     }
 
     public int getScore() {
