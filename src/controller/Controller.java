@@ -8,6 +8,7 @@ import view.View;
 import java.net.Proxy;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -278,7 +279,7 @@ public class Controller {
         else if (getCommandMatcher("\\d", command.split("")[0]).matches())
             return 2;
         else {
-            Date now = new Date(LocalDate.now().toString());
+            Date now = new Date(LocalDateTime.now().toString());
             new Team(command, user, now);
             return 3;
         }
