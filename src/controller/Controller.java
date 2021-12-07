@@ -143,10 +143,10 @@ public class Controller {
                 Integer.parseInt(matcher.group(5)) > 60
         )
             return 1;
-        else if (formatter.parse(command).before(task.getDeadline()))
+        else if (new Date(command).getDate().before(task.getDeadline().getDate()))
             return 1;
         else {
-            task.setDeadline(formatter.parse(command));
+            task.setDeadline(new Date(command));
             return 2;
         }
     }

@@ -1,6 +1,7 @@
 package model;
 
-import java.time.LocalDate;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -15,7 +16,10 @@ public class Date {
         this.localDate = LocalDateTime.parse(date, dtf);
         this.date = date;
     }
-    public LocalDateTime getLocalDate(){return this.localDate;}
+    public java.util.Date getDate() throws ParseException {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd|HH:mm");
+        return formatter.parse(this.date)  ;
+    }
     public static Integer getDaysBetween(Date inputDate1, Date inputDate2) {
         long daysBetween = DAYS.between(inputDate1.localDate, inputDate2.localDate);
         int result = (int) (daysBetween);
