@@ -11,8 +11,8 @@ public class Team {
     private int teamNumber;
     private String teamName;
     private ArrayList<User> teamMembers;
-
     private ArrayList<User> suspendedMembers;
+    private ArrayList<Board> boards;
     private User teamLeader;
     private Scoreboard scoreboard;
     private RoadMap roadMap;
@@ -34,6 +34,7 @@ public class Team {
         this.allTasks = new ArrayList<>();
         this.suspendedMembers = new ArrayList<>();
         this.notifications = new ArrayList<>();
+        this.boards = new ArrayList<>();
     }
 
     public static Team getTeamByName(String teamName, ArrayList<Team> teams) {
@@ -109,5 +110,9 @@ public class Team {
 
     public static ArrayList<Team> getAllTeams() {
         return allTeams;
+    }
+
+    public ArrayList<Board> getBoards() {
+        return boards;
     }
 }

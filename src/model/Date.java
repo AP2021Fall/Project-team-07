@@ -12,21 +12,25 @@ public class Date {
     private static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd|HH:mm");
     private LocalDateTime localDate;
     private String date;
+
     public Date(String date) {
         this.localDate = LocalDateTime.parse(date, dtf);
         this.date = date;
     }
+
     public java.util.Date getDate() throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd|HH:mm");
-        return formatter.parse(this.date)  ;
+        return formatter.parse(this.date);
     }
+
     public static Integer getDaysBetween(Date inputDate1, Date inputDate2) {
         long daysBetween = DAYS.between(inputDate1.localDate, inputDate2.localDate);
         int result = (int) (daysBetween);
         return result;
 
     }
-    public static Integer getTimeBetween(Date inputDate1, Date inputDate2 ){
+
+    public static Integer getTimeBetween(Date inputDate1, Date inputDate2) {
         long secondsBetween = ChronoUnit.SECONDS.between(inputDate1.localDate, inputDate2.localDate);
         int result = (int) secondsBetween;
         return result;

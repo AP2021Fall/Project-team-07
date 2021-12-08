@@ -5,6 +5,8 @@ import java.util.ArrayList;
 public class Board {
 
     private static ArrayList<Board> allBoards = new ArrayList<>();
+    private static int idCreator = 1;
+    private int creationId;
     private boolean isCreated;
     private Team team;
     private String boardName;
@@ -14,25 +16,24 @@ public class Board {
     private ArrayList<User> membersOfBoards;
     private ArrayList<Task> boardTask;
     private User creator;
-    private String categoryName;
     private String column;
 
-    public Board(String boardName, User creator) {
+    public Board(String boardName, User creator, Team team) {
+        this.creationId = idCreator;
+        idCreator++;
         this.boardName = boardName;
         this.creator = creator;
+        this.team = team;
         this.failed = new ArrayList<>();
         this.done = new ArrayList<>();
         this.membersOfBoards = new ArrayList<>();
         this.allCategories = new ArrayList<>();
         this.boardTask = new ArrayList<>();
+        this.team.getBoards().add(this);
     }
 
-    public static Board getBoardByBoardName(String boardName){
+    public static Board getBoardByBoardName(String boardName) {
         return null;
-    }
-
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
     }
 
     public void setAllCategories(ArrayList<Category> allCategories) {
@@ -71,10 +72,6 @@ public class Board {
         return team;
     }
 
-    public String getCategoryName() {
-        return categoryName;
-    }
-
     public String getColumn() {
         return column;
     }
@@ -97,5 +94,13 @@ public class Board {
 
     public User getCreator() {
         return creator;
+    }
+
+
+    public static Board getBoardByName(ArrayList<Board> boards, String boardName) {
+        for (Board board : boards) {
+            if (board.boardName.equals(boardName)) return board;
+        }
+        return null;
     }
 }

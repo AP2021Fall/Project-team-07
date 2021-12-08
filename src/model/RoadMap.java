@@ -6,7 +6,7 @@ public class RoadMap {
 
     private Team team;
     private HashMap<Task, Integer> tasksStatus;
-    private HashMap<Task,model.Date> creationDates;
+    private HashMap<Task, model.Date> creationDates;
 
     public RoadMap(Team team) {
         this.team = team;

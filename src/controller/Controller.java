@@ -98,10 +98,6 @@ public class Controller {
         return null;
     }
 
-    public int getDaysBetween(Date date1, Date date2) {
-        return 0;
-    }
-
     public int editTaskTitle(User user, Task task, String command) {
         if (!user.getRole().equals("Leader"))
             return 0;
@@ -185,12 +181,74 @@ public class Controller {
         return null;
     }
 
-    public int makeBoard(User user, String command) {
-        return 0;
+    public int makeBoard(User user, Team team, String boardName) {
+        if (!user.getRole().equals("Leader"))
+            return 0;
+        Board board = Board.getBoardByName(team.getBoards(), boardName);
+        if (board != null)
+            return 1;
+        else {
+            board = new Board(boardName, user, team);
+            return 2;
+        }
     }
 
-    public int removeBoard(User user, String command) {
-        return 0;
+    public int removeBoard(User user, Team team, String boardName) {
+        if (!user.getRole().equals("Leader"))
+            return 0;
+        Board board = Board.getBoardByName(team.getBoards(), boardName);
+        if (board == null)
+            return 1;
+        else {
+            team.getBoards().remove(board);
+            return 2;
+        }
+    }
+
+    public int addCategory(User user, Team team, String boardName, String categoryName) {
+        if (!user.getRole().equals("Leader"))
+            return 0;
+        Board board = Board.getBoardByName(team.getBoards(), boardName);
+        if (board == null)
+            return 1;
+        Category category = Category.getCategoryByName(board.getAllCategories(), categoryName);
+        if (category != null)
+            return 2;
+        else {
+            category = new Category(board, categoryName);
+            return 3;
+        }
+    }
+
+    public int changeColumn(User user, Team team, String boardName, String categoryName, int column) {
+        if (!user.getRole().equals("Leader"))
+            return 0;
+        Board board = Board.getBoardByName(team.getBoards(), boardName);
+        if (board == null)
+            return 1;
+        Category category = Category.getCategoryByName(board.getAllCategories(), categoryName);
+        if (category == null)
+            return 2;
+        if (column < 0 || column > board.getAllCategories().size() - 1)
+            return 3;
+        else {
+            board.setAllCategories(changeArrangement(board.getAllCategories(), category, column));
+            return 4;
+        }
+
+    }
+
+    public ArrayList<Category> changeArrangement(ArrayList<Category> categories, Category category, int column) {
+        ArrayList<Category> rearranged = new ArrayList<>();
+        categories.remove(category);
+        for (int i = 0; i < column; i++) {
+            rearranged.add(categories.get(i));
+        }
+        rearranged.add(category);
+        for (int i = column; i < categories.size(); i++) {
+            rearranged.add(categories.get(i));
+        }
+        return rearranged;
     }
 
     public int boardDone(User user, String command) {
@@ -242,16 +300,16 @@ public class Controller {
     }
 
 
-    public ArrayList<java.util.Date> showDeadLines(User user) {
+    public ArrayList<java.util.Date> showDeadLines(User user) throws ParseException {
 
         ArrayList<java.util.Date> allTaskDate = new ArrayList<>();
         for (Task task : user.getAllTasksForUser()) {
-            allTaskDate.add(task.getDeadline());
+            allTaskDate.add(task.getDeadline().getDate());
         }
         Collections.sort(allTaskDate);
         HashMap<String, java.util.Date> allTask = new HashMap<>();
         for (Task task : user.getAllTasksForUser()) {
-            allTask.put(task.getTeam().getTeamName(), task.getDeadline());
+            allTask.put(task.getTeam().getTeamName(), task.getDeadline().getDate());
         }
         return allTaskDate;
 
@@ -330,7 +388,7 @@ public class Controller {
         )
             return 3;
         else {
-            team.getAllTasks().add(new Task(title, formatter.parse(dateOfCreation), formatter.parse(deadline), team));
+            team.getAllTasks().add(new Task(title, new Date(dateOfCreation), new Date(deadline), team));
             return 4;
         }
     }

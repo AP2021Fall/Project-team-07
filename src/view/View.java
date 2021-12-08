@@ -34,11 +34,9 @@ public class View {
                     if (choose.equals("1") || choose.equals("yes")) {
                         print("Have a nice day!");
                         break label;
-                    }
-                    else if(choose.equals("2") || choose.equals("no")){
+                    } else if (choose.equals("2") || choose.equals("no")) {
 
-                    }
-                    else{
+                    } else {
                         print("Invalid command!");
                     }
                 }
@@ -73,11 +71,9 @@ public class View {
                 if (choose.equals("1") || choose.equals("yes")) {
                     print("Have a nice day!");
                     break;
-                }
-                else if(choose.equals("2") || choose.equals("no")){
+                } else if (choose.equals("2") || choose.equals("no")) {
 
-                }
-                else{
+                } else {
                     print("Invalid command!");
                 }
             } else {

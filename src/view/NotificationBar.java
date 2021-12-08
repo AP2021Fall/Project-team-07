@@ -2,7 +2,7 @@ package view;
 
 public class NotificationBar {
 
-    public void runNotificationBar(){
+    public void runNotificationBar() {
 
     }
 }

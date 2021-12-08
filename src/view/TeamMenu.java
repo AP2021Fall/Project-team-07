@@ -90,7 +90,6 @@ public class TeamMenu extends Menu {
     public void showTasks(Team team) {
 
 
-
     }
 
     public void showTask(Task task) {
