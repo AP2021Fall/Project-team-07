@@ -345,10 +345,6 @@ public class Controller {
 
     }
 
-    public int showTeamsOfLeader(User user) {
-        return 0;
-    }
-
     public Team showSpecialTeam(User user, String command) {
         Team selectTeam = null;
         for (Team team : Team.getAcceptedTeams()) {
@@ -627,7 +623,17 @@ public class Controller {
         return 0;
     }
 
-    public int sendNotificationForAll(String command) {
+    public int sendNotificationForUser(String username) {
+        if (!isUsernameAvailable(username)) {
+            return 1;
+        }
+        return 0;
+    }
+
+    public int sendNotificationForTeam(String teamName) {
+        if (!isTeamAvailable(teamName)){
+            return 1;
+        }
         return 0;
     }
 
@@ -739,6 +745,14 @@ public class Controller {
         return false;
     }
 
+    private boolean isTeamAvailable(String command){
+        for (Team team: Team.getAllTeams()){
+            if(team.getTeamName().equals(command)){
+                return true;
+            }
+        }
+        return false;
+    }
     private User findUser(String command) {
         for (User user : User.getUsers()) {
             if (user.getUserName().equals(command))

@@ -42,7 +42,14 @@ public class View {
                 print("You are not logged in\n");
             } else if (Controller.controller.getCommandMatcher("change role --user ([^ ]+) --role ([^ ]+)", input).matches()) {
                 print("You are not logged in\n");
-            } else {
+            } else if (Controller.controller.getCommandMatcher("send --notification ([^ ]+) --all", input).matches()) {
+                print("You are not logged in\n");
+            } else if (Controller.controller.getCommandMatcher("send --notification ([^ ]+) --user ([^ ]+)", input).matches()){
+                print("You are not logged in\n");
+            } else if (Controller.controller.getCommandMatcher("send --notification ([^ ]+) --team ([^ ]+)", input).matches()){
+                print("You are not logged in\n");
+            }
+            else {
                 print("Invalid command!");
             }
         }
@@ -85,7 +92,14 @@ public class View {
                 print("You do not have access to this section");
             } else if (Controller.controller.getCommandMatcher("change role --user ([^ ]+) --role ([^ ]+)", input).matches()) {
                 print("You do not have access to this section");
-            } else {
+            } else if (Controller.controller.getCommandMatcher("send --notification ([^ ]+) --all", input).matches()) {
+                print("You do not have access to this section");
+            } else if (Controller.controller.getCommandMatcher("send --notification ([^ ]+) --user ([^ ]+)", input).matches()){
+                print("You do not have access to this section");
+            } else if (Controller.controller.getCommandMatcher("send --notification ([^ ]+) --team ([^ ]+)", input).matches()){
+                print("You do not have access to this section");
+            }
+            else {
                 print("Invalid command!");
             }
         }
@@ -130,7 +144,14 @@ public class View {
                 print("You do not have access to this section");
             } else if (Controller.controller.getCommandMatcher("change role --user ([^ ]+) --role ([^ ]+)", input).matches()) {
                 print("You do not have access to this section");
-            } else {
+            } else if (Controller.controller.getCommandMatcher("send --notification ([^ ]+) --all", input).matches()) {
+                print("You do not have access to this section");
+            } else if (Controller.controller.getCommandMatcher("send --notification ([^ ]+) --user ([^ ]+)", input).matches()){
+                print("You do not have access to this section");
+            } else if (Controller.controller.getCommandMatcher("send --notification ([^ ]+) --team ([^ ]+)", input).matches()){
+                print("You do not have access to this section");
+            }
+            else {
                 print("Invalid command!");
             }
         }
@@ -147,6 +168,16 @@ public class View {
             AdminMenu.banUser(matcher.group(1));
         } else if ((matcher = Controller.controller.getCommandMatcher("change role --user ([^ ]+) --role ([^ ]+)", input)).matches()) {
             AdminMenu.changeRole(matcher.group(1), matcher.group(2));
+        } else if ((matcher = Controller.controller.getCommandMatcher("send --notification ([^ ]+) --all", input)).matches()) {
+            AdminMenu.sendNotificationForAll(matcher.group(1), user);
+        } else if ((matcher = Controller.controller.getCommandMatcher("send --notification ([^ ]+) --user ([^ ]+)", input)).matches()){
+            AdminMenu.sendNotificationForUser(matcher.group(2), matcher.group(1), user);
+        } else if ((matcher = Controller.controller.getCommandMatcher("send --notification ([^ ]+) --team ([^ ]+)", input)).matches()){
+            AdminMenu.sendNotificationForTeam(matcher.group(2), matcher.group(1), user);
+        } else if (Controller.controller.getCommandMatcher("show --scoreBoard", input).matches()){
+            AdminMenu.showScoreBoard();
+        } else if (Controller.controller.getCommandMatcher("show --pendingTeams", input).matches()){
+            AdminMenu.showPendingTeams();
         }
     }
 

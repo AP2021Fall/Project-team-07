@@ -1,8 +1,11 @@
 package view;
 
 import controller.Controller;
+import model.Notification;
 import model.Team;
 import model.User;
+
+import java.util.regex.Matcher;
 
 public class AdminMenu {
 
@@ -38,27 +41,57 @@ public class AdminMenu {
         }
     }
 
-    public static void sendNotificationForAll(String command) {
-
+    public static void sendNotificationForAll(String text, User sender) {
+        Notification notification = new Notification(text, sender, 0);
+        for(User user : User.getUsers()){
+            user.getNotifications().add(notification);
+        }
     }
 
-    public static void sendNotificationForUser(User user, String command) {
-
+    public static void sendNotificationForUser(String username, String text, User sender) {
+        int answer = Controller.controller.sendNotificationForUser(username);
+        if (answer == 1){
+            View.print("There is no user with this username");
+        }
+        else {
+            Notification notification = new Notification(text, sender, 0);
+            User.getUserByUsername(username).getNotifications().add(notification);
+        }
     }
 
-    public static void sendNotificationForTeam(Team team, String command) {
+    public static void sendNotificationForTeam(String teamName, String text, User sender) {
+        int answer = Controller.controller.sendNotificationForTeam(teamName);
+        if (answer == 1){
+            View.print("There is no team with this name");
+        }
+        else{
+            Notification notification = new Notification(text, sender, 1);
+            for(User user : Controller.controller.findTeam(teamName).getTeamMembers()){
+                user.getNotifications().add(notification);
+            }
+        }
+    }
 
+    public static void showScoreBoard(){
+        // continue
     }
 
     public static void showPendingTeams() {
-
+        String input = View.scanner.nextLine().trim();
+        Matcher matcher;
+        if ((matcher = Controller.controller.getCommandMatcher("accept --teams ([^ ]+)", input)).matches()){
+            // continue
+        }
+        else if ((matcher = Controller.controller.getCommandMatcher("reject --teams ([^ ]+)", input)).matches()){
+            // continue
+        }
     }
 
     public static void acceptTeam(String command) {
-
+        // continue
     }
 
     public static void rejectTeam(String command) {
-
+        // continue
     }
 }
