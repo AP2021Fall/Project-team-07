@@ -36,6 +36,12 @@ public class View {
                 } else {
                     print("Invalid command!");
                 }
+            } else if (Controller.controller.getCommandMatcher("show profile --username ([^ ]+)", input).matches()) {
+                print("You are not logged in\n");
+            } else if (Controller.controller.getCommandMatcher("ban user --user ([^ ]+)", input).matches()) {
+                print("You are not logged in\n");
+            } else if (Controller.controller.getCommandMatcher("change role --user ([^ ]+) --role ([^ ]+)", input).matches()) {
+                print("You are not logged in\n");
             } else {
                 print("Invalid command!");
             }
@@ -57,11 +63,11 @@ public class View {
                 TeamMenu teamMenu = new TeamMenu(user);
                 teamMenu.runTeamMenu();
             } else if (input.equals("3") || input.equals("Tasks Page")) {
-                // continue
+                TasksPage.tasksPage.runTasksPage();
             } else if (input.equals("4") || input.equals("Calender Menu")) {
-                // continue
+                CalenderMenu.calenderMenu.runCalenderMenu();
             } else if (input.equals("5") || input.equals("Notification Bar")) {
-                // continue
+                NotificationBar.notificationBar.runNotificationBar();
             } else if (input.equals("6") || input.equals("Quit")) {
                 print("Are you sure you want to quit?\n1. Yes\n2. No");
                 String choose = scanner.nextLine().trim().toLowerCase(Locale.ROOT);
@@ -73,6 +79,12 @@ public class View {
                 } else {
                     print("Invalid command!");
                 }
+            } else if (Controller.controller.getCommandMatcher("show profile --username ([^ ]+)", input).matches()) {
+                print("You do not have access to this section");
+            } else if (Controller.controller.getCommandMatcher("ban user --user ([^ ]+)", input).matches()) {
+                print("You do not have access to this section");
+            } else if (Controller.controller.getCommandMatcher("change role --user ([^ ]+) --role ([^ ]+)", input).matches()) {
+                print("You do not have access to this section");
             } else {
                 print("Invalid command!");
             }
@@ -91,15 +103,17 @@ public class View {
                 ProfileMenu profileMenu = new ProfileMenu(user);
                 profileMenu.runProfileMenu();
             } else if (input.equals("2") || input.equals("Team Menu")) {
-                TeamMenu teamMenu = new TeamMenu(user);
+                TeamMenu teamMenu = new TeamMenu(user);    // Leader Menu?????
                 teamMenu.runTeamMenu();
             } else if (input.equals("3") || input.equals("Tasks Page")) {
-                // continue
+                TasksPage.tasksPage.runTasksPage();
             } else if (input.equals("4") || input.equals("Calender Menu")) {
-                // continue
+                CalenderMenu.calenderMenu.runCalenderMenu();
             } else if (input.equals("5") || input.equals("Notification Bar")) {
-                // continue
-            } else if (input.equals("6") || input.equals("Quit")) {
+                NotificationBar.notificationBar.runNotificationBar();
+            } else if (input.equals("6") || input.equals("Special Commands")) {
+                LeaderMenu.leaderMenu.runSpecialCommandsForLeaderMenu(user);
+            } else if (input.equals("7") || input.equals("Quit")) {
                 print("Are you sure you want to quit?\n1. Yes\n2. No");
                 String choose = scanner.nextLine().trim().toLowerCase(Locale.ROOT);
                 if (choose.equals("1") || choose.equals("yes")) {
@@ -110,15 +124,30 @@ public class View {
                 } else {
                     print("Invalid command!");
                 }
+            } else if (Controller.controller.getCommandMatcher("show profile --username ([^ ]+)", input).matches()) {
+                print("You do not have access to this section");
+            } else if (Controller.controller.getCommandMatcher("ban user --user ([^ ]+)", input).matches()) {
+                print("You do not have access to this section");
+            } else if (Controller.controller.getCommandMatcher("change role --user ([^ ]+) --role ([^ ]+)", input).matches()) {
+                print("You do not have access to this section");
             } else {
                 print("Invalid command!");
             }
         }
-        // continue after for another choices...
     }
 
     public static void runAdminMenu(User user) {
-        // continue...
+        printMenu(user);
+        String input = scanner.nextLine().trim();
+        Matcher matcher;
+
+        if ((matcher = Controller.controller.getCommandMatcher("show profile --username ([^ ]+)", input)).matches()) {
+            AdminMenu.showProfile(matcher.group(1));
+        } else if ((matcher = Controller.controller.getCommandMatcher("ban user --user ([^ ]+)", input)).matches()) {
+            AdminMenu.banUser(matcher.group(1));
+        } else if ((matcher = Controller.controller.getCommandMatcher("change role --user ([^ ]+) --role ([^ ]+)", input)).matches()) {
+            AdminMenu.changeRole(matcher.group(1), matcher.group(2));
+        }
     }
 
     public void register(String command) {
@@ -160,15 +189,13 @@ public class View {
 
     public static void printMenu(User user) {
         int answer = Controller.controller.printMenu(user);
-        if(answer == 1){
+        if (answer == 1) {
             print("1. Profile Menu\n2. Team Menu\n3. Tasks Page\n4. Calender Menu\n5. Notification Bar\n6. Quit");
-        }
-        else if(answer == 2){
-            print("1. Profile Menu\n2. Team Menu\n3. Tasks Page\n4. Calender Menu\n5. Notification Bar\n6. Quit");
-            // needs another choice...
-        }
-        else if(answer == 3){
-            // continue for admin menu
+        } else if (answer == 2) {
+            print("1. Profile Menu\n2. Team Menu\n3. Tasks Page\n4. Calender Menu\n5. Notification Bar\n6. Special Commands" +
+                    "\n7. Quit");
+        } else if (answer == 3) {
+            print("Enter your command :");
         }
     }
 

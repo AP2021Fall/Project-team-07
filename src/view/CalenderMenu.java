@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class CalenderMenu {
+    public static final CalenderMenu calenderMenu = new CalenderMenu();
     Controller controller = new Controller();
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 

@@ -8,12 +8,7 @@ import model.User;
 import java.text.ParseException;
 
 public class TasksPage {
-
-    private Task task;
-
-    public TasksPage(Task task) {
-        this.task = task;
-    }
+    public static final TasksPage tasksPage = new TasksPage();
 
     public void runTasksPage() {
 
