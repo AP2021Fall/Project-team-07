@@ -9,45 +9,42 @@ import java.util.regex.Matcher;
 
 public class View {
     public static Scanner scanner = new Scanner(System.in);
+    public static final View view = new View();
 
     public void run() {
         print("Welcome to our program\n");
-        label:
         while (true) {
             print("1. Sign in\n2. Login\n3. Quit\n");
             print("Enter your choice: ");
             String input = scanner.nextLine().trim();
-            switch (input) {
-                case "1", "Sign in" -> {
-                    print("Enter your command: ");
-                    String command = scanner.nextLine().trim();
-                    register(command);
+            if (input.equals("1") || input.equals("Sign in")) {
+                print("Enter your command: ");
+                String command = scanner.nextLine().trim();
+                register(command);
+            } else if (input.equals("2") || input.equals("Login")) {
+                print("Enter your command: ");
+                String command = scanner.nextLine().trim();
+                logIn(command);
+            } else if (input.equals("3") || input.equals("Quit")) {
+                print("Are you sure you want to quit?\n1. Yes\n2. No");
+                String choose = scanner.nextLine().trim().toLowerCase(Locale.ROOT);
+                if (choose.equals("1") || choose.equals("yes")) {
+                    print("Have a nice day!");
+                    break;
+                } else if (choose.equals("2") || choose.equals("no")) {
+                    System.out.println();
+                } else {
+                    print("Invalid command!");
                 }
-                case "2", "Login" -> {
-                    print("Enter your command: ");
-                    String command = scanner.nextLine().trim();
-                    logIn(command);
-                }
-                case "3", "Quit" -> {
-                    print("Are you sure you want to quit?\n1. Yes\n2. No");
-                    String choose = scanner.nextLine().trim().toLowerCase(Locale.ROOT);
-                    if (choose.equals("1") || choose.equals("yes")) {
-                        print("Have a nice day!");
-                        break label;
-                    } else if (choose.equals("2") || choose.equals("no")) {
-
-                    } else {
-                        print("Invalid command!");
-                    }
-                }
-                default -> print("Invalid command!");
+            } else {
+                print("Invalid command!");
             }
         }
     }
 
     public static void runMemberMenu(User user) {
         while (true) {
-            print("1. Profile Menu\n2. Team Menu\n3. Tasks Page\n4. Calender Menu\n5. Notification Bar\n6. Quit");
+            printMenu(user);
             print("\nEnter your command: ");
             String input = scanner.nextLine().trim();
             Matcher matcher = Controller.controller.getCommandMatcher("^enter menu ([^ ]+)$", input);
@@ -83,11 +80,45 @@ public class View {
     }
 
     public static void runLeaderMenu(User user) {
+        while (true) {
+            printMenu(user);
+            print("\nEnter your command: ");
+            String input = scanner.nextLine().trim();
+            Matcher matcher = Controller.controller.getCommandMatcher("^enter menu ([^ ]+)$", input);
+            input = matcher.group(1);
 
+            if (input.equals("1") || input.equals("Profile Menu")) {
+                ProfileMenu profileMenu = new ProfileMenu(user);
+                profileMenu.runProfileMenu();
+            } else if (input.equals("2") || input.equals("Team Menu")) {
+                TeamMenu teamMenu = new TeamMenu(user);
+                teamMenu.runTeamMenu();
+            } else if (input.equals("3") || input.equals("Tasks Page")) {
+                // continue
+            } else if (input.equals("4") || input.equals("Calender Menu")) {
+                // continue
+            } else if (input.equals("5") || input.equals("Notification Bar")) {
+                // continue
+            } else if (input.equals("6") || input.equals("Quit")) {
+                print("Are you sure you want to quit?\n1. Yes\n2. No");
+                String choose = scanner.nextLine().trim().toLowerCase(Locale.ROOT);
+                if (choose.equals("1") || choose.equals("yes")) {
+                    print("Have a nice day!");
+                    break;
+                } else if (choose.equals("2") || choose.equals("no")) {
+
+                } else {
+                    print("Invalid command!");
+                }
+            } else {
+                print("Invalid command!");
+            }
+        }
+        // continue after for another choices...
     }
 
     public static void runAdminMenu(User user) {
-
+        // continue...
     }
 
     public void register(String command) {
@@ -127,8 +158,18 @@ public class View {
         }
     }
 
-    public void printMenu(User user) {
-
+    public static void printMenu(User user) {
+        int answer = Controller.controller.printMenu(user);
+        if(answer == 1){
+            print("1. Profile Menu\n2. Team Menu\n3. Tasks Page\n4. Calender Menu\n5. Notification Bar\n6. Quit");
+        }
+        else if(answer == 2){
+            print("1. Profile Menu\n2. Team Menu\n3. Tasks Page\n4. Calender Menu\n5. Notification Bar\n6. Quit");
+            // needs another choice...
+        }
+        else if(answer == 3){
+            // continue for admin menu
+        }
     }
 
     public static void print(String string) {

@@ -37,23 +37,57 @@ public class Controller {
             return 2;
         }
         String role = User.getUserByUsername(username).getRole();
-        switch (role) {
-            case "Member" -> View.runMemberMenu(User.getUserByUsername(username));
-            case "Leader" -> View.runLeaderMenu(User.getUserByUsername(username));
-            case "System Admin" -> View.runAdminMenu(User.getUserByUsername(username));
+        if(role.equals("Member")){
+            View.runMemberMenu(User.getUserByUsername(username));
+        }
+        else if(role.equals("Leader")){
+            View.runLeaderMenu(User.getUserByUsername(username));
+        }
+        else if(role.equals("System Admin")){
+            View.runAdminMenu(User.getUserByUsername(username));
         }
         return 0;
     }
 
     public int printMenu(User user) {
+        if(user.getRole().equals("Member")){
+            return 1;
+        }
+        else if(user.getRole().equals("Leader")){
+            return 2;
+        }
+        else if(user.getRole().equals("System Admin")){
+            return 3;
+        }
         return 0;
     }
 
-    public int changePassword(User user, String command) {
+    public int changePassword(User user, String oldPassword, String newPassword) {
+        if(!oldPassword.equals(user.getPassword())){
+            return 1;
+        }
+        else if(newPassword.equals(oldPassword)){
+            return 2;
+        }
+        else if(!getCommandMatcher("(?=.*[A-Z])(?=.*\\d)(?!.*[&%$]).{8,}", newPassword).matches()){
+            return 3;
+        }
         return 0;
     }
 
-    public int changeUserName(User user, String command) {
+    public int changeUserName(User user, String newUsername) {
+        if(!getCommandMatcher("[A-Za-z]{4,}", newUsername).matches()){
+            return 1;
+        }
+        else if(isUsernameAvailable(newUsername)){
+            return 2;
+        }
+        else if(!getCommandMatcher("[A-Za-z0-9_]+", newUsername).matches()){
+            return 3;
+        }
+        else if(newUsername.equals(user.getUserName())){
+            return 4;
+        }
         return 0;
     }
 
@@ -89,7 +123,12 @@ public class Controller {
         return result;
     }
 
-    public int showTeam(User user, String command) {
+    public int showTeam(User user, String teamName) {
+        for(Team team : Team.getAllTeams()){
+            if(teamName.equals(team.getTeamName())){
+                return 1;
+            }
+        }
         return 0;
     }
 
@@ -673,6 +712,14 @@ public class Controller {
         return null;
     }
 
+    public Team findTeam(String teamName){
+        for (Team team : Team.getAllTeams()){
+            if (team.getTeamName().equals(teamName)){
+                return team;
+            }
+        }
+        return null;
+    }
     private boolean isUsernameAvailable(String command) {
         for (User user : User.getUsers()) {
             if (user.getUserName().equals(command))
