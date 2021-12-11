@@ -6,6 +6,7 @@ import model.Notification;
 import model.Team;
 import model.User;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.regex.Matcher;
@@ -16,7 +17,7 @@ public class ProfileMenu extends Menu {
         super(user);
     }
 
-    public void runProfileMenu() {
+    public void runProfileMenu() throws ParseException {
         while (true) {
             View.print("Enter your command: ");
             String input = View.scanner.nextLine().trim();
@@ -46,7 +47,7 @@ public class ProfileMenu extends Menu {
         }
     }
 
-    public void changePassword(String oldPassword, String newPassword) {
+    public void changePassword(String oldPassword, String newPassword) throws ParseException {
         int answer = Controller.controller.changePassword(user, oldPassword, newPassword);
         if (answer == 1) {
             View.print("wrong old password !");

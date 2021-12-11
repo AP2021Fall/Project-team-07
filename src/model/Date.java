@@ -27,7 +27,6 @@ public class Date {
         long daysBetween = DAYS.between(inputDate1.localDate, inputDate2.localDate);
         int result = (int) (daysBetween);
         return result;
-
     }
 
     public static Integer getTimeBetween(Date inputDate1, Date inputDate2) {

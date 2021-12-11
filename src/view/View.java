@@ -3,6 +3,7 @@ package view;
 import controller.Controller;
 import model.User;
 
+import java.text.ParseException;
 import java.util.Locale;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -11,7 +12,7 @@ public class View {
     public static Scanner scanner = new Scanner(System.in);
     public static final View view = new View();
 
-    public void run() {
+    public void run() throws ParseException {
         print("Welcome to our program\n");
         while (true) {
             print("1. Sign in\n2. Login\n3. Quit\n");
@@ -55,7 +56,7 @@ public class View {
         }
     }
 
-    public static void runMemberMenu(User user) {
+    public static void runMemberMenu(User user) throws ParseException {
         while (true) {
             printMenu(user);
             print("\nEnter your command: ");
@@ -105,7 +106,7 @@ public class View {
         }
     }
 
-    public static void runLeaderMenu(User user) {
+    public static void runLeaderMenu(User user) throws ParseException {
         while (true) {
             printMenu(user);
             print("\nEnter your command: ");
@@ -202,7 +203,7 @@ public class View {
         }
     }
 
-    public void logIn(String command) {
+    public void logIn(String command) throws ParseException {
         Matcher matcher;
         if ((matcher = Controller.controller.getCommandMatcher("^user login --username ([^ ]+) --password ([^ ]+)$", command)).matches()) {
             int answer = Controller.controller.logIn(matcher.group(1), matcher.group(2));

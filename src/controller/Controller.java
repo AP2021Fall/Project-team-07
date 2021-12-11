@@ -8,6 +8,7 @@ import view.View;
 import java.net.Proxy;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -30,7 +31,7 @@ public class Controller {
         return 0;
     }
 
-    public int logIn(String username, String password) {
+    public int logIn(String username, String password) throws ParseException {
         if (!isUsernameAvailable(username)) {
             return 1;
         } else if (!password.equals(User.getUserByUsername(username).getPassword())) {

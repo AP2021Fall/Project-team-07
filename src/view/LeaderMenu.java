@@ -8,12 +8,47 @@ import model.User;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.regex.Matcher;
 
 public class LeaderMenu {
     public static final LeaderMenu leaderMenu = new LeaderMenu();
+    private Team team;
 
-    public void runSpecialCommandsForLeaderMenu(User user) {
-
+    public void runSpecialCommandsForLeaderMenu(User user) throws ParseException {
+        String input = View.scanner.nextLine().trim();
+        if (Controller.controller.getCommandMatcher("show --teams", input).matches()) {
+            showTeams(user);
+        } else if (Controller.controller.getCommandMatcher("show --team ([^ ]+)", input).matches()) {
+            showSpecialTeam(user, Controller.controller.getCommandMatcher("show --team ([^ ]+)", input).group(1));
+        } else if (Controller.controller.getCommandMatcher("create --team ([^ ]+)", input).matches()) {
+            creatTeam(user, Controller.controller.getCommandMatcher("create --team ([^ ]+)", input).group(1));
+        } else if (Controller.controller.getCommandMatcher("sudo show  --all --tasks", input).matches()) {
+            showAllTasks(user, team);
+        } else if (Controller.controller.getCommandMatcher("create task --title ([^ ]+) --startTime ([^ ]+) --deadline ([^ ]+)", input).matches()) {
+            Matcher matcher = Controller.controller.getCommandMatcher("create task --title ([^ ]+) --startTime ([^ ]+) --deadline ([^ ]+)", input);
+            creatTask(user, team, matcher.group(1), matcher.group(2), matcher.group(3));
+        } else if (Controller.controller.getCommandMatcher("show --members", input).matches()) {
+            showMembers(user, team);
+        } else if (Controller.controller.getCommandMatcher("Add member --username ([^ ]+)", input).matches()) {
+            addMember(user, team, Controller.controller.getCommandMatcher("Add member --username ([^ ]+)", input).group(1));
+        } else if (Controller.controller.getCommandMatcher("delete member --username ([^ ]+)", input).matches()) {
+            deleteMember(user, team, Controller.controller.getCommandMatcher("delete member --username ([^ ]+)", input).group(1));
+        } else if (Controller.controller.getCommandMatcher("suspend member --username ([^ ]+)", input).matches()) {
+            suspendMember(user, team, Controller.controller.getCommandMatcher("suspend member --username ([^ ]+)", input).group(1));
+        } else if (Controller.controller.getCommandMatcher("promote --username ([^ ]+) --rate ([^ ]+)", input).matches()) {
+            promoteMember(user, team, Controller.controller.getCommandMatcher("promote --username ([^ ]+) --rate ([^ ]+)", input).group(1));
+        } else if (Controller.controller.getCommandMatcher("assign member --task ([^ ]+) --username ([^ ]+)", input).matches()) {
+            Matcher matcher = Controller.controller.getCommandMatcher("assign member --task ([^ ]+) --username ([^ ]+)", input);
+            assignMember(user, team, matcher.group(1), matcher.group(2));
+        } else if (Controller.controller.getCommandMatcher("promote --username ([^ ]+) --rate ([^ ]+)", input).matches()) {
+            showScoreBoard(user, team);
+        } else if (Controller.controller.getCommandMatcher("send --notification ([^ ]+) --user ([^ ]+)", input).matches()) {
+            Matcher matcher = Controller.controller.getCommandMatcher("send --notification ([^ ]+) --user ([^ ]+)", input);
+            sendNotificationForUser(user, matcher.group(2), matcher.group(1));
+        } else if (Controller.controller.getCommandMatcher("send --notification ([^ ]+) --team ([^ ]+)", input).matches()) {
+            Matcher matcher = Controller.controller.getCommandMatcher("send --notification ([^ ]+) --team ([^ ]+)", input);
+            sendNotificationForTeam(user, matcher.group(2), matcher.group(1));
+        }
     }
 
     public void showTeams(User user) {
@@ -31,10 +66,11 @@ public class LeaderMenu {
 
     //The team must also be sent
     public void showSpecialTeam(User user, String command) {
-        Team team = Controller.controller.showSpecialTeam(user, command);
-        if (team == null)
+        Team foundTeam = Controller.controller.showSpecialTeam(user, command);
+        if (foundTeam == null)
             View.print("Team not found!");
         else {
+            this.team = foundTeam;
             TeamMenu teamMenu = new TeamMenu(user);
             teamMenu.runTeamMenu();
         }
