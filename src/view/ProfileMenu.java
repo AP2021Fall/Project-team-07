@@ -85,11 +85,10 @@ public class ProfileMenu extends Menu {
                 View.print("" + rank + ". " + print);
                 rank++;
             }
-        }
-        else if(user.getRole().equals("Leader")){
+        } else if (user.getRole().equals("Leader")) {
             int rank = 1;
-            for (String team : teams){
-                if(Controller.controller.findTeam(team).getTeamLeader().getUserName().equals(user.getUserName())){
+            for (String team : teams) {
+                if (Controller.controller.findTeam(team).getTeamLeader().getUserName().equals(user.getUserName())) {
                     View.print("" + rank + ". " + team);
                     rank++;
                 }

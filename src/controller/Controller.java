@@ -632,21 +632,24 @@ public class Controller {
     }
 
     public int sendNotificationForTeam(String teamName) {
-        if (!isTeamAvailable(teamName)){
+        if (!isTeamAvailable(teamName)) {
             return 1;
         }
         return 0;
     }
 
     public int showPendingTeams() {
+        // continuing
         return 0;
     }
 
     public int acceptTeam(String command) {
+        // continuing
         return 0;
     }
 
     public int rejectTeam(String command) {
+        // continuing
         return 0;
     }
 
@@ -746,14 +749,15 @@ public class Controller {
         return false;
     }
 
-    private boolean isTeamAvailable(String command){
-        for (Team team: Team.getAllTeams()){
-            if(team.getTeamName().equals(command)){
+    private boolean isTeamAvailable(String command) {
+        for (Team team : Team.getAllTeams()) {
+            if (team.getTeamName().equals(command)) {
                 return true;
             }
         }
         return false;
     }
+
     private User findUser(String command) {
         for (User user : User.getUsers()) {
             if (user.getUserName().equals(command))
@@ -765,7 +769,7 @@ public class Controller {
 
     private Task findTask(Team team, String command) {
         for (Task task : team.getAllTasks()) {
-            if (command.equals(task.getCreationId()))
+            if (Integer.parseInt(command) == task.getCreationId())
                 return task;
         }
         return null;
