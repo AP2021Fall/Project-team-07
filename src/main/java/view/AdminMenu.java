@@ -5,6 +5,7 @@ import model.Notification;
 import model.Team;
 import model.User;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 
 public class AdminMenu {
@@ -70,25 +71,53 @@ public class AdminMenu {
         }
     }
 
-    public static void showScoreBoard() {
-        // continue
-    }
-
-    public static void showPendingTeams() {
-        String input = View.scanner.nextLine().trim();
-        Matcher matcher;
-        if ((matcher = Controller.controller.getCommandMatcher("accept --teams ([^ ]+)", input)).matches()) {
-            // continue
-        } else if ((matcher = Controller.controller.getCommandMatcher("reject --teams ([^ ]+)", input)).matches()) {
-            // continue
+    public static void showScoreBoard(User user, String teamName) {
+        ArrayList<String> forPrint = Controller.controller.showScoreBoard(user, Controller.controller.findTeam(teamName));
+        int rank = 1;
+        for (String print : forPrint) {
+            View.print("" + rank + ". " + print);
+            rank++;
         }
     }
 
-    public static void acceptTeam(String command) {
-        // continue
+
+    public static void showPendingTeams() {
+        int answer = Controller.controller.showPendingTeams();
+        if (answer == 1) {
+            View.print("There are no Teams in Pending Status!\n");
+        } else {
+            int rank = 1;
+            for(Team team : Team.getPendingTeams()){
+                View.print(""+ rank + ". " + team.getTeamName());
+                rank++;
+            }
+            String input = View.scanner.nextLine().trim();
+            Matcher matcher;
+            if ((matcher = Controller.controller.getCommandMatcher("accept --teams ([A-Za-z0-9 ]+)", input)).matches()) {
+                acceptTeam(matcher.group(1));
+            } else if ((matcher = Controller.controller.getCommandMatcher("reject --teams ([A-Za-z0-9 ]+)", input)).matches()) {
+                rejectTeam(matcher.group(1));
+            }
+        }
     }
 
-    public static void rejectTeam(String command) {
-        // continue
+    public static void acceptTeam(String teamName) {
+        int answer = Controller.controller.acceptTeam(teamName);
+        if(answer == 1){
+            View.print("Some teams are not in pending status! Try again");
+        }
+        else {
+            View.print("Teams accepted successfully!");
+        }
+    }
+
+    public static void rejectTeam(String teamName) {
+        int answer = Controller.controller.rejectTeam(teamName);
+        if(answer == 1){
+            View.print("Some teams are not in pending status! Try again");
+        }
+        else {
+            View.print("Teams rejected successfully!");
+        }
     }
 }

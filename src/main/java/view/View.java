@@ -70,9 +70,9 @@ public class View {
                 TeamMenu teamMenu = new TeamMenu(user);
                 teamMenu.runTeamMenu();
             } else if (input.equals("3") || input.equals("Tasks Page")) {
-                TasksPage.tasksPage.runTasksPage();
+                TasksPage.tasksPage.runTasksPage(user);
             } else if (input.equals("4") || input.equals("Calender Menu")) {
-                CalenderMenu.calenderMenu.runCalenderMenu();
+                CalenderMenu.calenderMenu.runCalenderMenu(user);
             } else if (input.equals("5") || input.equals("Notification Bar")) {
                 NotificationBar.notificationBar.runNotificationBar();
             } else if (input.equals("6") || input.equals("Quit")) {
@@ -121,9 +121,9 @@ public class View {
                 TeamMenu teamMenu = new TeamMenu(user);    // Leader Menu?????
                 teamMenu.runTeamMenu();
             } else if (input.equals("3") || input.equals("Tasks Page")) {
-                TasksPage.tasksPage.runTasksPage();
+                TasksPage.tasksPage.runTasksPage(user);
             } else if (input.equals("4") || input.equals("Calender Menu")) {
-                CalenderMenu.calenderMenu.runCalenderMenu();
+                CalenderMenu.calenderMenu.runCalenderMenu(user);
             } else if (input.equals("5") || input.equals("Notification Bar")) {
                 NotificationBar.notificationBar.runNotificationBar();
             } else if (input.equals("6") || input.equals("Special Commands")) {
@@ -177,8 +177,8 @@ public class View {
                 AdminMenu.sendNotificationForUser(matcher.group(2), matcher.group(1), user);
             } else if ((matcher = Controller.controller.getCommandMatcher("send --notification ([^ ]+) --team ([^ ]+)", input)).matches()) {
                 AdminMenu.sendNotificationForTeam(matcher.group(2), matcher.group(1), user);
-            } else if (Controller.controller.getCommandMatcher("show --scoreBoard", input).matches()) {
-                AdminMenu.showScoreBoard();
+            } else if (Controller.controller.getCommandMatcher("Scoreboard --show --team ([^ ]+)", input).matches()) {
+                AdminMenu.showScoreBoard(user, matcher.group(1));
             } else if (Controller.controller.getCommandMatcher("show --pendingTeams", input).matches()) {
                 AdminMenu.showPendingTeams();
             } else if (input.equals("back")) {
