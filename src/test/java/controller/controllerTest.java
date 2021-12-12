@@ -1,4 +1,4 @@
-package test.java;
+package controller;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
-public class T {
+public class controllerTest {
     @BeforeEach
     public void first(){
 
@@ -18,7 +18,7 @@ public class T {
         String password2 = "mmd2021";
         String email = "mmd@gmail.com";
         int response = controller.Controller.controller.register(username,password1,password2,email);
-        assertEquals(3,response);
+        assertEquals(2,response);
     }
     @Test
     public void checkLogin(){
