@@ -17,6 +17,9 @@ public class Date {
         this.localDate = LocalDateTime.parse(date, dtf);
         this.date = date;
     }
+    public String toString(){
+        return this.date;
+    }
 
     public java.util.Date getDate() throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd|HH:mm");
@@ -39,6 +42,9 @@ public class Date {
     public static Date getNDaysAfter(Date inputDate1, int n) {
         String newDate = dtf.format(inputDate1.localDate.plusDays(n));
         return new Date(newDate);
+    }
+    public static Date getNow (){
+        return new Date(dtf.format(LocalDateTime.now()));
     }
 
 

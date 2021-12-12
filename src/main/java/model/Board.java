@@ -14,7 +14,7 @@ public class Board {
     private ArrayList<Task> failed;
     private ArrayList<Task> done;
     private ArrayList<User> membersOfBoards;
-    private ArrayList<Task> boardTask;
+    private ArrayList<Task> boardTasks;
     private User creator;
     private String column;
 
@@ -28,7 +28,7 @@ public class Board {
         this.done = new ArrayList<>();
         this.membersOfBoards = new ArrayList<>();
         this.allCategories = new ArrayList<>();
-        this.boardTask = new ArrayList<>();
+        this.boardTasks = new ArrayList<>();
         this.team.getBoards().add(this);
     }
 
@@ -62,7 +62,7 @@ public class Board {
     }
 
     public ArrayList<Task> getBoardTask() {
-        return boardTask;
+        return boardTasks;
     }
 
     public Team getTeam() {

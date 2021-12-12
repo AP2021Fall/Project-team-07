@@ -298,9 +298,29 @@ public class Controller {
 
     }
 
-    public int boardAddTask(User user, String command) {
-        return 0;
+    public int boardAddTask(User user,Team team,String boardName,String taskId) {
+        if (!user.getRole().equals("Leader"))
+            return 0;
+        Board board = Board.getBoardByName(team.getBoards(),boardName);
+        if (board == null)
+            return 1;
+        if (!board.isCreated())
+            return 2;
+        Task task = Task.getTaskById(team,taskId);
+        if (task == null)
+            return 3;
+        if (board.getBoardTask().contains(task))
+            return 4;
+        if (Date.getTimeBetween(Date.getNow(),task.getDeadline())<0)
+            return 5;
+        if (task.getAssignedUser().isEmpty())
+            return 6;
+        else {
+            board.getBoardTask().add(task);
+            return 7;
+        }
     }
+
 
     public int boardAssignMember(User user, String command) {
         return 0;

@@ -32,8 +32,13 @@ public class BoardMenu extends Menu {
             else if (Controller.controller.getCommandMatcher
                     ("^board --category (.+) --column (\\d+) --name (.+)$", command).matches())
                 changeColumn(command);
-            else if (Controller.controller.getCommandMatcher("^board --done --name (.+)$",command).matches())
+            else if (Controller.controller.getCommandMatcher
+                    ("^board --done --name (.+)$",command).matches())
                 boardDone(command);
+            else if (Controller.controller.getCommandMatcher
+                    ("^board --add (\\d+) --name (\\S+)$",command).matches())
+                boardAddTask(command);
+
 
         }
 
@@ -48,10 +53,13 @@ public class BoardMenu extends Menu {
         switch (response) {
             case 0:
                 View.print("You do not have the permission to do this action!");
+                break;
             case 1:
                 View.print("There is already a board with this name");
+                break;
             case 2:
                 View.print("board created successfully");
+                break;
         }
     }
 
@@ -64,10 +72,13 @@ public class BoardMenu extends Menu {
         switch (response) {
             case 0:
                 View.print("You do not have the permission to do this action!");
+                break;
             case 1:
                 View.print("There is no board with this name");
+                break;
             case 2:
                 View.print("board removed successfully");
+                break;
         }
     }
 
@@ -81,12 +92,16 @@ public class BoardMenu extends Menu {
         switch (response) {
             case 0:
                 View.print("You do not have the permission to do this action!");
+                break;
             case 1:
                 View.print("There is no board with this name");
+                break;
             case 2:
                 View.print("The name is already taken for a category!");
+                break;
             case 3:
                 View.print("category created ");
+                break;
         }
     }
 
@@ -101,14 +116,19 @@ public class BoardMenu extends Menu {
         switch (response) {
             case 0:
                 View.print("You do not have the permission to do this action!");
+                break;
             case 1:
                 View.print("There is no board with this name");
+                break;
             case 2:
                 View.print("There is no category with this name!");
+                break;
             case 3:
                 View.print("wrong column");
+                break;
             case 4:
                 View.print("column changed successfully");
+                break;
         }
     }
 
@@ -120,21 +140,56 @@ public class BoardMenu extends Menu {
         switch (response) {
             case 0:
                 View.print("You do not have the permission to do this action!");
+                break;
             case 1:
                 View.print("There is no board with this name");
+                break;
             case 2:
                 View.print("plz make a category first");
+                break;
             case 3:
                 View.print("board completed successfully");
+                break;
         }
 
     }
 
     public void boardAddTask(String command) {
-
+        Matcher matcher = Controller.controller.getCommandMatcher
+                ("^board --add (\\d+) --name (\\S+)$",command);
+        matcher.matches();
+        String taskId = matcher.group(1);
+        String boardName = matcher.group(2);
+        int response = Controller.controller.boardAddTask(super.user,this.team,boardName,taskId);
+        switch (response) {
+            case 0:
+                View.print("You do not have the permission to do this action!");
+                break;
+            case 1:
+                View.print("There is no board with this name");
+                break;
+            case 2:
+                View.print("Please finish creating the board first");
+            case 3:
+                View.print("Invalid task id in this team!");
+                break;
+            case 4:
+                View.print("This task has already been added to this board");
+                break;
+            case 5:
+                View.print("The deadline of this task has already passed");
+                break;
+            case 6:
+                View.print("Please assign this task to someone first");
+                break;
+            case 7:
+                View.print("Task added successfully");
+                break;
+        }
     }
 
     public void boardAssignMember(String command) {
+
 
     }
 
