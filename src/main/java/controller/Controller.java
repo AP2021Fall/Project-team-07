@@ -10,6 +10,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -27,7 +28,10 @@ public class Controller {
         } else if (!getCommandMatcher("[A-Za-z0-9.]+(@gmail.com|@yahoo.com)", email).matches()) {
             return 4;
         }
-        new User(username, password1, email);
+        User user = new User(username, password1, email);
+        DateTimeFormatter currentDate = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        Log log = new Log(user, currentDate.format(now));
         return 0;
     }
 
@@ -282,10 +286,10 @@ public class Controller {
         return rearranged;
     }
 
-    public int boardDone(User user,Team team,String boardName) {
+    public int boardDone(User user, Team team, String boardName) {
         if (!user.getRole().equals("Leader"))
             return 0;
-        Board board = Board.getBoardByName(team.getBoards(),boardName);
+        Board board = Board.getBoardByName(team.getBoards(), boardName);
         if (board == null)
             return 1;
         if (board.getAllCategories().isEmpty())
@@ -298,20 +302,20 @@ public class Controller {
 
     }
 
-    public int boardAddTask(User user,Team team,String boardName,String taskId) {
+    public int boardAddTask(User user, Team team, String boardName, String taskId) {
         if (!user.getRole().equals("Leader"))
             return 0;
-        Board board = Board.getBoardByName(team.getBoards(),boardName);
+        Board board = Board.getBoardByName(team.getBoards(), boardName);
         if (board == null)
             return 1;
         if (!board.isCreated())
             return 2;
-        Task task = Task.getTaskById(team,taskId);
+        Task task = Task.getTaskById(team, taskId);
         if (task == null)
             return 3;
         if (board.getBoardTask().contains(task))
             return 4;
-        if (Date.getTimeBetween(Date.getNow(),task.getDeadline())<0)
+        if (Date.getTimeBetween(Date.getNow(), task.getDeadline()) < 0)
             return 5;
         if (task.getAssignedUser().isEmpty())
             return 6;
@@ -322,15 +326,15 @@ public class Controller {
     }
 
 
-    public int boardAssignMember(User user,Team team,String username ,String boardName,String taskId) {
+    public int boardAssignMember(User user, Team team, String username, String boardName, String taskId) {
         if (!user.getRole().equals("Leader"))
             return 0;
-        Board board = Board.getBoardByName(team.getBoards(),boardName);
+        Board board = Board.getBoardByName(team.getBoards(), boardName);
         if (board == null)
             return 1;
         if (!board.isCreated())
             return 2;
-        Task task = Task.getTaskById(team,taskId);
+        Task task = Task.getTaskById(team, taskId);
         if (task == null)
             return 3;
         if (board.getBoardTask().contains(task))

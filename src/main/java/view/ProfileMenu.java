@@ -41,6 +41,8 @@ public class ProfileMenu extends Menu {
                 showLogs();
             } else if (Controller.controller.getCommandMatcher("profile --show notifications", input).matches()) {
                 showNotifications();
+            } else if (input.equals("back")) {
+                break;
             } else {
                 View.print("Invalid command!");
             }

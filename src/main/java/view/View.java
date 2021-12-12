@@ -98,6 +98,8 @@ public class View {
                 print("You do not have access to this section");
             } else if (Controller.controller.getCommandMatcher("send --notification ([^ ]+) --team ([^ ]+)", input).matches()) {
                 print("You do not have access to this section");
+            } else if (input.equals("back")) {
+                break;
             } else {
                 print("Invalid command!");
             }
@@ -149,6 +151,8 @@ public class View {
                 print("You do not have access to this section");
             } else if (Controller.controller.getCommandMatcher("send --notification ([^ ]+) --team ([^ ]+)", input).matches()) {
                 print("You do not have access to this section");
+            } else if (input.equals("back")) {
+                break;
             } else {
                 print("Invalid command!");
             }
@@ -156,26 +160,32 @@ public class View {
     }
 
     public static void runAdminMenu(User user) {
-        printMenu(user);
-        String input = scanner.nextLine().trim();
-        Matcher matcher;
+        while (true) {
+            printMenu(user);
+            String input = scanner.nextLine().trim();
+            Matcher matcher;
 
-        if ((matcher = Controller.controller.getCommandMatcher("show profile --username ([^ ]+)", input)).matches()) {
-            AdminMenu.showProfile(matcher.group(1));
-        } else if ((matcher = Controller.controller.getCommandMatcher("ban user --user ([^ ]+)", input)).matches()) {
-            AdminMenu.banUser(matcher.group(1));
-        } else if ((matcher = Controller.controller.getCommandMatcher("change role --user ([^ ]+) --role ([^ ]+)", input)).matches()) {
-            AdminMenu.changeRole(matcher.group(1), matcher.group(2));
-        } else if ((matcher = Controller.controller.getCommandMatcher("send --notification ([^ ]+) --all", input)).matches()) {
-            AdminMenu.sendNotificationForAll(matcher.group(1), user);
-        } else if ((matcher = Controller.controller.getCommandMatcher("send --notification ([^ ]+) --user ([^ ]+)", input)).matches()) {
-            AdminMenu.sendNotificationForUser(matcher.group(2), matcher.group(1), user);
-        } else if ((matcher = Controller.controller.getCommandMatcher("send --notification ([^ ]+) --team ([^ ]+)", input)).matches()) {
-            AdminMenu.sendNotificationForTeam(matcher.group(2), matcher.group(1), user);
-        } else if (Controller.controller.getCommandMatcher("show --scoreBoard", input).matches()) {
-            AdminMenu.showScoreBoard();
-        } else if (Controller.controller.getCommandMatcher("show --pendingTeams", input).matches()) {
-            AdminMenu.showPendingTeams();
+            if ((matcher = Controller.controller.getCommandMatcher("show profile --username ([^ ]+)", input)).matches()) {
+                AdminMenu.showProfile(matcher.group(1));
+            } else if ((matcher = Controller.controller.getCommandMatcher("ban user --user ([^ ]+)", input)).matches()) {
+                AdminMenu.banUser(matcher.group(1));
+            } else if ((matcher = Controller.controller.getCommandMatcher("change role --user ([^ ]+) --role ([^ ]+)", input)).matches()) {
+                AdminMenu.changeRole(matcher.group(1), matcher.group(2));
+            } else if ((matcher = Controller.controller.getCommandMatcher("send --notification ([^ ]+) --all", input)).matches()) {
+                AdminMenu.sendNotificationForAll(matcher.group(1), user);
+            } else if ((matcher = Controller.controller.getCommandMatcher("send --notification ([^ ]+) --user ([^ ]+)", input)).matches()) {
+                AdminMenu.sendNotificationForUser(matcher.group(2), matcher.group(1), user);
+            } else if ((matcher = Controller.controller.getCommandMatcher("send --notification ([^ ]+) --team ([^ ]+)", input)).matches()) {
+                AdminMenu.sendNotificationForTeam(matcher.group(2), matcher.group(1), user);
+            } else if (Controller.controller.getCommandMatcher("show --scoreBoard", input).matches()) {
+                AdminMenu.showScoreBoard();
+            } else if (Controller.controller.getCommandMatcher("show --pendingTeams", input).matches()) {
+                AdminMenu.showPendingTeams();
+            } else if (input.equals("back")) {
+                break;
+            } else {
+                print("Invalid command!");
+            }
         }
     }
 
