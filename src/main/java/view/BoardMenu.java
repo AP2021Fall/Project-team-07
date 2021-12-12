@@ -38,6 +38,9 @@ public class BoardMenu extends Menu {
             else if (Controller.controller.getCommandMatcher
                     ("^board --add (\\d+) --name (\\S+)$",command).matches())
                 boardAddTask(command);
+            else if (Controller.controller.getCommandMatcher
+                    ("^board --assign (\\S+) --task (\\S+) --name (\\S+)$",command).matches())
+                boardAssignMember(command);
 
 
         }
@@ -189,8 +192,32 @@ public class BoardMenu extends Menu {
     }
 
     public void boardAssignMember(String command) {
-
-
+        Matcher matcher  = Controller.controller.getCommandMatcher
+                ("^board --assign (\\S+) --task (\\d+) --name (\\S+)$",command);
+        matcher.matches();
+        String username = matcher.group(1);
+        String taskId = matcher.group(2);
+        String boardName = matcher.group(3);
+        int response = Controller.controller.boardAssignMember(super.user,this.team,username,boardName,taskId);
+        switch (response) {
+            case 0:
+                View.print("You do not have the permission to do this action!");
+                break;
+            case 1:
+                View.print("There is no board with this name");
+                break;
+            case 2:
+                View.print("Please finish creating the board first");
+            case 3:
+                View.print("Invalid task id in this board!");
+                break;
+            case 4:
+                View.print("invalid teammate");
+                break;
+            case 5:
+                View.print("user assigned to the task");
+                break;
+        }
     }
 
     public void forceCategory(String command) {
