@@ -41,7 +41,8 @@ public class Task {
         return null;
 
     }
-    public static Task getTaskByTitle (ArrayList<Task> tasks, String title) {
+
+    public static Task getTaskByTitle(ArrayList<Task> tasks, String title) {
         for (Task task : tasks) {
             if (task.getTitle().equals(title))
                 return task;
@@ -49,6 +50,15 @@ public class Task {
         }
         return null;
 
+    }
+
+    public static Task getTaskByIdWithoutTeam(String taskId) {
+        for (Task task : Task.allTasks) {
+            if (task.getCreationId() == Integer.parseInt(taskId))
+                return task;
+
+        }
+        return null;
     }
 
     public void setDeadline(Date deadline) {
