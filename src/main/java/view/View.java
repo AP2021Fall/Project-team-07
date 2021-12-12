@@ -70,9 +70,9 @@ public class View {
                 TeamMenu teamMenu = new TeamMenu(user);
                 teamMenu.runTeamMenu();
             } else if (input.equals("3") || input.equals("Tasks Page")) {
-                TasksPage.tasksPage.runTasksPage();
+                TasksPage.tasksPage.runTasksPage(user);
             } else if (input.equals("4") || input.equals("Calender Menu")) {
-                CalenderMenu.calenderMenu.runCalenderMenu();
+                CalenderMenu.calenderMenu.runCalenderMenu(user);
             } else if (input.equals("5") || input.equals("Notification Bar")) {
                 NotificationBar.notificationBar.runNotificationBar();
             } else if (input.equals("6") || input.equals("Quit")) {
@@ -121,9 +121,9 @@ public class View {
                 TeamMenu teamMenu = new TeamMenu(user);    // Leader Menu?????
                 teamMenu.runTeamMenu();
             } else if (input.equals("3") || input.equals("Tasks Page")) {
-                TasksPage.tasksPage.runTasksPage();
+                TasksPage.tasksPage.runTasksPage(user);
             } else if (input.equals("4") || input.equals("Calender Menu")) {
-                CalenderMenu.calenderMenu.runCalenderMenu();
+                CalenderMenu.calenderMenu.runCalenderMenu(user);
             } else if (input.equals("5") || input.equals("Notification Bar")) {
                 NotificationBar.notificationBar.runNotificationBar();
             } else if (input.equals("6") || input.equals("Special Commands")) {
