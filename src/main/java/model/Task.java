@@ -41,6 +41,15 @@ public class Task {
         return null;
 
     }
+    public static Task getTaskByTitle (ArrayList<Task> tasks, String title) {
+        for (Task task : tasks) {
+            if (task.getTitle().equals(title))
+                return task;
+
+        }
+        return null;
+
+    }
 
     public void setDeadline(Date deadline) {
         this.deadline = deadline;

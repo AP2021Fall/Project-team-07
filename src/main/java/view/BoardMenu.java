@@ -41,6 +41,9 @@ public class BoardMenu extends Menu {
             else if (Controller.controller.getCommandMatcher
                     ("^board --assign (\\S+) --task (\\S+) --name (\\S+)$",command).matches())
                 boardAssignMember(command);
+            else if (Controller.controller.getCommandMatcher
+                    ("^board --force --category (\\S+) --task (\\S+) --name (\\S+)$",command).matches())
+                forceCategory(command);
 
 
         }
@@ -215,12 +218,50 @@ public class BoardMenu extends Menu {
                 View.print("invalid teammate");
                 break;
             case 5:
+                View.print("This task has already finished");
+                break;
+            case 6:
                 View.print("user assigned to the task");
                 break;
+
         }
     }
 
     public void forceCategory(String command) {
+        Matcher matcher = Controller.controller.getCommandMatcher
+                ("^board --force --category (\\S+) --task (\\S+) --name (\\S+)$",command);
+        matcher.matches();
+        String category = matcher.group(1);
+        String taskTitle = matcher.group(2);
+        String boardName = matcher.group(3);
+        int response = Controller.controller.forceCategory(super.user,this.team,category,boardName,taskTitle);
+        switch (response) {
+            case 0:
+                View.print("You do not have the permission to do this action!");
+                break;
+            case 1:
+                View.print("There is no board with this name");
+                break;
+            case 2:
+                View.print("Please finish creating the board first");
+            case 3:
+                View.print("Invalid task title in this board!");
+                break;
+            case 4:
+                View.print("This task has already finished");
+                break;
+            case 5:
+                View.print("invalid category");
+            case 6:
+                View.print("task put to category");
+                break;
+        }
+
+
+
+
+
+
 
     }
 

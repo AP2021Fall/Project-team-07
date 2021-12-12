@@ -337,19 +337,51 @@ public class Controller {
         Task task = Task.getTaskById(team, taskId);
         if (task == null)
             return 3;
-        if (board.getBoardTask().contains(task))
+        if (!board.getBoardTask().contains(task))
             return 3;
         User user1 = User.getUserByUsername(username);
-        if (user == null)
+        if (user1 == null)
             return 4;
-        else {
-            task.getAssignedUser().add(user);
+        if (board.getDone().contains(task))
             return 5;
+        else {
+            if(!task.getAssignedUser().contains(user1)){
+                task.getAssignedUser().add(user1);
+            }
+            return 6;
         }
     }
 
-    public int forceCategory(User user, String command) {
-        return 0;
+    public int forceCategory(User user,Team team,String categoryName ,String boardName,String taskTitle) {
+        if (!user.getRole().equals("Leader"))
+            return 0;
+        Board board = Board.getBoardByName(team.getBoards(),boardName);
+        if (board == null)
+            return 1;
+        if (!board.isCreated())
+            return 2;
+        Task task = Task.getTaskByTitle(board.getBoardTask(),taskTitle);
+        if (task == null)
+            return 3;
+        if (!board.getBoardTask().contains(task))
+            return 3;
+        if (Date.getTimeBetween(Date.getNow(), task.getDeadline()) < 0)
+            return 4;
+        Category category = Category.getCategoryByName(board.getAllCategories(),categoryName);
+        if (category == null)
+            return 5;
+        else {
+            removeFromCategories(task,board);
+            category.getCategoryTasks().add(task);
+            return 6;
+        }
+    }
+
+    private void removeFromCategories(Task task, Board board) {
+        for(Category category : board.getAllCategories()){
+            if (category.getCategoryTasks().contains(task))
+                category.getCategoryTasks().remove(task);
+        }
     }
 
     //public ArrayList<Category> updateColumns(ArrayList<Category> oldColumns, Category category){
