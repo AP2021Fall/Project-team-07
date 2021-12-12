@@ -177,8 +177,8 @@ public class View {
                 AdminMenu.sendNotificationForUser(matcher.group(2), matcher.group(1), user);
             } else if ((matcher = Controller.controller.getCommandMatcher("send --notification ([^ ]+) --team ([^ ]+)", input)).matches()) {
                 AdminMenu.sendNotificationForTeam(matcher.group(2), matcher.group(1), user);
-            } else if (Controller.controller.getCommandMatcher("show --scoreBoard", input).matches()) {
-                AdminMenu.showScoreBoard();
+            } else if (Controller.controller.getCommandMatcher("Scoreboard --show --team ([^ ]+)", input).matches()) {
+                AdminMenu.showScoreBoard(user, matcher.group(1));
             } else if (Controller.controller.getCommandMatcher("show --pendingTeams", input).matches()) {
                 AdminMenu.showPendingTeams();
             } else if (input.equals("back")) {

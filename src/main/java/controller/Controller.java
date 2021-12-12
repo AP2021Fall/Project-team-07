@@ -693,18 +693,49 @@ public class Controller {
     }
 
     public int showPendingTeams() {
-        // continuing
+        if(Team.getPendingTeams().size() == 0){
+            return 1;
+        }
         return 0;
     }
 
-    public int acceptTeam(String command) {
-        // continuing
-        return 0;
+    public int acceptTeam(String teamName) {
+        int counter = 0;
+        String[] teamsNames = teamName.split(" ");
+        for (String string : teamsNames){
+            for (Team team : Team.getPendingTeams()){
+                if(string.equals(team.getTeamName())){
+                    counter++;
+                }
+            }
+        }
+        if(counter == teamsNames.length){
+            for (String string : teamsNames){
+                Team.getPendingTeams().remove(findTeam(string));
+                Team.getAcceptedTeams().add(findTeam(string));
+            }
+            return 0;
+        }
+        return 1;
     }
 
-    public int rejectTeam(String command) {
-        // continuing
-        return 0;
+    public int rejectTeam(String teamName) {
+        int counter = 0;
+        String[] teamsNames = teamName.split(" ");
+        for (String string : teamsNames){
+            for (Team team : Team.getPendingTeams()){
+                if(string.equals(team.getTeamName())){
+                    counter++;
+                }
+            }
+        }
+        if(counter == teamsNames.length){
+            for (String string : teamsNames){
+                Team.getPendingTeams().remove(findTeam(string));
+            }
+            return 0;
+        }
+        return 1;
     }
 
     public HashMap<User, Integer> sortBoard(HashMap<User, Integer> hashMap) {
