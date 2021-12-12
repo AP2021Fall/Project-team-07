@@ -191,7 +191,7 @@ public class View {
 
     public void register(String command) {
         Matcher matcher;
-        if ((matcher = Controller.controller.getCommandMatcher("^user create --username ([^ ]+) --password1 ([^ ]+) --password2 ([^ ]+)" +
+        if ((matcher = Controller.controller.getCommandMatcher("user create --username ([^ ]+) --password1 ([^ ]+) --password2 ([^ ]+)" +
                 " --email Address ([^ ]+)$", command)).matches()) {
             int answer = Controller.controller.register(matcher.group(1), matcher.group(2), matcher.group(3), matcher.group(4));
             if (answer == 1) {
