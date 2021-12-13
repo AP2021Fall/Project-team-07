@@ -5,11 +5,11 @@ import java.util.Date;
 import java.util.HashMap;
 
 public class User {
-    {
-        final User Admin = new User("admin", "admin", "admin");
-        Admin.setRole("System Admin");
-        users.add(Admin);
-    }
+//    {
+//        final User Admin = new User("admin", "admin", "admin");
+//        Admin.setRole("System Admin");
+//        users.add(Admin);
+//    }
     private static ArrayList<User> users = new ArrayList<>();
     private static int idCreator = 1;
     private int creationId;
