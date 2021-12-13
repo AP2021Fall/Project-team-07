@@ -377,19 +377,51 @@ public class Controller {
         }
     }
 
-    private void removeFromCategories(Task task, Board board) {
+    private int removeFromCategories(Task task, Board board) {
+         int index = -1;
+         int it = 0;
         for(Category category : board.getAllCategories()){
-            if (category.getCategoryTasks().contains(task))
+            if (category.getCategoryTasks().contains(task)){
+                index = it;
                 category.getCategoryTasks().remove(task);
+            }
+            it++;
         }
+        return index;
     }
 
     //public ArrayList<Category> updateColumns(ArrayList<Category> oldColumns, Category category){
     //    return null;
     //}
 
-    public int goToNextCategory(User user, String command) {
-        return 0;
+    public int goToNextCategory(User user,Team team,String boardName,String taskTitle) {
+        Board board = Board.getBoardByName(team.getBoards(),boardName);
+        if (board == null)
+            return 1;
+        if (!board.isCreated())
+            return 2;
+        Task task = Task.getTaskByTitle(board.getBoardTask(),taskTitle);
+        if (task == null)
+            return 3;
+        if (!board.getBoardTask().contains(task))
+            return 3;
+        if (user.getRole().equals("Member")){
+            if(!task.getAssignedUser().contains(user))
+                return 0;
+        }
+        if (Date.getTimeBetween(Date.getNow(), task.getDeadline()) < 0)
+            return 4;
+        int index = removeFromCategories(task,board);
+        if (index == -1)
+            return 5;
+        else {
+            if (index==board.getAllCategories().size()-1){
+                board.getDone().add(task);
+                return 6;
+            }
+            board.getAllCategories().get(index+1).getCategoryTasks().add(task);
+            return 6;
+        }
     }
 
     public boolean checkDeadline(Task task, Date date) {
