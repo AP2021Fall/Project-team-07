@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 
 public class User {
-//    {
+    //    {
 //        final User Admin = new User("admin", "admin", "admin");
 //        Admin.setRole("System Admin");
 //        users.add(Admin);
@@ -28,6 +28,9 @@ public class User {
 
     public User(String userName, String password,
                 String email) {
+        if (users.size() == 0) {
+            this.role = "System Admin";
+        }
         this.userName = userName;
         this.password = password;
         this.email = email;

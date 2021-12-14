@@ -27,5 +27,6 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="Maven: com.gilecode.yagson:yagson:0.5" level="project" />
   </component>
 </module>

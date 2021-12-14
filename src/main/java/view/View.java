@@ -1,6 +1,7 @@
 package view;
 
 import controller.Controller;
+import controller.JsonController;
 import model.User;
 
 import java.text.ParseException;
@@ -31,6 +32,7 @@ public class View {
                 String choose = scanner.nextLine().trim().toLowerCase(Locale.ROOT);
                 if (choose.equals("1") || choose.equals("yes")) {
                     print("Have a nice day!");
+                    JsonController.getInstance().updateJson();
                     break;
                 } else if (choose.equals("2") || choose.equals("no")) {
                     System.out.println();
@@ -60,7 +62,9 @@ public class View {
             printMenu(user);
             print("\nEnter your command: ");
             String input = scanner.nextLine().trim();
-            Matcher matcher = Controller.controller.getCommandMatcher("^enter menu ([^ ]+)$", input);
+            //enter menu Tasks Page
+            Matcher matcher = Controller.controller.getCommandMatcher("enter menu (.+)", input);
+            matcher.matches();
             input = matcher.group(1);
 
             if (input.equals("1") || input.equals("Profile Menu")) {
@@ -111,7 +115,7 @@ public class View {
             printMenu(user);
             print("\nEnter your command: ");
             String input = scanner.nextLine().trim();
-            Matcher matcher = Controller.controller.getCommandMatcher("^enter menu ([^ ]+)$", input);
+            Matcher matcher = Controller.controller.getCommandMatcher("enter menu ([^ ]+)", input);
             input = matcher.group(1);
 
             if (input.equals("1") || input.equals("Profile Menu")) {
@@ -191,8 +195,9 @@ public class View {
 
     public void register(String command) {
         Matcher matcher;
-        if ((matcher = Controller.controller.getCommandMatcher("user create --username ([^ ]+) --password1 ([^ ]+) --password2 ([^ ]+)" +
-                " --email Address ([^ ]+)$", command)).matches()) {
+        //user create --username mirzaeimahdi409 --password1 138014 --password2 138014 --email Address mirzaeimahdi409@gmail.com
+        //user create --username AmirReza --password1 138014 --password2 138014 --email Address AmirReza@gmail.com
+        if ((matcher = Controller.controller.getCommandMatcher("user create --username ([^ ]+) --password1 ([^ ]+) --password2 ([^ ]+) --email Address ([^ ]+)$", command)).matches()) {
             int answer = Controller.controller.register(matcher.group(1), matcher.group(2), matcher.group(3), matcher.group(4));
             if (answer == 1) {
                 print("user with username " + matcher.group(1) + " already exists!");
@@ -212,7 +217,9 @@ public class View {
 
     public void logIn(String command) throws ParseException {
         Matcher matcher;
-        if ((matcher = Controller.controller.getCommandMatcher("^user login --username ([^ ]+) --password ([^ ]+)$", command)).matches()) {
+        //user login --username mirzaeimahdi409 --password 138014
+        //user login --username AmirReza --password 138014
+        if ((matcher = Controller.controller.getCommandMatcher("user login --username ([^ ]+) --password ([^ ]+)", command)).matches()) {
             int answer = Controller.controller.logIn(matcher.group(1), matcher.group(2));
             if (answer == 1) {
                 print("There is not any user with username: " + matcher.group(1) + "!");
