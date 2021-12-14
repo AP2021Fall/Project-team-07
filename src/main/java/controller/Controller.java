@@ -2,13 +2,10 @@ package controller;
 
 import model.Date;
 import model.*;
-import view.TeamMenu;
 import view.View;
 
-import java.net.Proxy;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -345,43 +342,43 @@ public class Controller {
         if (board.getDone().contains(task))
             return 5;
         else {
-            if(!task.getAssignedUser().contains(user1)){
+            if (!task.getAssignedUser().contains(user1)) {
                 task.getAssignedUser().add(user1);
             }
             return 6;
         }
     }
 
-    public int forceCategory(User user,Team team,String categoryName ,String boardName,String taskTitle) {
+    public int forceCategory(User user, Team team, String categoryName, String boardName, String taskTitle) {
         if (!user.getRole().equals("Leader"))
             return 0;
-        Board board = Board.getBoardByName(team.getBoards(),boardName);
+        Board board = Board.getBoardByName(team.getBoards(), boardName);
         if (board == null)
             return 1;
         if (!board.isCreated())
             return 2;
-        Task task = Task.getTaskByTitle(board.getBoardTask(),taskTitle);
+        Task task = Task.getTaskByTitle(board.getBoardTask(), taskTitle);
         if (task == null)
             return 3;
         if (!board.getBoardTask().contains(task))
             return 3;
         if (Date.getTimeBetween(Date.getNow(), task.getDeadline()) < 0)
             return 4;
-        Category category = Category.getCategoryByName(board.getAllCategories(),categoryName);
+        Category category = Category.getCategoryByName(board.getAllCategories(), categoryName);
         if (category == null)
             return 5;
         else {
-            removeFromCategories(task,board);
+            removeFromCategories(task, board);
             category.getCategoryTasks().add(task);
             return 6;
         }
     }
 
     private int removeFromCategories(Task task, Board board) {
-         int index = -1;
-         int it = 0;
-        for(Category category : board.getAllCategories()){
-            if (category.getCategoryTasks().contains(task)){
+        int index = -1;
+        int it = 0;
+        for (Category category : board.getAllCategories()) {
+            if (category.getCategoryTasks().contains(task)) {
                 index = it;
                 category.getCategoryTasks().remove(task);
             }
@@ -394,42 +391,92 @@ public class Controller {
     //    return null;
     //}
 
-    public int goToNextCategory(User user,Team team,String boardName,String taskTitle) {
-        Board board = Board.getBoardByName(team.getBoards(),boardName);
+    public int goToNextCategory(User user, Team team, String boardName, String taskTitle) {
+        Board board = Board.getBoardByName(team.getBoards(), boardName);
         if (board == null)
             return 1;
         if (!board.isCreated())
             return 2;
-        Task task = Task.getTaskByTitle(board.getBoardTask(),taskTitle);
+        Task task = Task.getTaskByTitle(board.getBoardTask(), taskTitle);
         if (task == null)
             return 3;
         if (!board.getBoardTask().contains(task))
             return 3;
-        if (user.getRole().equals("Member")){
-            if(!task.getAssignedUser().contains(user))
+        if (user.getRole().equals("Member")) {
+            if (!task.getAssignedUser().contains(user))
                 return 0;
         }
         if (Date.getTimeBetween(Date.getNow(), task.getDeadline()) < 0)
             return 4;
-        int index = removeFromCategories(task,board);
+        int index = removeFromCategories(task, board);
         if (index == -1)
             return 5;
         else {
-            if (index==board.getAllCategories().size()-1){
+            if (index == board.getAllCategories().size() - 1) {
                 board.getDone().add(task);
+                increaseScore(team, task);
                 return 6;
             }
-            board.getAllCategories().get(index+1).getCategoryTasks().add(task);
+            board.getAllCategories().get(index + 1).getCategoryTasks().add(task);
             return 6;
         }
     }
 
-    public boolean checkDeadline(Task task, Date date) {
-        return true;
+    private void increaseScore(Team team, Task task) {
+        for (User user1 : task.getAssignedUser()) {
+            Integer score = team.getScoreboard().getScores().get(user1);
+            if (score == null)
+                score = 10;
+            else
+                score = score + 10;
+            team.getScoreboard().getScores().put(user1, score);
+        }
     }
 
-    public int showDoneOrFailed(User user, String command) {
-        return 0;
+    private void decreaseScore(Team team, Task task) {
+        for (User user1 : task.getAssignedUser()) {
+            Integer score = team.getScoreboard().getScores().get(user1);
+            if (score == null)
+                score = -5;
+            else
+                score = score - 5;
+            team.getScoreboard().getScores().put(user1, score);
+        }
+    }
+
+    public void updateFailed(Board board) {
+        for (Task task : board.getBoardTask()) {
+            if (!board.getFailed().contains(task)) {
+                if (Date.getTimeBetween(Date.getNow(), task.getDeadline()) < 0) {
+                    removeFromCategories(task, board);
+                    board.getFailed().add(task);
+                    decreaseScore(board.getTeam(), task);
+                }
+            }
+
+        }
+    }
+
+
+    public ArrayList<String> showDoneOrFailed(Team team, String doneOrFailed, String boardName) {
+        ArrayList<String> result = new ArrayList<>();
+        Board board = Board.getBoardByName(team.getBoards(), boardName);
+        if (board == null) {
+            result.add("There is no board with this name");
+        } else {
+            if (doneOrFailed.equals("done")) {
+                result.add("done tasks : ");
+                for (Task task : board.getDone()) {
+                    result.add("task id :" + task.getCreationId() + " task title : " + task.getTitle());
+                }
+            } else {
+                result.add("Failed tasks : ");
+                for (Task task : board.getFailed()) {
+                    result.add("task id :" + task.getCreationId() + " task title : " + task.getTitle());
+                }
+            }
+        }
+        return result;
     }
 
     public int updateDeadline(User user, String command) {
@@ -600,6 +647,9 @@ public class Controller {
     }
 
     public ArrayList<String> showScoreBoard(User user, Team team) {
+        for (Board board : team.getBoards()) {
+            updateFailed(board);
+        }
         HashMap<User, Integer> scores = sortBoard
                 (team.getScoreboard().getScores());
         ArrayList<String> result = new ArrayList<>();
@@ -757,7 +807,7 @@ public class Controller {
     }
 
     public int showPendingTeams() {
-        if(Team.getPendingTeams().size() == 0){
+        if (Team.getPendingTeams().size() == 0) {
             return 1;
         }
         return 0;
@@ -766,15 +816,15 @@ public class Controller {
     public int acceptTeam(String teamName) {
         int counter = 0;
         String[] teamsNames = teamName.split(" ");
-        for (String string : teamsNames){
-            for (Team team : Team.getPendingTeams()){
-                if(string.equals(team.getTeamName())){
+        for (String string : teamsNames) {
+            for (Team team : Team.getPendingTeams()) {
+                if (string.equals(team.getTeamName())) {
                     counter++;
                 }
             }
         }
-        if(counter == teamsNames.length){
-            for (String string : teamsNames){
+        if (counter == teamsNames.length) {
+            for (String string : teamsNames) {
                 Team.getPendingTeams().remove(findTeam(string));
                 Team.getAcceptedTeams().add(findTeam(string));
             }
@@ -786,15 +836,15 @@ public class Controller {
     public int rejectTeam(String teamName) {
         int counter = 0;
         String[] teamsNames = teamName.split(" ");
-        for (String string : teamsNames){
-            for (Team team : Team.getPendingTeams()){
-                if(string.equals(team.getTeamName())){
+        for (String string : teamsNames) {
+            for (Team team : Team.getPendingTeams()) {
+                if (string.equals(team.getTeamName())) {
                     counter++;
                 }
             }
         }
-        if(counter == teamsNames.length){
-            for (String string : teamsNames){
+        if (counter == teamsNames.length) {
+            for (String string : teamsNames) {
                 Team.getPendingTeams().remove(findTeam(string));
             }
             return 0;

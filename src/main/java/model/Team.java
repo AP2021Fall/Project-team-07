@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Team {
 
@@ -20,6 +21,7 @@ public class Team {
     private ArrayList<Task> allTasks;
     private ArrayList<Notification> notifications;
     private Date creationDate;
+    private HashMap<User, Date> joiningDateForMembers;
 
 
     public Team(String teamName, User teamLeader, Date creationDate) {

@@ -23,8 +23,8 @@ public class User {
     private ArrayList<Log> allLogs;
     private ArrayList<Task> allTasksForUser;
     private ArrayList<Notification> notifications;
-    private ArrayList<Team> userTeams;
-    private HashMap<Team, model.Date> joiningDate;
+    private  ArrayList<Team> userTeams;
+    private  HashMap<Team, model.Date> joiningDate;
 
     public User(String userName, String password,
                 String email) {
@@ -119,4 +119,12 @@ public class User {
     public String getRole() {
         return role;
     }
+//    public void setForFirstTeams(){
+//        for(Team team : Team.getAllTeams()){
+//            if (team.getTeamMembers().contains(this)){
+//                this.userTeams.add(team);
+//            }
+//        }
+//    }
+
 }

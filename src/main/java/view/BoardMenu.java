@@ -6,6 +6,7 @@ import model.User;
 import view.View;
 import view.Menu;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 
 public class BoardMenu extends Menu {
@@ -33,20 +34,23 @@ public class BoardMenu extends Menu {
                     ("^board --category (.+) --column (\\d+) --name (.+)$", command).matches())
                 changeColumn(command);
             else if (Controller.controller.getCommandMatcher
-                    ("^board --done --name (.+)$",command).matches())
+                    ("^board --done --name (.+)$", command).matches())
                 boardDone(command);
             else if (Controller.controller.getCommandMatcher
-                    ("^board --add (\\d+) --name (\\S+)$",command).matches())
+                    ("^board --add (\\d+) --name (\\S+)$", command).matches())
                 boardAddTask(command);
             else if (Controller.controller.getCommandMatcher
-                    ("^board --assign (\\S+) --task (\\S+) --name (\\S+)$",command).matches())
+                    ("^board --assign (\\S+) --task (\\S+) --name (\\S+)$", command).matches())
                 boardAssignMember(command);
             else if (Controller.controller.getCommandMatcher
-                    ("^board --force --category (\\S+) --task (\\S+) --name (\\S+)$",command).matches())
+                    ("^board --force --category (\\S+) --task (\\S+) --name (\\S+)$", command).matches())
                 forceCategory(command);
             else if (Controller.controller.getCommandMatcher
-                    ("^board --category next --task (\\S+) --name (\\S+)$",command).matches())
+                    ("^board --category next --task (\\S+) --name (\\S+)$", command).matches())
                 goToNextCategory(command);
+            else if (Controller.controller.getCommandMatcher
+                    ("^board --show (done|failed) --name --board (\\S+)$", command).matches())
+                showDoneOrFailed(command);
 
 
         }
@@ -142,10 +146,10 @@ public class BoardMenu extends Menu {
     }
 
     public void boardDone(String command) {
-        Matcher matcher = Controller.controller.getCommandMatcher("^board --done --name (.+)$",command);
+        Matcher matcher = Controller.controller.getCommandMatcher("^board --done --name (.+)$", command);
         matcher.matches();
         String boardName = matcher.group(1);
-        int response = Controller.controller.boardDone(super.user,this.team,boardName);
+        int response = Controller.controller.boardDone(super.user, this.team, boardName);
         switch (response) {
             case 0:
                 View.print("You do not have the permission to do this action!");
@@ -165,11 +169,11 @@ public class BoardMenu extends Menu {
 
     public void boardAddTask(String command) {
         Matcher matcher = Controller.controller.getCommandMatcher
-                ("^board --add (\\d+) --name (\\S+)$",command);
+                ("^board --add (\\d+) --name (\\S+)$", command);
         matcher.matches();
         String taskId = matcher.group(1);
         String boardName = matcher.group(2);
-        int response = Controller.controller.boardAddTask(super.user,this.team,boardName,taskId);
+        int response = Controller.controller.boardAddTask(super.user, this.team, boardName, taskId);
         switch (response) {
             case 0:
                 View.print("You do not have the permission to do this action!");
@@ -198,13 +202,13 @@ public class BoardMenu extends Menu {
     }
 
     public void boardAssignMember(String command) {
-        Matcher matcher  = Controller.controller.getCommandMatcher
-                ("^board --assign (\\S+) --task (\\d+) --name (\\S+)$",command);
+        Matcher matcher = Controller.controller.getCommandMatcher
+                ("^board --assign (\\S+) --task (\\d+) --name (\\S+)$", command);
         matcher.matches();
         String username = matcher.group(1);
         String taskId = matcher.group(2);
         String boardName = matcher.group(3);
-        int response = Controller.controller.boardAssignMember(super.user,this.team,username,boardName,taskId);
+        int response = Controller.controller.boardAssignMember(super.user, this.team, username, boardName, taskId);
         switch (response) {
             case 0:
                 View.print("You do not have the permission to do this action!");
@@ -232,12 +236,12 @@ public class BoardMenu extends Menu {
 
     public void forceCategory(String command) {
         Matcher matcher = Controller.controller.getCommandMatcher
-                ("^board --force --category (\\S+) --task (\\S+) --name (\\S+)$",command);
+                ("^board --force --category (\\S+) --task (\\S+) --name (\\S+)$", command);
         matcher.matches();
         String category = matcher.group(1);
         String taskTitle = matcher.group(2);
         String boardName = matcher.group(3);
-        int response = Controller.controller.forceCategory(super.user,this.team,category,boardName,taskTitle);
+        int response = Controller.controller.forceCategory(super.user, this.team, category, boardName, taskTitle);
         switch (response) {
             case 0:
                 View.print("You do not have the permission to do this action!");
@@ -263,11 +267,11 @@ public class BoardMenu extends Menu {
 
     public void goToNextCategory(String command) {
         Matcher matcher = Controller.controller.getCommandMatcher
-                ("^board --category next --task (\\S+) --name (\\S+)$",command);
+                ("^board --category next --task (\\S+) --name (\\S+)$", command);
         matcher.matches();
-        String taskTitle  = matcher.group(1);
-        String boardName  = matcher.group(2);
-        int response = Controller.controller.goToNextCategory(super.user,this.team,boardName,taskTitle);
+        String taskTitle = matcher.group(1);
+        String boardName = matcher.group(2);
+        int response = Controller.controller.goToNextCategory(super.user, this.team, boardName, taskTitle);
         switch (response) {
             case 0:
                 View.print("You do not have the permission to do this action!");
@@ -294,8 +298,14 @@ public class BoardMenu extends Menu {
     }
 
     public void showDoneOrFailed(String command) {
-
-
+        Matcher matcher = Controller.controller.getCommandMatcher
+                ("^board --show (done|failed) --name --board (\\S+)$", command);
+        matcher.matches();
+        String doneOrFailed = matcher.group(1);
+        String boardName = matcher.group(2);
+        ArrayList<String> response = Controller.controller.showDoneOrFailed(team, doneOrFailed, boardName);
+        for (String string : response)
+            View.print(string);
     }
 
     public void updateDeadline(String command) {
