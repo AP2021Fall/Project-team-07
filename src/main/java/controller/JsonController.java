@@ -23,7 +23,7 @@ public class JsonController {
 
     public void readFromJson() {
         try {
-            String json = new String(Files.readAllBytes(Paths.get("json.json")));
+            String json = new String(Files.readAllBytes(Paths.get("src\\main\\resources\\json.json")));
             if (json.length() > 0) {
                 ArrayList<User> users = new YaGson().fromJson(json, new TypeToken<List<User>>() {
                 }.getType());
@@ -39,7 +39,7 @@ public class JsonController {
 
     public void updateJson() {
         try {
-            FileWriter writer = new FileWriter("json.json");
+            FileWriter writer = new FileWriter("src\\main\\resources\\json.json");
             writer.write(new YaGson().toJson(User.getUsers()));
             writer.close();
         } catch (IOException e) {
