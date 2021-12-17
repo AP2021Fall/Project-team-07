@@ -52,6 +52,12 @@ public class Task {
 
     }
 
+    public static ArrayList<Task> getAllTasks() {
+
+        return allTasks;
+
+    }
+
     public static Task getTaskByIdWithoutTeam(String taskId) {
         for (Task task : Task.allTasks) {
             if (task.getCreationId() == Integer.parseInt(taskId))
