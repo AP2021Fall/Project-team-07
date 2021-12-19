@@ -7,6 +7,7 @@ import model.User;
 import controller.Controller.*;
 import view.View.*;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.WeakHashMap;
@@ -20,7 +21,7 @@ public class TeamMenu extends Menu {
     }
 
 
-    public void runTeamMenu() {
+    public void runTeamMenu() throws ParseException {
         showTeams();
         Team team = selectTeam();
         while (true) {
@@ -31,12 +32,16 @@ public class TeamMenu extends Menu {
                     , input).matches()) showRoadMap(team);
             else if (Controller.controller.getCommandMatcher("Chatroom --show"
                     , input).matches()) showChatRoom(team);
-            else if (Controller.controller.getCommandMatcher("Boardmenu"
+            else if (Controller.controller.getCommandMatcher("BoardMenu"
                     ,input).matches()){
                 BoardMenu boardMenu = new BoardMenu(user,team);
                 boardMenu.runBoardMenu();
             }
-
+            else if (Controller.controller.getCommandMatcher("Show tasks",input).matches())
+                showTasks(team);
+            else if (Controller.controller.getCommandMatcher("show task --id (\\d+)",input).matches())
+                showTask(input);
+            else System.out.println("invalid command ");
         }
     }
 
@@ -95,13 +100,16 @@ public class TeamMenu extends Menu {
         }
     }
 
-    public void showTasks(Team team) {
-
-
+    public void showTasks(Team team) throws ParseException {
+        for(String string : Controller.controller.showTasks(team))
+            View.print(string);
     }
 
-    public void showTask(Task task) {
-
+    public void showTask( String command ) {
+       Matcher matcher =  Controller.controller.getCommandMatcher("show task --id (\\d+)",command);
+       matcher.matches();
+       String taskId = matcher.group(1);
+       View.print(Controller.controller.showTask(taskId));
     }
 
 }

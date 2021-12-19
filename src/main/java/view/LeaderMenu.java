@@ -69,7 +69,7 @@ public class LeaderMenu {
     }
 
     //The team must also be sent
-    public void showSpecialTeam(User user, String command) {
+    public void showSpecialTeam(User user, String command) throws ParseException {
         Team foundTeam = Controller.controller.showSpecialTeam(user, command);
         if (foundTeam == null)
             View.print("Team not found!");

@@ -205,12 +205,52 @@ public class Controller {
 
     }
 
-    public ArrayList<String> showTasks(Team team) {
-        return null;
+    public ArrayList<String> showTasks(Team team) throws ParseException {
+        ArrayList<String> arrayList = new  ArrayList();
+        ArrayList<Task> sorted = new ArrayList<>();
+        ArrayList<Task> tasks = team.getAllTasks();
+        if(tasks.isEmpty()){
+            arrayList.add("no task to show ");
+            return arrayList;
+        }
+        ArrayList<java.util.Date> dates = new ArrayList<>();
+        for (Task task : tasks){
+            dates.add(task.getDeadline().getDate());
+        }
+        Collections.sort(dates);
+        for (java.util.Date date : dates ){
+            for (Task task : tasks ){
+                if (task.getDeadline().getDate().equals(date))
+                    if (!sorted.contains(task))
+                        sorted.add(task);
+            }
+        }
+        int rank = 1;
+        for (Task task : sorted){
+            arrayList.add(""+rank+". "+showTask(""+task.getCreationId()));
+        }
+        return arrayList;
     }
 
-    public String showTask(Task task) {
-        return null;
+    public String showTask(String taskId ) {
+        StringBuilder stringBuilder = new StringBuilder();
+        Task task = Task.getTaskByIdWithoutTeam(taskId);
+        if (task == null){
+            stringBuilder.append("there is no task whit this id");
+            return stringBuilder.toString();
+        }
+        stringBuilder.append(task.getTitle());
+        stringBuilder.append(" : id ");
+        stringBuilder.append(taskId);
+        stringBuilder.append(" ,Creation date: ");
+        stringBuilder.append(task.getDateOfCreation().toString());
+        stringBuilder.append(" ,deadline: ");
+        stringBuilder.append(task.getDeadline().toString());
+        stringBuilder.append(" ,assigned to : ");
+        stringBuilder.append(getAssignedMembers(task));
+        stringBuilder.append(" priority : ");
+        stringBuilder.append(task.getPriority());
+        return stringBuilder.toString();
     }
 
     public int makeBoard(User user, Team team, String boardName) {
