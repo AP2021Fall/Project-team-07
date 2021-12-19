@@ -479,12 +479,111 @@ public class Controller {
         return result;
     }
 
-    public int updateDeadline(User user, String command) {
-        return 0;
+    public int updateDeadline(User user, Team team , String taskTitle , String deadline , String boardName ) {
+        if (!user.getRole().equals("Leader"))
+            return 0;
+        Board board = Board.getBoardByName(team.getBoards(), boardName);
+        if (board == null)
+            return 1;
+        if (!board.isCreated())
+            return 2;
+        Task task = Task.getTaskByTitle(board.getBoardTask(), taskTitle);
+        if (task == null)
+            return 3;
+        if (!board.getBoardTask().contains(task))
+            return 3;
+        if (!board.getFailed().contains(task))
+            return 4;
+        Matcher matcher = getCommandMatcher("([\\d]{4})-([\\d]{2})-([\\d]{2})[|]([\\d]{2}):([\\d]{2})", deadline);
+        if (!matcher.matches())
+            return 5;
+        else {
+            task.setDeadline(new Date(deadline));
+            board.getFailed().remove(task);
+            return 6;
+        }
+    }
+    public int getBoardCompletionPercentage(Board board) {
+        float percentage =(float) (board.getDone().size()) /(float)(board.getBoardTask().size());
+        return (int) (percentage*100);
+    }
+    public int getBoardFailedPercentage(Board board) {
+        float percentage =(float) (board.getFailed().size()) /(float)(board.getBoardTask().size());
+        return (int) (percentage*100);
+    }
+    public Category getCategory(Board board,Task task){
+        for (Category category : board.getAllCategories()){
+            if(category.getCategoryTasks().contains(task))
+                return category;
+        }
+        return null;
+    }
+    public String getAssignedMembers(Task task){
+        StringBuilder  stringBuilder = new StringBuilder();
+        for (User user : task.getAssignedUser()){
+            stringBuilder.append(",");
+            stringBuilder.append(user.getUserName());
+        }
+        return stringBuilder.toString();
+    }
+    public String getStatus(Board board, Task task){
+        String status = "in progress";
+        if (board.getDone().contains(task))
+            status = "done";
+        if (board.getFailed().contains(task))
+            status = "failed";
+        return status;
     }
 
-    public int boardShow(Board board, String command) {
-        return 0;
+
+    public ArrayList<String> boardShow( Team team,String boardName) {
+        ArrayList<String> arrayList = new ArrayList<>();
+        Board board = Board.getBoardByName(team.getBoards(), boardName);
+        if (board == null){
+            arrayList.add("invalid boardName ");
+            return arrayList;
+        }
+        arrayList.add("Board name : "+boardName);
+        arrayList.add("Board name : "+getBoardCompletionPercentage(board)+" %");
+        arrayList.add("Board name : "+getBoardFailedPercentage(board)+" %");
+        arrayList.add("Board leader : "+team.getTeamLeader().getUserName());
+        arrayList.add("Board tasks : ");
+        arrayList.add("Highest Priority :");
+        for (Task task : board.getBoardTask()){
+            if (task.getPriority().equals("Highest")){
+                addTaskDetails(arrayList, board, task);
+            }
+        }
+        for (Task task : board.getBoardTask()){
+            if (task.getPriority().equals("High")){
+                addTaskDetails(arrayList, board, task);
+            }
+        }
+        for (Task task : board.getBoardTask()){
+            if (task.getPriority().equals("Low")){
+                addTaskDetails(arrayList, board, task);
+            }
+        }
+        for (Task task : board.getBoardTask()){
+            if (task.getPriority().equals("Lowest")){
+                addTaskDetails(arrayList, board, task);
+            }
+        }
+        return arrayList;
+    }
+
+    private void addTaskDetails(ArrayList<String> arrayList, Board board, Task task) {
+        arrayList.add("Title : "+ task.getTitle());
+        String categoryName = "no category";
+        if(getCategory(board, task)!= null)
+            categoryName = getCategory(board, task).getName();
+        arrayList.add("Category : "+ categoryName);
+        arrayList.add(("Description : "+ task.getDescription()));
+        arrayList.add("Creation Date : "+ task.getDateOfCreation().toString());
+        arrayList.add("Deadline : "+ task.getDeadline().toString());
+        arrayList.add("Assigned to : "+getAssignedMembers(task));
+        arrayList.add("Status : "+getStatus(board, task));
+        arrayList.add("--");
     }
 
     public ArrayList<String> showChatRoom(Team team) {
@@ -973,4 +1072,6 @@ public class Controller {
         }
         return null;
     }
+
+
 }

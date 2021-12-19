@@ -1,6 +1,7 @@
 package view;
 
 import controller.Controller;
+import model.Board;
 import model.Team;
 import model.User;
 import view.View;
@@ -51,6 +52,13 @@ public class BoardMenu extends Menu {
             else if (Controller.controller.getCommandMatcher
                     ("^board --show (done|failed) --name --board (\\S+)$", command).matches())
                 showDoneOrFailed(command);
+            else if (Controller.controller.getCommandMatcher
+                    ("^board --open --task (\\S+) --deadline (\\S+) --name (\\S+)$",command).matches())
+                updateDeadline(command);
+            else if (Controller.controller.getCommandMatcher
+                    ("^board --show --name (\\S+)$",command).matches())
+                boardShow(command);
+            else System.out.println("invalid command ");
 
 
         }
@@ -293,8 +301,6 @@ public class BoardMenu extends Menu {
                 View.print("task put to the next category");
                 break;
         }
-
-
     }
 
     public void showDoneOrFailed(String command) {
@@ -309,10 +315,43 @@ public class BoardMenu extends Menu {
     }
 
     public void updateDeadline(String command) {
-
+        Matcher matcher = Controller.controller.getCommandMatcher
+                ("^board --open --task (\\S+) --deadline (\\S+) --name (\\S+)$",command);
+        matcher.matches();
+        String taskTitle  = matcher.group(1);
+        String deadLine = matcher.group(2);
+        String boardName = matcher.group(3);
+        int response = Controller.controller.updateDeadline(super.user,this.team,taskTitle,deadLine,boardName);
+        switch (response) {
+            case 0:
+                View.print("You do not have the permission to do this action!");
+                break;
+            case 1:
+                View.print("There is no board with this name");
+                break;
+            case 2:
+                View.print("Please finish creating the board first");
+            case 3:
+                View.print("Invalid task title in this board!");
+                break;
+            case 4:
+                View.print("This task is not in failed section");
+                break;
+            case 5:
+                View.print("wrong date format");
+            case 6:
+                View.print("deadline changed and ");
+                break;
+        }
     }
 
     public void boardShow(String command) {
-
+        Matcher matcher = Controller.controller.getCommandMatcher
+                ("^board --show --name (\\S+)$",command);
+        matcher.matches();
+        String boardName = matcher.group(1);
+        ArrayList<String> response = Controller.controller.boardShow(this.team,boardName);
+        for (String string : response)
+            View.print(string);
     }
 }

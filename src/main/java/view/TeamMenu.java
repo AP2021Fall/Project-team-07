@@ -31,6 +31,12 @@ public class TeamMenu extends Menu {
                     , input).matches()) showRoadMap(team);
             else if (Controller.controller.getCommandMatcher("Chatroom --show"
                     , input).matches()) showChatRoom(team);
+            else if (Controller.controller.getCommandMatcher("Boardmenu"
+                    ,input).matches()){
+                BoardMenu boardMenu = new BoardMenu(user,team);
+                boardMenu.runBoardMenu();
+            }
+
         }
     }
 

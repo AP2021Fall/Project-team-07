@@ -9,8 +9,8 @@ public class Task {
     private static int idCreator = 1;
     private int creationId;
     private String title;
-    private String description;
-    private String priority;
+    private String description = "";
+    private String priority = "";
     // model.date
     private Date dateOfCreation;
     private Date deadline;
