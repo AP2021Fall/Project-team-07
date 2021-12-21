@@ -58,6 +58,8 @@ public class BoardMenu extends Menu {
             else if (Controller.controller.getCommandMatcher
                     ("^board --show --name (\\S+)$",command).matches())
                 boardShow(command);
+            else if (command.equals("back"))
+                return;
             else System.out.println("invalid command ");
 
 

@@ -115,7 +115,8 @@ public class View {
             printMenu(user);
             print("\nEnter your command: ");
             String input = scanner.nextLine().trim();
-            Matcher matcher = Controller.controller.getCommandMatcher("enter menu ([^ ]+)", input);
+            Matcher matcher = Controller.controller.getCommandMatcher("^(\\d+)$", input);
+            matcher.matches();
             input = matcher.group(1);
 
             if (input.equals("1") || input.equals("Profile Menu")) {
@@ -197,6 +198,8 @@ public class View {
         Matcher matcher;
         //user create --username mirzaeimahdi409 --password1 138014 --password2 138014 --email Address mirzaeimahdi409@gmail.com
         //user create --username AmirReza --password1 138014 --password2 138014 --email Address AmirReza@gmail.com
+        //user create --username Amir --password1 2020 --password2 2020 --email Address Amir@gmail.com
+        //user create --username mehrad --password1 2020 --password2 2020 --email Address Mehrad@gmail.com
         if ((matcher = Controller.controller.getCommandMatcher("user create --username ([^ ]+) --password1 ([^ ]+) --password2 ([^ ]+) --email Address ([^ ]+)$", command)).matches()) {
             int answer = Controller.controller.register(matcher.group(1), matcher.group(2), matcher.group(3), matcher.group(4));
             if (answer == 1) {

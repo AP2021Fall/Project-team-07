@@ -1,0 +1,16 @@
+2
+user login --username mirzaeimahdi409 --password 138014
+change role --user AmirReza --role Leader
+back
+2
+user login --username AmirReza --password 138014
+6
+create --team Team1
+back
+7
+1
+2
+user login --username mirzaeimahdi409 --password 138014
+
+
+

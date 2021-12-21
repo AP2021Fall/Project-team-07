@@ -668,7 +668,7 @@ public class Controller {
         else if (getCommandMatcher("\\d", command.split("")[0]).matches())
             return 2;
         else {
-            Date now = new Date(LocalDateTime.now().toString());
+            Date now = Date.getNow();
             new Team(command, user, now);
             return 3;
         }
@@ -1051,7 +1051,10 @@ public class Controller {
 
     public Matcher getCommandMatcher(String pattern, String input) {
         Pattern pattern1 = Pattern.compile(pattern);
-        return pattern1.matcher(input);
+        Matcher matcher = pattern1.matcher(input);
+        matcher.matches();
+        return matcher ;
+
     }
 
     public User findAssignedUsers(Team team, String command) {

@@ -42,6 +42,14 @@ public class Task {
 
     }
 
+    public static int getIdCreator() {
+        return idCreator;
+    }
+
+    public static void setIdCreator(int idCreator) {
+        Task.idCreator = idCreator;
+    }
+
     public static Task getTaskByTitle(ArrayList<Task> tasks, String title) {
         for (Task task : tasks) {
             if (task.getTitle().equals(title))

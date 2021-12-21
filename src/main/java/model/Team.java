@@ -46,6 +46,14 @@ public class Team {
         return null;
     }
 
+    public static int getTeamNumberCreator() {
+        return teamNumberCreator;
+    }
+
+    public static void setTeamNumberCreator(int teamNumberCreator) {
+        Team.teamNumberCreator = teamNumberCreator;
+    }
+
     public void setTeamLeader(User teamLeader) {
         this.teamLeader = teamLeader;
     }

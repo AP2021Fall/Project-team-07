@@ -49,7 +49,10 @@ public class LeaderMenu {
             } else if (Controller.controller.getCommandMatcher("send --notification ([^ ]+) --team ([^ ]+)", input).matches()) {
                 Matcher matcher = Controller.controller.getCommandMatcher("send --notification ([^ ]+) --team ([^ ]+)", input);
                 sendNotificationForTeam(user, matcher.group(2), matcher.group(1));
-            } else {
+            }
+            else if (input.equals("back"))
+                return;
+            else {
                 View.print("Invalid command!");
             }
         }

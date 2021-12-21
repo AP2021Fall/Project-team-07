@@ -41,6 +41,8 @@ public class TeamMenu extends Menu {
                 showTasks(team);
             else if (Controller.controller.getCommandMatcher("show task --id (\\d+)",input).matches())
                 showTask(input);
+            else if (input.equals("back"))
+                return;
             else System.out.println("invalid command ");
         }
     }

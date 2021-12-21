@@ -52,15 +52,23 @@ public class JsonController {
         try {
             String jsonTeam = new String(Files.readAllBytes(Paths.get("src\\main\\resources\\json\\Team.json")));
             if (jsonTeam.length() > 0) {
-                ArrayList<Team> teams = new YaGson().fromJson(jsonTeam, new TypeToken<List<Team>>() {
+                ArrayList<ArrayList<Team>> teams = new YaGson().fromJson(jsonTeam, new TypeToken<List<List<Team>>>() {
                 }.getType());
-                for (Team team : teams) {
+                for (Team team : teams.get(0)) {
                     Team.getAllTeams().add(team);
                 }
+                for (Team team : teams.get(1)) {
+                    Team.getPendingTeams().add(team);
+                }
+                for (Team team : teams.get(2)) {
+                    Team.getAcceptedTeams().add(team);
+                }
+
             }
         } catch (IOException e) {
             System.out.println("can't read from json");
         }
+
         try {
             String jsonBoard = new String(Files.readAllBytes(Paths.get("src\\main\\resources\\json\\Board.json")));
             if (jsonBoard.length() > 0) {
@@ -73,6 +81,39 @@ public class JsonController {
         } catch (IOException e) {
             System.out.println("can't read from json");
         }
+        try {
+            String jsonBoard = new String(Files.readAllBytes(Paths.get("src\\main\\resources\\json\\UserId.json")));
+            if (jsonBoard.length() > 0) {
+                User.setIdCreator(new YaGson().fromJson(jsonBoard, Integer.class));
+            }
+        } catch (IOException e) {
+            System.out.println("can't read from json");
+        }
+        try {
+            String jsonBoard = new String(Files.readAllBytes(Paths.get("src\\main\\resources\\json\\TeamId.json")));
+            if (jsonBoard.length() > 0) {
+                Team.setTeamNumberCreator(new YaGson().fromJson(jsonBoard, Integer.class));
+            }
+        } catch (IOException e) {
+            System.out.println("can't read from json");
+        }
+        try {
+            String jsonBoard = new String(Files.readAllBytes(Paths.get("src\\main\\resources\\json\\TaskId.json")));
+            if (jsonBoard.length() > 0) {
+                Task.setIdCreator(new YaGson().fromJson(jsonBoard, Integer.class));
+            }
+        } catch (IOException e) {
+            System.out.println("can't read from json");
+        }
+        try {
+            String jsonBoard = new String(Files.readAllBytes(Paths.get("src\\main\\resources\\json\\BoardId.json")));
+            if (jsonBoard.length() > 0) {
+                Board.setIdCreator(new YaGson().fromJson(jsonBoard, Integer.class));
+            }
+        } catch (IOException e) {
+            System.out.println("can't read from json");
+        }
+
     }
 
 
@@ -93,14 +134,47 @@ public class JsonController {
         }
         try {
             FileWriter writerTeam = new FileWriter("src\\main\\resources\\json\\Team.json");
-            writerTeam.write(new YaGson().toJson(Team.getAllTeams()));
+            ArrayList<ArrayList<Team>> teams = new ArrayList<>();
+            teams.add(Team.getAllTeams());
+            teams.add(Team.getPendingTeams());
+            teams.add(Team.getAcceptedTeams());
+            writerTeam.write(new YaGson().toJson(teams));
             writerTeam.close();
         } catch (IOException e) {
             System.out.println("can't create or update team");
         }
+
         try {
             FileWriter writerBoard = new FileWriter("src\\main\\resources\\json\\Board.json");
             writerBoard.write(new YaGson().toJson(Board.getAllBoards()));
+            writerBoard.close();
+        } catch (IOException e) {
+            System.out.println("can't create or update board");
+        }
+        try {
+            FileWriter writerBoard = new FileWriter("src\\main\\resources\\json\\UserId.json");
+            writerBoard.write(new YaGson().toJson(User.getIdCreator()));
+            writerBoard.close();
+        } catch (IOException e) {
+            System.out.println("can't create or update board");
+        }
+        try {
+            FileWriter writerBoard = new FileWriter("src\\main\\resources\\json\\TeamId.json");
+            writerBoard.write(new YaGson().toJson(Team.getTeamNumberCreator()));
+            writerBoard.close();
+        } catch (IOException e) {
+            System.out.println("can't create or update board");
+        }
+        try {
+            FileWriter writerBoard = new FileWriter("src\\main\\resources\\json\\TaskId.json");
+            writerBoard.write(new YaGson().toJson(Task.getIdCreator()));
+            writerBoard.close();
+        } catch (IOException e) {
+            System.out.println("can't create or update board");
+        }
+        try {
+            FileWriter writerBoard = new FileWriter("src\\main\\resources\\json\\BoardId.json");
+            writerBoard.write(new YaGson().toJson(Board.getIdCreator()));
             writerBoard.close();
         } catch (IOException e) {
             System.out.println("can't create or update board");

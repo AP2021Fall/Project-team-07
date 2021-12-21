@@ -93,6 +93,13 @@ public class Board {
         return creator;
     }
 
+    public static int getIdCreator() {
+        return idCreator;
+    }
+
+    public static void setIdCreator(int idCreator) {
+        Board.idCreator = idCreator;
+    }
 
     public static Board getBoardByName(ArrayList<Board> boards, String boardName) {
         for (Board board : boards) {

@@ -47,4 +47,8 @@ public class controllerTest {
         user.getUserTeams().add(team);
         JsonController.getInstance().updateJson();
     }
+    @Test public void testGson (){
+        JsonController.getInstance().readFromJson();
+        assertEquals(true, Team.getAllTeams().get(0)==Team.getAcceptedTeams().get(0));
+    }
 }
