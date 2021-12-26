@@ -159,7 +159,7 @@ public class Controller {
 
     public int editTaskDeadline(User user, Task task, String command) throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd|HH:mm");
-        Matcher matcher = getCommandMatcher("([\\d]{4})-([\\d]{2})-([\\d]{2})[|]([\\d]{2}):([\\d]{2})", command);
+        Matcher matcher = getCommandMatcher("([\\d]{4})/([\\d]{2})/([\\d]{2})[|]([\\d]{2}):([\\d]{2})", command);
         matcher.matches();
         if (!user.getRole().equals("Leader"))
             return 0;
@@ -228,6 +228,7 @@ public class Controller {
         int rank = 1;
         for (Task task : sorted){
             arrayList.add(""+rank+". "+showTask(""+task.getCreationId()));
+            rank++;
         }
         return arrayList;
     }
@@ -465,10 +466,14 @@ public class Controller {
     private void increaseScore(Team team, Task task) {
         for (User user1 : task.getAssignedUser()) {
             Integer score = team.getScoreboard().getScores().get(user1);
-            if (score == null)
+            if (score == null) {
                 score = 10;
-            else
+                user1.setScore(user1.getScore() + 10);
+            }
+            else {
                 score = score + 10;
+                user1.setScore(user1.getScore() + 10);
+            }
             team.getScoreboard().getScores().put(user1, score);
         }
     }
@@ -476,10 +481,14 @@ public class Controller {
     private void decreaseScore(Team team, Task task) {
         for (User user1 : task.getAssignedUser()) {
             Integer score = team.getScoreboard().getScores().get(user1);
-            if (score == null)
+            if (score == null) {
                 score = -5;
-            else
+                user1.setScore(user1.getScore() - 5);
+            }
+            else {
                 score = score - 5;
+                user1.setScore(user1.getScore() - 5);
+            }
             team.getScoreboard().getScores().put(user1, score);
         }
     }
@@ -534,7 +543,7 @@ public class Controller {
             return 3;
         if (!board.getFailed().contains(task))
             return 4;
-        Matcher matcher = getCommandMatcher("([\\d]{4})-([\\d]{2})-([\\d]{2})[|]([\\d]{2}):([\\d]{2})", deadline);
+        Matcher matcher = getCommandMatcher("([\\d]{4})/([\\d]{2})/([\\d]{2})[|]([\\d]{2}):([\\d]{2})", deadline);
         if (!matcher.matches())
             return 5;
         else {
@@ -584,8 +593,8 @@ public class Controller {
             return arrayList;
         }
         arrayList.add("Board name : "+boardName);
-        arrayList.add("Board name : "+getBoardCompletionPercentage(board)+" %");
-        arrayList.add("Board name : "+getBoardFailedPercentage(board)+" %");
+        arrayList.add("Board Completion : "+getBoardCompletionPercentage(board)+" %");
+        arrayList.add("Board Failed : "+getBoardFailedPercentage(board)+" %");
         arrayList.add("Board leader : "+team.getTeamLeader().getUserName());
         arrayList.add("Board tasks : ");
         arrayList.add("Highest Priority :");
@@ -739,6 +748,8 @@ public class Controller {
         else {
             team.getTeamMembers().add(findUser(command));
             findUser(command).getUserTeams().add(team);
+            findUser(command).getJoiningDate().put(team,team.getCreationDate());
+            team.getScoreboard().getScores().put(findUser(command), 0);
             return 2;
         }
     }
@@ -749,6 +760,8 @@ public class Controller {
         else {
             team.getTeamMembers().remove(findUser(command));
             findUser(command).getUserTeams().remove(team);
+            findUser(command).getJoiningDate().remove(team);
+            team.getScoreboard().getScores().remove(findUser(command));
             return 2;
         }
     }
@@ -767,8 +780,12 @@ public class Controller {
             return 1;
         else {
             team.setTeamLeader(findUser(command));
-            team.getTeamMembers().remove(user);
-            user.getUserTeams().remove(team);
+            findUser(command).setRole("Leader");
+            user.setRole("Member");
+            team.getTeamMembers().remove(findUser(command));
+            findUser(command).getUserTeams().remove(team);
+            findUser(command).getJoiningDate().remove(team);
+            team.getScoreboard().getScores().remove(findUser(command));
             return 2;
         }
     }
@@ -781,6 +798,7 @@ public class Controller {
         else {
             Task task = findTask(team, command1);
             task.getAssignedUser().add(findUser(command2));
+            findUser(command2).getAllTasksForUser().add(task);
             return 3;
         }
     }
@@ -1011,7 +1029,7 @@ public class Controller {
 
     public HashMap<Task, Date> sortRoadMap(HashMap<Task, Date> hashMap) {
         // a random date for comparing to other dates
-        Date comparingDate = new Date("1300/01/01");
+        Date comparingDate = new Date("1300/01/01|00:00");
         List<Map.Entry<Task, Date>> valueList =
                 new LinkedList<Map.Entry<Task, Date>>(hashMap.entrySet());
         Comparator comparator = new Comparator<Map.Entry<Task, Date>>() {

@@ -63,7 +63,7 @@ public class View {
             print("\nEnter your command: ");
             String input = scanner.nextLine().trim();
             //enter menu Tasks Page
-            Matcher matcher = Controller.controller.getCommandMatcher("enter menu (.+)", input);
+            Matcher matcher = Controller.controller.getCommandMatcher("(\\d+)", input);
             matcher.matches();
             input = matcher.group(1);
 

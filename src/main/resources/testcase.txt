@@ -4,6 +4,7 @@ change role --user AmirReza --role Leader
 back
 2
 user login --username AmirReza --password 138014
+user login --username Amir --password 2020
 6
 create --team Team1
 back
@@ -14,11 +15,48 @@ user login --username mirzaeimahdi409 --password 138014
 show --pendingTeams
 accept --teams Team3
 show --teams
-show --team Team4
+show --team Team1
 Add member --username Amir
 Add member --username mehrad
 show --members
-Enter team Team4
+Enter team Team1
 create task --title Task1 --startTime 1400/10/05|17:40 --deadline 1400/10/30|17:40
+Show tasks
+show task --id 1
+edit --task --id 1 --priority High
+edit --task --id 1 --assignedUsers Amir --add
+edit --task --id 1 --title newTitle
+edit --task --id 1 --description ThisTest
+edit --task --id 1 --deadline 1400/10/01|17:40
+edit --task --id 1 --deadline 1400/11/01|17:40
+create task --title Task3 --startTime 1400/10/05|17:40 --deadline 1400/11/01|17:40
+edit --task --id 2 --assignedUsers Amir --remove
+Scoreboard --show
+Roadmap --show
+Chatroom --show
+BoardMenu
+board --new --name board1
+delete member --username Amir
+delete member --username Amirrrr
+board --show --name board1
+board --remove --name board2
+board --new  --category HardTasks --name board1
+board --category EasyTasks --column 0 --name board1
+board --done --name board1
+board --add 2 --name board1
+board --add 1 --name board1
+board --force --category EasyTasks --task 1 --name board1
+board --force --category EasyTasks --task Task1 --name board1
+board --category next --task Task1 --name board1
+board --show done --name --board board1
+board --open --task Task1 --deadline 1400/11/01|17:40 --name board1
+board --show --name board1
 
+sudo show  --all --tasks
+promote --username mehrad --rate rate
+show --scoreboard
+suspend member --username mehrad
 
+send --notification Hello --user Amir
+send --notification Hellooo --team Team2
+send --notification Hellooo --team Team1

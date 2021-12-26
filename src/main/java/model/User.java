@@ -15,7 +15,7 @@ public class User {
     private String password;
     private String email;
     private String role = "Member";
-    private int score;
+    private int score = 0;
     private ArrayList<Log> allLogs;
     private ArrayList<Task> allTasksForUser;
     private ArrayList<Notification> notifications;
@@ -94,6 +94,10 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 
     public ArrayList<Log> getAllLogs() {

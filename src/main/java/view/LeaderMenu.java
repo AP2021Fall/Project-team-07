@@ -41,13 +41,13 @@ public class LeaderMenu {
             } else if (Controller.controller.getCommandMatcher("assign member --task ([^ ]+) --username ([^ ]+)", input).matches()) {
                 Matcher matcher = Controller.controller.getCommandMatcher("assign member --task ([^ ]+) --username ([^ ]+)", input);
                 assignMember(user, team, matcher.group(1), matcher.group(2));
-            } else if (Controller.controller.getCommandMatcher("promote --username ([^ ]+) --rate ([^ ]+)", input).matches()) {
+            } else if (Controller.controller.getCommandMatcher("show --scoreboard", input).matches()) {
                 showScoreBoard(user, team);
-            } else if (Controller.controller.getCommandMatcher("send --notification ([^ ]+) --user ([^ ]+)", input).matches()) {
-                Matcher matcher = Controller.controller.getCommandMatcher("send --notification ([^ ]+) --user ([^ ]+)", input);
+            } else if (Controller.controller.getCommandMatcher("send --notification (.+) --user ([^ ]+)", input).matches()) {
+                Matcher matcher = Controller.controller.getCommandMatcher("send --notification (.+) --user ([^ ]+)", input);
                 sendNotificationForUser(user, matcher.group(2), matcher.group(1));
-            } else if (Controller.controller.getCommandMatcher("send --notification ([^ ]+) --team ([^ ]+)", input).matches()) {
-                Matcher matcher = Controller.controller.getCommandMatcher("send --notification ([^ ]+) --team ([^ ]+)", input);
+            } else if (Controller.controller.getCommandMatcher("send --notification (.+) --team ([^ ]+)", input).matches()) {
+                Matcher matcher = Controller.controller.getCommandMatcher("send --notification (.+) --team ([^ ]+)", input);
                 sendNotificationForTeam(user, matcher.group(2), matcher.group(1));
             }
             else if (input.equals("back"))
@@ -150,7 +150,7 @@ public class LeaderMenu {
         if (status == 1)
             View.print("No user exists with this username!");
         else if (status == 2) {
-            //View.print("User successfully suspended");
+            View.print("User successfully suspended");
         }
 
     }
@@ -160,7 +160,7 @@ public class LeaderMenu {
         if (status == 1)
             View.print("No user exists with this username!");
         else if (status == 2) {
-            //View.print("The user was promoted to team leader");
+            View.print("The user was promoted to team leader");
         }
     }
 
@@ -171,7 +171,7 @@ public class LeaderMenu {
         else if (status == 2) {
             View.print("No Task exists with this id!");
         } else if (status == 3) {
-            //View.print("User successfully added to activity");
+            View.print("User successfully added to activity");
         }
 
     }
@@ -190,7 +190,7 @@ public class LeaderMenu {
         if (status == 1)
             View.print("No user exists with this username!");
         else if (status == 2) {
-            //View.print("The notification was sent to the user successfully");
+            View.print("The notification was sent to the user successfully");
         }
     }
 
@@ -199,7 +199,7 @@ public class LeaderMenu {
         if (status == 1)
             View.print("No team exists with this name !");
         else if (status == 2) {
-            //View.print("The notification was sent to the team successfully");
+            View.print("The notification was sent to the team successfully");
         }
     }
 }

@@ -9,7 +9,6 @@ public class Main {
     public static void main(String[] args) throws ParseException {
 
         JsonController.getInstance().readFromJson();
-        System.out.println(User.getIdCreator());
         View.view.run();
     }
 }

@@ -10,7 +10,7 @@ public class Task {
     private int creationId;
     private String title;
     private String description = "";
-    private String priority = "";
+    private String priority = "Lowest";
     // model.date
     private Date dateOfCreation;
     private Date deadline;

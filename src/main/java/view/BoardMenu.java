@@ -193,6 +193,7 @@ public class BoardMenu extends Menu {
                 break;
             case 2:
                 View.print("Please finish creating the board first");
+                break;
             case 3:
                 View.print("Invalid task id in this team!");
                 break;

@@ -12,28 +12,32 @@ public class TasksPage {
     public static final TasksPage tasksPage = new TasksPage();
 
     public void runTasksPage(User user) throws ParseException {
-        View.print("Enter your command: ");
-        String input = View.scanner.nextLine().trim();
-        if (Controller.controller.getCommandMatcher("edit --task --id ([^ ]+) --title ([^ ]+)", input).matches()) {
-            Matcher matcher = Controller.controller.getCommandMatcher("edit --task --id ([^ ]+) --title ([^ ]+)", input);
-            editTaskTitle(user, matcher.group(1), matcher.group(2));
-        } else if (Controller.controller.getCommandMatcher("edit --task --id ([^ ]+) --description ([^ ]+)", input).matches()) {
-            Matcher matcher = Controller.controller.getCommandMatcher("edit --task --id ([^ ]+) --description ([^ ]+)", input);
-            editTaskDescription(user, matcher.group(1), matcher.group(2));
-        } else if (Controller.controller.getCommandMatcher("edit --task --id ([^ ]+) --priority ([^ ]+)", input).matches()) {
-            Matcher matcher = Controller.controller.getCommandMatcher("edit --task --id ([^ ]+) --priority ([^ ]+)", input);
-            editTaskPriority(user, matcher.group(1), matcher.group(2));
-        } else if (Controller.controller.getCommandMatcher("edit --task --id ([^ ]+) --deadline ([^ ]+)", input).matches()) {
-            Matcher matcher = Controller.controller.getCommandMatcher("edit --task --id ([^ ]+) --deadline ([^ ]+)", input);
-            editTaskDeadline(user, matcher.group(1), matcher.group(2));
-        } else if (Controller.controller.getCommandMatcher("edit --task --id ([^ ]+) --assignedUsers ([^ ]+) --remove", input).matches()) {
-            Matcher matcher = Controller.controller.getCommandMatcher("edit --task --id ([^ ]+) --assignedUsers ([^ ]+) --remove", input);
-            removeAssignedUsers(user, matcher.group(1), matcher.group(2));
-        } else if (Controller.controller.getCommandMatcher("edit --task --id ([^ ]+) --assignedUsers ([^ ]+) --add", input).matches()) {
-            Matcher matcher = Controller.controller.getCommandMatcher("edit --task --id ([^ ]+) --assignedUsers ([^ ]+) --add", input);
-            addAssignedUsers(user, matcher.group(1), matcher.group(2));
-        } else {
-            View.print("Invalid command!");
+        while (true) {
+            View.print("Enter your command: ");
+            String input = View.scanner.nextLine().trim();
+            if (Controller.controller.getCommandMatcher("edit --task --id ([^ ]+) --title ([^ ]+)", input).matches()) {
+                Matcher matcher = Controller.controller.getCommandMatcher("edit --task --id ([^ ]+) --title ([^ ]+)", input);
+                editTaskTitle(user, matcher.group(1), matcher.group(2));
+            } else if (Controller.controller.getCommandMatcher("edit --task --id ([^ ]+) --description ([^ ]+)", input).matches()) {
+                Matcher matcher = Controller.controller.getCommandMatcher("edit --task --id ([^ ]+) --description ([^ ]+)", input);
+                editTaskDescription(user, matcher.group(1), matcher.group(2));
+            } else if (Controller.controller.getCommandMatcher("edit --task --id ([^ ]+) --priority ([^ ]+)", input).matches()) {
+                Matcher matcher = Controller.controller.getCommandMatcher("edit --task --id ([^ ]+) --priority ([^ ]+)", input);
+                editTaskPriority(user, matcher.group(1), matcher.group(2));
+            } else if (Controller.controller.getCommandMatcher("edit --task --id ([^ ]+) --deadline ([^ ]+)", input).matches()) {
+                Matcher matcher = Controller.controller.getCommandMatcher("edit --task --id ([^ ]+) --deadline ([^ ]+)", input);
+                editTaskDeadline(user, matcher.group(1), matcher.group(2));
+            } else if (Controller.controller.getCommandMatcher("edit --task --id ([^ ]+) --assignedUsers ([^ ]+) --remove", input).matches()) {
+                Matcher matcher = Controller.controller.getCommandMatcher("edit --task --id ([^ ]+) --assignedUsers ([^ ]+) --remove", input);
+                removeAssignedUsers(user, matcher.group(1), matcher.group(2));
+            } else if (Controller.controller.getCommandMatcher("edit --task --id ([^ ]+) --assignedUsers ([^ ]+) --add", input).matches()) {
+                Matcher matcher = Controller.controller.getCommandMatcher("edit --task --id ([^ ]+) --assignedUsers ([^ ]+) --add", input);
+                addAssignedUsers(user, matcher.group(1), matcher.group(2));
+            } else if (input.equals("back")) {
+                return;
+            } else {
+                View.print("Invalid command!");
+            }
         }
     }
 

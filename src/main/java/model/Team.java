@@ -40,6 +40,7 @@ public class Team {
         this.boards = new ArrayList<>();
         teamLeader.getJoiningDate().put(this,this.creationDate);
         teamLeader.getUserTeams().add(this);
+        this.scoreboard = new Scoreboard(this);
     }
 
     public static Team getTeamByName(String teamName, ArrayList<Team> teams) {
@@ -47,6 +48,10 @@ public class Team {
             if (team.teamName.equals(teamName)) return team;
         }
         return null;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
     }
 
     public static void setAcceptedTeams(ArrayList<Team> acceptedTeams) {
