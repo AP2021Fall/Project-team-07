@@ -97,6 +97,10 @@ public class Board {
         return idCreator;
     }
 
+    public static void setAllBoards(ArrayList<Board> allBoards) {
+        Board.allBoards = allBoards;
+    }
+
     public static void setIdCreator(int idCreator) {
         Board.idCreator = idCreator;
     }

@@ -48,6 +48,10 @@ public class User {
         return null;
     }
 
+    public static void setUsers(ArrayList<User> users) {
+        User.users = users;
+    }
+
     public int getScore() {
         return score;
     }

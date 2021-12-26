@@ -5,7 +5,7 @@ import model.Date;
 import java.util.ArrayList;
 
 public class Task {
-    private static final ArrayList<Task> allTasks = new ArrayList<>();
+    private static  ArrayList<Task> allTasks = new ArrayList<>();
     private static int idCreator = 1;
     private int creationId;
     private String title;
@@ -64,6 +64,10 @@ public class Task {
 
         return allTasks;
 
+    }
+
+    public static void setAllTasks(ArrayList<Task> allTasks) {
+        Task.allTasks = allTasks;
     }
 
     public static Task getTaskByIdWithoutTeam(String taskId) {

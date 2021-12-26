@@ -49,6 +49,18 @@ public class Team {
         return null;
     }
 
+    public static void setAcceptedTeams(ArrayList<Team> acceptedTeams) {
+        Team.acceptedTeams = acceptedTeams;
+    }
+
+    public static void setPendingTeams(ArrayList<Team> pendingTeams) {
+        Team.pendingTeams = pendingTeams;
+    }
+
+    public static void setAllTeams(ArrayList<Team> allTeams) {
+        Team.allTeams = allTeams;
+    }
+
     public static int getTeamNumberCreator() {
         return teamNumberCreator;
     }
