@@ -11,6 +11,14 @@ back
 1
 2
 user login --username mirzaeimahdi409 --password 138014
-
+show --pendingTeams
+accept --teams Team3
+show --teams
+show --team Team4
+Add member --username Amir
+Add member --username mehrad
+show --members
+Enter team Team4
+create task --title Task1 --startTime 1400/10/05|17:40 --deadline 1400/10/30|17:40
 
 

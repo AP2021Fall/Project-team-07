@@ -32,11 +32,14 @@ public class Team {
         teamNumberCreator++;
         pendingTeams.add(this);
         allTeams.add(this);
+        roadMap = new RoadMap(this);
         this.teamMembers = new ArrayList<>();
         this.allTasks = new ArrayList<>();
         this.suspendedMembers = new ArrayList<>();
         this.notifications = new ArrayList<>();
         this.boards = new ArrayList<>();
+        teamLeader.getJoiningDate().put(this,this.creationDate);
+        teamLeader.getUserTeams().add(this);
     }
 
     public static Team getTeamByName(String teamName, ArrayList<Team> teams) {

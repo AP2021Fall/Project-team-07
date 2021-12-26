@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import java.text.ParseException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 
 public class controllerTest {
@@ -50,5 +51,12 @@ public class controllerTest {
     @Test public void testGson (){
         JsonController.getInstance().readFromJson();
         assertEquals(true, Team.getAllTeams().get(0)==Team.getAcceptedTeams().get(0));
+    }
+    @Test
+    public void  testTask(){
+        JsonController.getInstance().readFromJson();
+        User user = User.getUserByUsername("AmirReza");
+        Team team = Team.getTeamByName("Team5",Team.getAllTeams());
+        assertEquals(false,team.getAllTasks().isEmpty());
     }
 }

@@ -692,9 +692,9 @@ public class Controller {
                 break;
             }
         }
-        Matcher matcher = getCommandMatcher("([\\d]{4})-([\\d]{2})-([\\d]{2})[|]([\\d]{2}):([\\d]{2})", dateOfCreation);
+        Matcher matcher = getCommandMatcher("([\\d]{4})/([\\d]{2})/([\\d]{2})[|]([\\d]{2}):([\\d]{2})", dateOfCreation);
         matcher.matches();
-        Matcher matcher2 = getCommandMatcher("([\\d]{4})-([\\d]{2})-([\\d]{2})[|]([\\d]{2}):([\\d]{2})", deadline);
+        Matcher matcher2 = getCommandMatcher("([\\d]{4})/([\\d]{2})/([\\d]{2})[|]([\\d]{2}):([\\d]{2})", deadline);
         matcher2.matches();
         if (isTaskAlready) {
             return 1;
@@ -727,14 +727,14 @@ public class Controller {
     public ArrayList<String> showMembers(User user, Team team) {
         ArrayList<String> names = new ArrayList<>();
         for (User user1 : team.getTeamMembers()) {
-            names.add(user1.getFullName());
+            names.add(user1.getUserName());
         }
         Collections.sort(names);
         return names;
     }
 
     public int addMember(User user, Team team, String command) {
-        if (isUsernameAvailable(command))
+        if (!isUsernameAvailable(command))
             return 1;
         else {
             team.getTeamMembers().add(findUser(command));
@@ -1031,7 +1031,7 @@ public class Controller {
 
     public HashMap<Team, Date> sortJoiningDates(HashMap<Team, Date> hashMap) {
         // a random date for comparing to other dates
-        Date comparingDate = new Date("1300/01/01");
+        Date comparingDate = new Date("1300/01/01|00:00");
         List<Map.Entry<Team, Date>> valueList =
                 new LinkedList<Map.Entry<Team, Date>>(hashMap.entrySet());
         Comparator comparator = new Comparator<Map.Entry<Team, Date>>() {

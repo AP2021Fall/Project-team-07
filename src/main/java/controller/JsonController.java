@@ -118,8 +118,18 @@ public class JsonController {
 
 
     public void updateJson() {
+//        List<Object> json = new ArrayList<Object>();
+//        json.add(User.getUsers());
+//        json.add(Team.getAllTeams());
         try {
             FileWriter writerUser = new FileWriter("src\\main\\resources\\json\\user.json");
+            writerUser.write(new YaGson().toJson(User.getUsers()));
+            writerUser.close();
+        } catch (IOException e) {
+            System.out.println("can't create or update user");
+        }
+        try {
+            FileWriter writerUser = new FileWriter("src\\main\\resources\\json\\json.json");
             writerUser.write(new YaGson().toJson(User.getUsers()));
             writerUser.close();
         } catch (IOException e) {

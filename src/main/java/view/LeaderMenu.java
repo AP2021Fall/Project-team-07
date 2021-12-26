@@ -78,8 +78,6 @@ public class LeaderMenu {
             View.print("Team not found!");
         else {
             this.team = foundTeam;
-            TeamMenu teamMenu = new TeamMenu(user);
-            teamMenu.runTeamMenu();
         }
     }
 
@@ -134,7 +132,7 @@ public class LeaderMenu {
         if (status == 1)
             View.print("No user exists with this username !");
         else if (status == 2) {
-            //View.print("User successfully added");
+            View.print("User successfully added");
         }
     }
 
@@ -143,7 +141,7 @@ public class LeaderMenu {
         if (status == 1)
             View.print("No user exists with this username!");
         else if (status == 2) {
-            //View.print("User successfully removed");
+            View.print("User successfully removed");
         }
     }
 
