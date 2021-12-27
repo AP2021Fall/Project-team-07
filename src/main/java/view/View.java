@@ -169,7 +169,6 @@ public class View {
             printMenu(user);
             String input = scanner.nextLine().trim();
             Matcher matcher;
-
             if ((matcher = Controller.controller.getCommandMatcher("show profile --username ([^ ]+)", input)).matches()) {
                 AdminMenu.showProfile(matcher.group(1));
             } else if ((matcher = Controller.controller.getCommandMatcher("ban user --user ([^ ]+)", input)).matches()) {
