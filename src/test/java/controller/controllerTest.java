@@ -68,4 +68,28 @@ public class controllerTest {
         assertEquals(false,team.getAllTasks().isEmpty());
     }
 
+    // BoardMenu tests
+    @Test void testCreatingBoard(){
+        JsonController.getInstance().readFromJson();
+        User user = User.getUserByUsername("AmirReza");
+        Team team = Team.getTeamByName("Yakuza1",Team.getAllTeams());
+        int response = Controller.controller.makeBoard(user,team,"board");
+        assertEquals(2,response);
+    }
+    @Test void testCreatingBoard2(){
+        JsonController.getInstance().readFromJson();
+        User user = User.getUserByUsername("Amir");
+        Team team = Team.getTeamByName("Yakuza1",Team.getAllTeams());
+        int response = Controller.controller.makeBoard(user,team,"board");
+        assertEquals(0,response);
+    }
+    @Test void testRemoveBoard(){
+        JsonController.getInstance().readFromJson();
+        User user = User.getUserByUsername("AmirReza");
+        Team team = Team.getTeamByName("Yakuza1",Team.getAllTeams());
+        int response = Controller.controller.makeBoard(user,team,"board");
+        assertEquals(1,response);
+    }
+
+
 }
