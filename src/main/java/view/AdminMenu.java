@@ -15,9 +15,7 @@ public class AdminMenu {
         if (answer == 1) {
             View.print("There is no user with this username");
         } else {
-//            View.print(User.getUserByUsername(username).getFullName());
             View.print(User.getUserByUsername(username).getUserName());
-//            View.print(User.getUserByUsername(username).getBirthday().toString());
             View.print(User.getUserByUsername(username).getEmail());
             View.print(User.getUserByUsername(username).getRole());
             View.print(Integer.toString(User.getUserByUsername(username).getScore()));

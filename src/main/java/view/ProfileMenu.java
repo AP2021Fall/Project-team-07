@@ -123,9 +123,7 @@ public class ProfileMenu extends Menu {
     }
 
     public void showMyProfile() {
-//        View.print(user.getFullName());
         View.print(user.getUserName());
-//        View.print(user.getBirthday().toString());
         View.print(user.getEmail());
         View.print(user.getRole());
         View.print(Integer.toString(user.getScore()));
@@ -133,8 +131,8 @@ public class ProfileMenu extends Menu {
 
     public void showLogs() {
         int rank = 1;
+        View.print("Logs of " + user.getUserName() + " :");
         for (Log log : user.getAllLogs()) {
-            View.print("Logs of " + log.getUser() + " :");
             View.print("    " + rank + ". " + log.getDate());
             rank++;
         }

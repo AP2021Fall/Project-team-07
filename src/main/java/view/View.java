@@ -63,7 +63,7 @@ public class View {
             print("\nEnter your command: ");
             String input = scanner.nextLine().trim();
             //enter menu Tasks Page
-            Matcher matcher = Controller.controller.getCommandMatcher("(\\d+)", input);
+            Matcher matcher = Controller.controller.getCommandMatcher("(.+)", input);
             matcher.matches();
             input = matcher.group(1);
 
@@ -77,9 +77,8 @@ public class View {
                 TasksPage.tasksPage.runTasksPage(user);
             } else if (input.equals("4") || input.equals("Calender Menu")) {
                 CalenderMenu.calenderMenu.runCalenderMenu(user);
-            } else if (input.equals("5") || input.equals("Notification Bar")) {
-                NotificationBar.notificationBar.runNotificationBar(user);
-            } else if (input.equals("6") || input.equals("Quit")) {
+            }
+             else if (input.equals("5") || input.equals("Quit")) {
                 print("Are you sure you want to quit?\n1. Yes\n2. No");
                 String choose = scanner.nextLine().trim().toLowerCase(Locale.ROOT);
                 if (choose.equals("1") || choose.equals("yes")) {
@@ -129,11 +128,9 @@ public class View {
                 TasksPage.tasksPage.runTasksPage(user);
             } else if (input.equals("4") || input.equals("Calender Menu")) {
                 CalenderMenu.calenderMenu.runCalenderMenu(user);
-            } else if (input.equals("5") || input.equals("Notification Bar")) {
-                NotificationBar.notificationBar.runNotificationBar(user);
-            } else if (input.equals("6") || input.equals("Special Commands")) {
+            }  else if (input.equals("5") || input.equals("Special Commands")) {
                 LeaderMenu.leaderMenu.runSpecialCommandsForLeaderMenu(user);
-            } else if (input.equals("7") || input.equals("Quit")) {
+            } else if (input.equals("6") || input.equals("Quit")) {
                 print("Are you sure you want to quit?\n1. Yes\n2. No");
                 String choose = scanner.nextLine().trim().toLowerCase(Locale.ROOT);
                 if (choose.equals("1") || choose.equals("yes")) {
@@ -175,13 +172,13 @@ public class View {
                 AdminMenu.banUser(matcher.group(1));
             } else if ((matcher = Controller.controller.getCommandMatcher("change role --user ([^ ]+) --role ([^ ]+)", input)).matches()) {
                 AdminMenu.changeRole(matcher.group(1), matcher.group(2));
-            } else if ((matcher = Controller.controller.getCommandMatcher("send --notification ([^ ]+) --all", input)).matches()) {
+            } else if ((matcher = Controller.controller.getCommandMatcher("send --notification (.+) --all", input)).matches()) {
                 AdminMenu.sendNotificationForAll(matcher.group(1), user);
-            } else if ((matcher = Controller.controller.getCommandMatcher("send --notification ([^ ]+) --user ([^ ]+)", input)).matches()) {
+            } else if ((matcher = Controller.controller.getCommandMatcher("send --notification (.+) --user ([^ ]+)", input)).matches()) {
                 AdminMenu.sendNotificationForUser(matcher.group(2), matcher.group(1), user);
-            } else if ((matcher = Controller.controller.getCommandMatcher("send --notification ([^ ]+) --team ([^ ]+)", input)).matches()) {
+            } else if ((matcher = Controller.controller.getCommandMatcher("send --notification (.+) --team ([^ ]+)", input)).matches()) {
                 AdminMenu.sendNotificationForTeam(matcher.group(2), matcher.group(1), user);
-            } else if (Controller.controller.getCommandMatcher("Scoreboard --show --team ([^ ]+)", input).matches()) {
+            } else if ((matcher = Controller.controller.getCommandMatcher("Scoreboard --show --team (.+)", input)).matches()) {
                 AdminMenu.showScoreBoard(user, matcher.group(1));
             } else if (Controller.controller.getCommandMatcher("show --pendingTeams", input).matches()) {
                 AdminMenu.showPendingTeams();
@@ -195,10 +192,6 @@ public class View {
 
     public void register(String command) {
         Matcher matcher;
-        //user create --username mirzaeimahdi409 --password1 138014 --password2 138014 --email Address mirzaeimahdi409@gmail.com
-        //user create --username AmirReza --password1 138014 --password2 138014 --email Address AmirReza@gmail.com
-        //user create --username Amir --password1 2020 --password2 2020 --email Address Amir@gmail.com
-        //user create --username mehrad --password1 2020 --password2 2020 --email Address Mehrad@gmail.com
         if ((matcher = Controller.controller.getCommandMatcher("user create --username ([^ ]+) --password1 ([^ ]+) --password2 ([^ ]+) --email Address ([^ ]+)$", command)).matches()) {
             int answer = Controller.controller.register(matcher.group(1), matcher.group(2), matcher.group(3), matcher.group(4));
             if (answer == 1) {
@@ -238,10 +231,10 @@ public class View {
     public static void printMenu(User user) {
         int answer = Controller.controller.printMenu(user);
         if (answer == 1) {
-            print("1. Profile Menu\n2. Team Menu\n3. Tasks Page\n4. Calender Menu\n5. Notification Bar\n6. Quit");
+            print("1. Profile Menu\n2. Team Menu\n3. Tasks Page\n4. Calender Menu\n5. Quit");
         } else if (answer == 2) {
-            print("1. Profile Menu\n2. Team Menu\n3. Tasks Page\n4. Calender Menu\n5. Notification Bar\n6. Special Commands" +
-                    "\n7. Quit");
+            print("1. Profile Menu\n2. Team Menu\n3. Tasks Page\n4. Calender Menu\n5. Special Commands" +
+                    "\n6. Quit");
         } else if (answer == 3) {
             print("Enter your command :");
         }

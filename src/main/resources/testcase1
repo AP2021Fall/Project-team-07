@@ -1,0 +1,9 @@
+user create --username mirzaeimahdi409 --password1 138014 --password2 138015 --email Address mirzaeimahdi409@gmail.com     --> checking passwords
+user create --username mirzaeimahdi409 --password1 138014 --password2 138014 --email Address mirzaeimahdi409@sharif.com    --> checking email format
+user create --username mirzaeimahdi409 --password1 138014 --password2 138014 --email Address mirzaeimahdi409@gmail.com     --> create
+user create --username mirzaeimahdi409 --password1 138014 --password2 138014 --email Address AmirReza@gmail.com            --> checking username
+user create --username AmirReza --password1 138014 --password2 138014 --email Address mirzaeimahdi409@gmail.com            --> checking invalid email
+user create --username AmirReza --password1 138014 --password2 138014 --email Address AmirReza@gmail.com                   --> create
+user create --username Amir --password1 2020 --password2 2020 --email Address Amir@gmail.com                               --> create
+user create --username mehrad --password1 2020 --password2 2020 --email Address Mehrad@gmail.com                           --> create
+user create --username Laleh --password1 2020 --password2 2020 --email Address Laleh@gmail.com                             --> create

@@ -100,6 +100,14 @@ public class User {
         this.score = score;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
     public ArrayList<Log> getAllLogs() {
         return allLogs;
     }

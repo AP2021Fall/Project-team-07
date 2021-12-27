@@ -26,9 +26,6 @@ public class Controller {
             return 4;
         }
         User user = new User(username, password1, email);
-        DateTimeFormatter currentDate = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-        LocalDateTime now = LocalDateTime.now();
-        Log log = new Log(user, currentDate.format(now));
         return 0;
     }
 
@@ -39,6 +36,9 @@ public class Controller {
             return 2;
         }
         View.print("user logged in successfully!");
+        DateTimeFormatter currentDate = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        Log log = new Log(findUser(username), currentDate.format(now));
         String role = User.getUserByUsername(username).getRole();
         if (role.equals("Member")) {
             View.runMemberMenu(User.getUserByUsername(username));
@@ -69,11 +69,12 @@ public class Controller {
         } else if (!getCommandMatcher("(?=.*[A-Z])(?=.*\\d)(?!.*[&%$]).{8,}", newPassword).matches()) {
             return 3;
         }
+        user.setPassword(newPassword);
         return 0;
     }
 
     public int changeUserName(User user, String newUsername) {
-        if (!getCommandMatcher("[A-Za-z]{4,}", newUsername).matches()) {
+        if (!getCommandMatcher(".{4,}", newUsername).matches()) {
             return 1;
         } else if (isUsernameAvailable(newUsername)) {
             return 2;
@@ -82,6 +83,7 @@ public class Controller {
         } else if (newUsername.equals(user.getUserName())) {
             return 4;
         }
+        user.setUserName(newUsername);
         return 0;
     }
 
@@ -925,7 +927,10 @@ public class Controller {
         if (receiverTeam == null)
             return 1;
         else {
-            receiverTeam.getNotifications().add(new Notification(command, sender, 1));
+            Notification notification = new Notification(command, sender, 1);
+            for (User user : Controller.controller.findTeam(team).getTeamMembers()) {
+                user.getNotifications().add(notification);
+            }
             return 2;
         }
     }
@@ -940,6 +945,11 @@ public class Controller {
     public int banUser(String username) {
         if (!isUsernameAvailable(username)) {
             return 1;
+        }
+        User findUser = User.getUserByUsername(username);
+        for(Team team: findUser.getUserTeams()){
+            team.getScoreboard().getScores().remove(findUser);
+            team.getTeamMembers().remove(findUser);
         }
         User.getUsers().remove(User.getUserByUsername(username));
         return 0;

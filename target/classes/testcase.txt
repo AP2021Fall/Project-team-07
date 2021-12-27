@@ -56,3 +56,22 @@ sudo show  --all --tasks
 promote --username mehrad --rate rate
 show --scoreboard
 suspend member --username mehrad
+
+send --notification Hello --user Amir
+send --notification Hellooo --team Team2
+send --notification Hellooo --team Team1
+
+Profile --change --oldPassword 2020 --newPassword 2021
+Profile --change --oldPassword 2020 --newPassword Mehrad2020
+user login --username mehrad --password Mehrad2020
+Profile --change --username Mehrad@
+Profile --change --username Mehrad
+Profile --showTeams
+Profile --showTeam Team1
+Profile --show --myProfile
+profile --show logs
+profile --show notifications
+show profile --username Amir
+ban user --user Amir
+send --notification Hello Guys --team Team1
+Scoreboard --show --team Team1

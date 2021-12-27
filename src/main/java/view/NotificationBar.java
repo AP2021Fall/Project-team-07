@@ -10,7 +10,7 @@ public class NotificationBar {
         int rank = 1;
         for (Notification notification : user.getNotifications()) {
             View.print("------------------------------");
-            View.print(rank + ". " + notification.getText() + ". " + " (from: " + notification.getSender() + ")");
+            View.print(rank + ". " + notification.getText() + ". " + " (from: " + notification.getSender().getUserName() + ")");
             View.print("------------------------------");
             rank++;
         }
