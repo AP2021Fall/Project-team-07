@@ -33,7 +33,7 @@ public class JsonController {
                 User.setIdCreator(database.uI);
                 Team.setAllTeams(database.teams);
                 Team.setAcceptedTeams(database.accepted);
-                Team.setPendingTeams(database.accepted);
+                Team.setPendingTeams(database.pending);
                 Team.setTeamNumberCreator(database.tI);
                 Task.setAllTasks(database.tasks);
                 Task.setIdCreator(database.taI);

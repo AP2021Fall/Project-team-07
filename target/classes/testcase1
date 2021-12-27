@@ -51,6 +51,3 @@ show --pendingTeams                                                             
 accept --teams Yakuza1 Yakuza2 Yakuza3 Yakuza4 Yakuza7                                                                      --> checking team name exist
 show --pendingTeams
 accept --teams Yakuza1 Yakuza2 Yakuza3 Yakuza4 Yakuza5                                                                      --> accept teams
-show --pendingTeams
-reject --teams Yakuza6                                                                                                      --> reject team
-show --pendingTeams

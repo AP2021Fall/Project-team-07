@@ -212,8 +212,6 @@ public class View {
 
     public void logIn(String command) throws ParseException {
         Matcher matcher;
-        //user login --username mirzaeimahdi409 --password 138014
-        //user login --username AmirReza --password 138014
         if ((matcher = Controller.controller.getCommandMatcher("user login --username ([^ ]+) --password ([^ ]+)", command)).matches()) {
             int answer = Controller.controller.logIn(matcher.group(1), matcher.group(2));
             if (answer == 1) {
