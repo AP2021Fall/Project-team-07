@@ -78,7 +78,7 @@ public class View {
             } else if (input.equals("4") || input.equals("Calender Menu")) {
                 CalenderMenu.calenderMenu.runCalenderMenu(user);
             } else if (input.equals("5") || input.equals("Notification Bar")) {
-                NotificationBar.notificationBar.runNotificationBar();
+                NotificationBar.notificationBar.runNotificationBar(user);
             } else if (input.equals("6") || input.equals("Quit")) {
                 print("Are you sure you want to quit?\n1. Yes\n2. No");
                 String choose = scanner.nextLine().trim().toLowerCase(Locale.ROOT);
@@ -103,7 +103,7 @@ public class View {
             } else if (Controller.controller.getCommandMatcher("send --notification ([^ ]+) --team ([^ ]+)", input).matches()) {
                 print("You do not have access to this section");
             } else if (input.equals("back")) {
-                break;
+                return;
             } else {
                 print("Invalid command!");
             }
@@ -130,7 +130,7 @@ public class View {
             } else if (input.equals("4") || input.equals("Calender Menu")) {
                 CalenderMenu.calenderMenu.runCalenderMenu(user);
             } else if (input.equals("5") || input.equals("Notification Bar")) {
-                NotificationBar.notificationBar.runNotificationBar();
+                NotificationBar.notificationBar.runNotificationBar(user);
             } else if (input.equals("6") || input.equals("Special Commands")) {
                 LeaderMenu.leaderMenu.runSpecialCommandsForLeaderMenu(user);
             } else if (input.equals("7") || input.equals("Quit")) {
@@ -157,7 +157,7 @@ public class View {
             } else if (Controller.controller.getCommandMatcher("send --notification ([^ ]+) --team ([^ ]+)", input).matches()) {
                 print("You do not have access to this section");
             } else if (input.equals("back")) {
-                break;
+                return;
             } else {
                 print("Invalid command!");
             }
@@ -187,7 +187,7 @@ public class View {
             } else if (Controller.controller.getCommandMatcher("show --pendingTeams", input).matches()) {
                 AdminMenu.showPendingTeams();
             } else if (input.equals("back")) {
-                break;
+                return;
             } else {
                 print("Invalid command!");
             }
@@ -229,7 +229,7 @@ public class View {
             } else if (answer == 2) {
                 print("Username and password didn’t match!");
             } else if (answer == 0) {
-                print("user logged in successfully!");
+                print("");
             }
         } else {
             print("Invalid command!");

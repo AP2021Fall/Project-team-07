@@ -12,4 +12,12 @@ public class Notification {
         this.sender = sender;
         this.type = type;
     }
+
+    public User getSender() {
+        return sender;
+    }
+
+    public String getText() {
+        return text;
+    }
 }

@@ -42,7 +42,7 @@ public class ProfileMenu extends Menu {
             } else if (Controller.controller.getCommandMatcher("profile --show notifications", input).matches()) {
                 showNotifications();
             } else if (input.equals("back")) {
-                break;
+                return;
             } else {
                 View.print("Invalid command!");
             }
@@ -123,9 +123,9 @@ public class ProfileMenu extends Menu {
     }
 
     public void showMyProfile() {
-        View.print(user.getFullName());
+//        View.print(user.getFullName());
         View.print(user.getUserName());
-        View.print(user.getBirthday().toString());
+//        View.print(user.getBirthday().toString());
         View.print(user.getEmail());
         View.print(user.getRole());
         View.print(Integer.toString(user.getScore()));
@@ -134,16 +134,13 @@ public class ProfileMenu extends Menu {
     public void showLogs() {
         int rank = 1;
         for (Log log : user.getAllLogs()) {
-            View.print("" + rank + ". " + log.toString());
+            View.print("Logs of " + log.getUser() + " :");
+            View.print("    " + rank + ". " + log.getDate());
             rank++;
         }
     }
 
     public void showNotifications() {
-        int rank = 1;
-        for (Notification notification : user.getNotifications()) {
-            View.print("" + rank + ". " + notification);
-            rank++;
-        }
+        NotificationBar.notificationBar.runNotificationBar(user);
     }
 }

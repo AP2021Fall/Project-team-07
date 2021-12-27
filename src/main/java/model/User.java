@@ -19,8 +19,8 @@ public class User {
     private ArrayList<Log> allLogs;
     private ArrayList<Task> allTasksForUser;
     private ArrayList<Notification> notifications;
-    private  ArrayList<Team> userTeams;
-    private  HashMap<Team, model.Date> joiningDate;
+    private ArrayList<Team> userTeams;
+    private HashMap<Team, model.Date> joiningDate;
 
     public User(String userName, String password,
                 String email) {

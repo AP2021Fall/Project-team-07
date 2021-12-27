@@ -33,13 +33,12 @@ public class TeamMenu extends Menu {
             else if (Controller.controller.getCommandMatcher("Chatroom --show"
                     , input).matches()) showChatRoom(team);
             else if (Controller.controller.getCommandMatcher("BoardMenu"
-                    ,input).matches()){
-                BoardMenu boardMenu = new BoardMenu(user,team);
+                    , input).matches()) {
+                BoardMenu boardMenu = new BoardMenu(user, team);
                 boardMenu.runBoardMenu();
-            }
-            else if (Controller.controller.getCommandMatcher("Show tasks",input).matches())
+            } else if (Controller.controller.getCommandMatcher("Show tasks", input).matches())
                 showTasks(team);
-            else if (Controller.controller.getCommandMatcher("show task --id (\\d+)",input).matches())
+            else if (Controller.controller.getCommandMatcher("show task --id (\\d+)", input).matches())
                 showTask(input);
             else if (input.equals("back"))
                 return;
@@ -103,15 +102,15 @@ public class TeamMenu extends Menu {
     }
 
     public void showTasks(Team team) throws ParseException {
-        for(String string : Controller.controller.showTasks(team))
+        for (String string : Controller.controller.showTasks(team))
             View.print(string);
     }
 
-    public void showTask( String command ) {
-       Matcher matcher =  Controller.controller.getCommandMatcher("show task --id (\\d+)",command);
-       matcher.matches();
-       String taskId = matcher.group(1);
-       View.print(Controller.controller.showTask(taskId));
+    public void showTask(String command) {
+        Matcher matcher = Controller.controller.getCommandMatcher("show task --id (\\d+)", command);
+        matcher.matches();
+        String taskId = matcher.group(1);
+        View.print(Controller.controller.showTask(taskId));
     }
 
 }

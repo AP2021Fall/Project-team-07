@@ -10,4 +10,12 @@ public class Log {
         this.date = date;
         this.user.getAllLogs().add(this);
     }
+
+    public User getUser() {
+        return user;
+    }
+
+    public String getDate() {
+        return date;
+    }
 }

@@ -17,7 +17,8 @@ public class Date {
         this.localDate = LocalDateTime.parse(date, dtf);
         this.date = date;
     }
-    public String toString(){
+
+    public String toString() {
         return this.date;
     }
 
@@ -43,7 +44,8 @@ public class Date {
         String newDate = dtf.format(inputDate1.localDate.plusDays(n));
         return new Date(newDate);
     }
-    public static Date getNow (){
+
+    public static Date getNow() {
         return new Date(dtf.format(LocalDateTime.now()));
     }
 

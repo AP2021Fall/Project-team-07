@@ -38,7 +38,7 @@ public class Team {
         this.suspendedMembers = new ArrayList<>();
         this.notifications = new ArrayList<>();
         this.boards = new ArrayList<>();
-        teamLeader.getJoiningDate().put(this,this.creationDate);
+        teamLeader.getJoiningDate().put(this, this.creationDate);
         teamLeader.getUserTeams().add(this);
         this.scoreboard = new Scoreboard(this);
     }

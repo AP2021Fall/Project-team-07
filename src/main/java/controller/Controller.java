@@ -38,6 +38,7 @@ public class Controller {
         } else if (!password.equals(User.getUserByUsername(username).getPassword())) {
             return 2;
         }
+        View.print("user logged in successfully!");
         String role = User.getUserByUsername(username).getRole();
         if (role.equals("Member")) {
             View.runMemberMenu(User.getUserByUsername(username));
@@ -206,37 +207,37 @@ public class Controller {
     }
 
     public ArrayList<String> showTasks(Team team) throws ParseException {
-        ArrayList<String> arrayList = new  ArrayList();
+        ArrayList<String> arrayList = new ArrayList();
         ArrayList<Task> sorted = new ArrayList<>();
         ArrayList<Task> tasks = team.getAllTasks();
-        if(tasks.isEmpty()){
+        if (tasks.isEmpty()) {
             arrayList.add("no task to show ");
             return arrayList;
         }
         ArrayList<java.util.Date> dates = new ArrayList<>();
-        for (Task task : tasks){
+        for (Task task : tasks) {
             dates.add(task.getDeadline().getDate());
         }
         Collections.sort(dates);
-        for (java.util.Date date : dates ){
-            for (Task task : tasks ){
+        for (java.util.Date date : dates) {
+            for (Task task : tasks) {
                 if (task.getDeadline().getDate().equals(date))
                     if (!sorted.contains(task))
                         sorted.add(task);
             }
         }
         int rank = 1;
-        for (Task task : sorted){
-            arrayList.add(""+rank+". "+showTask(""+task.getCreationId()));
+        for (Task task : sorted) {
+            arrayList.add("" + rank + ". " + showTask("" + task.getCreationId()));
             rank++;
         }
         return arrayList;
     }
 
-    public String showTask(String taskId ) {
+    public String showTask(String taskId) {
         StringBuilder stringBuilder = new StringBuilder();
         Task task = Task.getTaskByIdWithoutTeam(taskId);
-        if (task == null){
+        if (task == null) {
             stringBuilder.append("there is no task whit this id");
             return stringBuilder.toString();
         }
@@ -469,8 +470,7 @@ public class Controller {
             if (score == null) {
                 score = 10;
                 user1.setScore(user1.getScore() + 10);
-            }
-            else {
+            } else {
                 score = score + 10;
                 user1.setScore(user1.getScore() + 10);
             }
@@ -484,8 +484,7 @@ public class Controller {
             if (score == null) {
                 score = -5;
                 user1.setScore(user1.getScore() - 5);
-            }
-            else {
+            } else {
                 score = score - 5;
                 user1.setScore(user1.getScore() - 5);
             }
@@ -528,7 +527,7 @@ public class Controller {
         return result;
     }
 
-    public int updateDeadline(User user, Team team , String taskTitle , String deadline , String boardName ) {
+    public int updateDeadline(User user, Team team, String taskTitle, String deadline, String boardName) {
         if (!user.getRole().equals("Leader"))
             return 0;
         Board board = Board.getBoardByName(team.getBoards(), boardName);
@@ -552,30 +551,35 @@ public class Controller {
             return 6;
         }
     }
+
     public int getBoardCompletionPercentage(Board board) {
-        float percentage =(float) (board.getDone().size()) /(float)(board.getBoardTask().size());
-        return (int) (percentage*100);
+        float percentage = (float) (board.getDone().size()) / (float) (board.getBoardTask().size());
+        return (int) (percentage * 100);
     }
+
     public int getBoardFailedPercentage(Board board) {
-        float percentage =(float) (board.getFailed().size()) /(float)(board.getBoardTask().size());
-        return (int) (percentage*100);
+        float percentage = (float) (board.getFailed().size()) / (float) (board.getBoardTask().size());
+        return (int) (percentage * 100);
     }
-    public Category getCategory(Board board,Task task){
-        for (Category category : board.getAllCategories()){
-            if(category.getCategoryTasks().contains(task))
+
+    public Category getCategory(Board board, Task task) {
+        for (Category category : board.getAllCategories()) {
+            if (category.getCategoryTasks().contains(task))
                 return category;
         }
         return null;
     }
-    public String getAssignedMembers(Task task){
-        StringBuilder  stringBuilder = new StringBuilder();
-        for (User user : task.getAssignedUser()){
+
+    public String getAssignedMembers(Task task) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (User user : task.getAssignedUser()) {
             stringBuilder.append(",");
             stringBuilder.append(user.getUserName());
         }
         return stringBuilder.toString();
     }
-    public String getStatus(Board board, Task task){
+
+    public String getStatus(Board board, Task task) {
         String status = "in progress";
         if (board.getDone().contains(task))
             status = "done";
@@ -585,36 +589,36 @@ public class Controller {
     }
 
 
-    public ArrayList<String> boardShow( Team team,String boardName) {
+    public ArrayList<String> boardShow(Team team, String boardName) {
         ArrayList<String> arrayList = new ArrayList<>();
         Board board = Board.getBoardByName(team.getBoards(), boardName);
-        if (board == null){
+        if (board == null) {
             arrayList.add("invalid boardName ");
             return arrayList;
         }
-        arrayList.add("Board name : "+boardName);
-        arrayList.add("Board Completion : "+getBoardCompletionPercentage(board)+" %");
-        arrayList.add("Board Failed : "+getBoardFailedPercentage(board)+" %");
-        arrayList.add("Board leader : "+team.getTeamLeader().getUserName());
+        arrayList.add("Board name : " + boardName);
+        arrayList.add("Board Completion : " + getBoardCompletionPercentage(board) + " %");
+        arrayList.add("Board Failed : " + getBoardFailedPercentage(board) + " %");
+        arrayList.add("Board leader : " + team.getTeamLeader().getUserName());
         arrayList.add("Board tasks : ");
         arrayList.add("Highest Priority :");
-        for (Task task : board.getBoardTask()){
-            if (task.getPriority().equals("Highest")){
+        for (Task task : board.getBoardTask()) {
+            if (task.getPriority().equals("Highest")) {
                 addTaskDetails(arrayList, board, task);
             }
         }
-        for (Task task : board.getBoardTask()){
-            if (task.getPriority().equals("High")){
+        for (Task task : board.getBoardTask()) {
+            if (task.getPriority().equals("High")) {
                 addTaskDetails(arrayList, board, task);
             }
         }
-        for (Task task : board.getBoardTask()){
-            if (task.getPriority().equals("Low")){
+        for (Task task : board.getBoardTask()) {
+            if (task.getPriority().equals("Low")) {
                 addTaskDetails(arrayList, board, task);
             }
         }
-        for (Task task : board.getBoardTask()){
-            if (task.getPriority().equals("Lowest")){
+        for (Task task : board.getBoardTask()) {
+            if (task.getPriority().equals("Lowest")) {
                 addTaskDetails(arrayList, board, task);
             }
         }
@@ -622,16 +626,16 @@ public class Controller {
     }
 
     private void addTaskDetails(ArrayList<String> arrayList, Board board, Task task) {
-        arrayList.add("Title : "+ task.getTitle());
+        arrayList.add("Title : " + task.getTitle());
         String categoryName = "no category";
-        if(getCategory(board, task)!= null)
+        if (getCategory(board, task) != null)
             categoryName = getCategory(board, task).getName();
-        arrayList.add("Category : "+ categoryName);
-        arrayList.add(("Description : "+ task.getDescription()));
-        arrayList.add("Creation Date : "+ task.getDateOfCreation().toString());
-        arrayList.add("Deadline : "+ task.getDeadline().toString());
-        arrayList.add("Assigned to : "+getAssignedMembers(task));
-        arrayList.add("Status : "+getStatus(board, task));
+        arrayList.add("Category : " + categoryName);
+        arrayList.add(("Description : " + task.getDescription()));
+        arrayList.add("Creation Date : " + task.getDateOfCreation().toString());
+        arrayList.add("Deadline : " + task.getDeadline().toString());
+        arrayList.add("Assigned to : " + getAssignedMembers(task));
+        arrayList.add("Status : " + getStatus(board, task));
         arrayList.add("--");
     }
 
@@ -748,7 +752,7 @@ public class Controller {
         else {
             team.getTeamMembers().add(findUser(command));
             findUser(command).getUserTeams().add(team);
-            findUser(command).getJoiningDate().put(team,team.getCreationDate());
+            findUser(command).getJoiningDate().put(team, team.getCreationDate());
             team.getScoreboard().getScores().put(findUser(command), 0);
             return 2;
         }
@@ -1071,7 +1075,7 @@ public class Controller {
         Pattern pattern1 = Pattern.compile(pattern);
         Matcher matcher = pattern1.matcher(input);
         matcher.matches();
-        return matcher ;
+        return matcher;
 
     }
 

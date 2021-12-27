@@ -5,7 +5,7 @@ import model.Date;
 import java.util.ArrayList;
 
 public class Task {
-    private static  ArrayList<Task> allTasks = new ArrayList<>();
+    private static ArrayList<Task> allTasks = new ArrayList<>();
     private static int idCreator = 1;
     private int creationId;
     private String title;

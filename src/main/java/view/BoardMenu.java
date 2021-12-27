@@ -53,10 +53,10 @@ public class BoardMenu extends Menu {
                     ("^board --show (done|failed) --name --board (\\S+)$", command).matches())
                 showDoneOrFailed(command);
             else if (Controller.controller.getCommandMatcher
-                    ("^board --open --task (\\S+) --deadline (\\S+) --name (\\S+)$",command).matches())
+                    ("^board --open --task (\\S+) --deadline (\\S+) --name (\\S+)$", command).matches())
                 updateDeadline(command);
             else if (Controller.controller.getCommandMatcher
-                    ("^board --show --name (\\S+)$",command).matches())
+                    ("^board --show --name (\\S+)$", command).matches())
                 boardShow(command);
             else if (command.equals("back"))
                 return;
@@ -229,6 +229,7 @@ public class BoardMenu extends Menu {
                 break;
             case 2:
                 View.print("Please finish creating the board first");
+                break;
             case 3:
                 View.print("Invalid task id in this board!");
                 break;
@@ -262,6 +263,7 @@ public class BoardMenu extends Menu {
                 break;
             case 2:
                 View.print("Please finish creating the board first");
+                break;
             case 3:
                 View.print("Invalid task title in this board!");
                 break;
@@ -270,6 +272,7 @@ public class BoardMenu extends Menu {
                 break;
             case 5:
                 View.print("invalid category");
+                break;
             case 6:
                 View.print("task put to category");
                 break;
@@ -292,6 +295,7 @@ public class BoardMenu extends Menu {
                 break;
             case 2:
                 View.print("Please finish creating the board first");
+                break;
             case 3:
                 View.print("Invalid task title in this board!");
                 break;
@@ -300,6 +304,7 @@ public class BoardMenu extends Menu {
                 break;
             case 5:
                 View.print("this task is not in any category now!");
+                break;
             case 6:
                 View.print("task put to the next category");
                 break;
@@ -319,12 +324,12 @@ public class BoardMenu extends Menu {
 
     public void updateDeadline(String command) {
         Matcher matcher = Controller.controller.getCommandMatcher
-                ("^board --open --task (\\S+) --deadline (\\S+) --name (\\S+)$",command);
+                ("^board --open --task (\\S+) --deadline (\\S+) --name (\\S+)$", command);
         matcher.matches();
-        String taskTitle  = matcher.group(1);
+        String taskTitle = matcher.group(1);
         String deadLine = matcher.group(2);
         String boardName = matcher.group(3);
-        int response = Controller.controller.updateDeadline(super.user,this.team,taskTitle,deadLine,boardName);
+        int response = Controller.controller.updateDeadline(super.user, this.team, taskTitle, deadLine, boardName);
         switch (response) {
             case 0:
                 View.print("You do not have the permission to do this action!");
@@ -334,6 +339,7 @@ public class BoardMenu extends Menu {
                 break;
             case 2:
                 View.print("Please finish creating the board first");
+                break;
             case 3:
                 View.print("Invalid task title in this board!");
                 break;
@@ -342,6 +348,7 @@ public class BoardMenu extends Menu {
                 break;
             case 5:
                 View.print("wrong date format");
+                break;
             case 6:
                 View.print("deadline changed and ");
                 break;
@@ -350,10 +357,10 @@ public class BoardMenu extends Menu {
 
     public void boardShow(String command) {
         Matcher matcher = Controller.controller.getCommandMatcher
-                ("^board --show --name (\\S+)$",command);
+                ("^board --show --name (\\S+)$", command);
         matcher.matches();
         String boardName = matcher.group(1);
-        ArrayList<String> response = Controller.controller.boardShow(this.team,boardName);
+        ArrayList<String> response = Controller.controller.boardShow(this.team, boardName);
         for (String string : response)
             View.print(string);
     }

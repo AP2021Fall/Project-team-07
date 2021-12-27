@@ -15,9 +15,9 @@ public class AdminMenu {
         if (answer == 1) {
             View.print("There is no user with this username");
         } else {
-            View.print(User.getUserByUsername(username).getFullName());
+//            View.print(User.getUserByUsername(username).getFullName());
             View.print(User.getUserByUsername(username).getUserName());
-            View.print(User.getUserByUsername(username).getBirthday().toString());
+//            View.print(User.getUserByUsername(username).getBirthday().toString());
             View.print(User.getUserByUsername(username).getEmail());
             View.print(User.getUserByUsername(username).getRole());
             View.print(Integer.toString(User.getUserByUsername(username).getScore()));
@@ -29,7 +29,7 @@ public class AdminMenu {
         if (answer == 1) {
             View.print("There is no user with this username");
         } else {
-            View.print("User " + username + "banned successfully!");
+            View.print("User " + username + " banned successfully!");
         }
     }
 
@@ -75,7 +75,7 @@ public class AdminMenu {
         ArrayList<String> forPrint = Controller.controller.showScoreBoard(user, Controller.controller.findTeam(teamName));
         int rank = 1;
         for (String print : forPrint) {
-            View.print("" + rank + ". " + print);
+            View.print("" + rank + "_ " + print);
             rank++;
         }
     }
@@ -87,8 +87,8 @@ public class AdminMenu {
             View.print("There are no Teams in Pending Status!\n");
         } else {
             int rank = 1;
-            for(Team team : Team.getPendingTeams()){
-                View.print(""+ rank + ". " + team.getTeamName());
+            for (Team team : Team.getPendingTeams()) {
+                View.print("" + rank + ". " + team.getTeamName());
                 rank++;
             }
             String input = View.scanner.nextLine().trim();
@@ -103,20 +103,18 @@ public class AdminMenu {
 
     public static void acceptTeam(String teamName) {
         int answer = Controller.controller.acceptTeam(teamName);
-        if(answer == 1){
+        if (answer == 1) {
             View.print("Some teams are not in pending status! Try again");
-        }
-        else {
+        } else {
             View.print("Teams accepted successfully!");
         }
     }
 
     public static void rejectTeam(String teamName) {
         int answer = Controller.controller.rejectTeam(teamName);
-        if(answer == 1){
+        if (answer == 1) {
             View.print("Some teams are not in pending status! Try again");
-        }
-        else {
+        } else {
             View.print("Teams rejected successfully!");
         }
     }
