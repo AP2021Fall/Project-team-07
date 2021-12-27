@@ -23,7 +23,7 @@ public class LeaderMenu {
                 showSpecialTeam(user, Controller.controller.getCommandMatcher("show --team ([^ ]+)", input).group(1));
             } else if (Controller.controller.getCommandMatcher("create --team ([^ ]+)", input).matches()) {
                 creatTeam(user, Controller.controller.getCommandMatcher("create --team ([^ ]+)", input).group(1));
-            } else if (Controller.controller.getCommandMatcher("sudo show  --all --tasks", input).matches()) {
+            } else if (Controller.controller.getCommandMatcher("sudo show --all --tasks", input).matches()) {
                 showAllTasks(user, team);
             } else if (Controller.controller.getCommandMatcher("create task --title ([^ ]+) --startTime ([^ ]+) --deadline ([^ ]+)", input).matches()) {
                 Matcher matcher = Controller.controller.getCommandMatcher("create task --title ([^ ]+) --startTime ([^ ]+) --deadline ([^ ]+)", input);
@@ -74,7 +74,6 @@ public class LeaderMenu {
         }
     }
 
-    //The team must also be sent
     public void showSpecialTeam(User user, String command) throws ParseException {
         if (!user.getRole().equals("Leader")) {
             View.print("You are not a leader!");
@@ -84,6 +83,7 @@ public class LeaderMenu {
                 View.print("Team not found!");
             else {
                 this.team = foundTeam;
+                View.print("The team was successfully selected");
             }
         }
     }
