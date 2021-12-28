@@ -111,6 +111,9 @@ public class View {
 
     public static void runLeaderMenu(User user) throws ParseException {
         while (true) {
+            if(!user.getRole().equals("Leader")){
+                return;
+            }
             printMenu(user);
             print("\nEnter your command: ");
             String input = scanner.nextLine().trim();

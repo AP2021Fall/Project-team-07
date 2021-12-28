@@ -89,33 +89,46 @@ public class Controller {
 
     public ArrayList<String> showTeams(User user) {
         ArrayList<String> result = new ArrayList<>();
-        HashMap<Team, Date> joiningDate = sortJoiningDates(user.getJoiningDate());
-        HashMap<Date, ArrayList<Team>> data = new HashMap<>();
-        for (Map.Entry<Team, Date> unit : joiningDate.entrySet()) {
-            ArrayList<Team> teams;
-            teams = data.get(unit.getValue());
-            if (teams == null) {
-                teams = new ArrayList<>();
-                teams.add(unit.getKey());
-                data.put(unit.getValue(), teams);
-            } else {
-                teams.add(unit.getKey());
+        ArrayList<Integer> teamID = new ArrayList<>();
+        for (Team team: user.getUserTeams()){
+            teamID.add(team.getTeamNumber());
+        }
+        Collections.sort(teamID);
+        for (Team team: user.getUserTeams()){
+            for (Integer id: teamID){
+                if (team.getTeamNumber() == id){
+                    result.add(team.getTeamName());
+                    break;
+                }
             }
         }
-        ArrayList<Date> check = new ArrayList<Date>();
-        for (Map.Entry<Team, Date> unit : joiningDate.entrySet()) {
-            if (check.contains(unit.getValue())) continue;
-            check.add(unit.getValue());
-            ArrayList<Team> teams = data.get(unit.getValue());
-            ArrayList<String> names = new ArrayList<>();
-            for (Team team : teams) {
-                names.add(team.getTeamName());
-            }
-            Collections.sort(names);
-            for (String name : names) {
-                result.add(name);
-            }
-        }
+//        HashMap<Team, Date> joiningDate = sortJoiningDates(user.getJoiningDate());
+//        HashMap<Date, ArrayList<Team>> data = new HashMap<>();
+//        for (Map.Entry<Team, Date> unit : joiningDate.entrySet()) {
+//            ArrayList<Team> teams;
+//            teams = data.get(unit.getValue());
+//            if (teams == null) {
+//                teams = new ArrayList<>();
+//                teams.add(unit.getKey());
+//                data.put(unit.getValue(), teams);
+//            } else {
+//                teams.add(unit.getKey());
+//            }
+//        }
+//        ArrayList<Date> check = new ArrayList<Date>();
+//        for (Map.Entry<Team, Date> unit : joiningDate.entrySet()) {
+//            if (check.contains(unit.getValue())) continue;
+//            check.add(unit.getValue());
+//            ArrayList<Team> teams = data.get(unit.getValue());
+//            ArrayList<String> names = new ArrayList<>();
+//            for (Team team : teams) {
+//                names.add(team.getTeamName());
+//            }
+//            Collections.sort(names);
+//            for (String name : names) {
+//                result.add(name);
+//            }
+//        }
         return result;
     }
 
@@ -744,6 +757,9 @@ public class Controller {
         for (User user1 : team.getTeamMembers()) {
             names.add(user1.getUserName());
         }
+        for (User user2: team.getSuspendedMembers()){
+            names.add(user2.getUserName() + "    (Suspended)");
+        }
         Collections.sort(names);
         return names;
     }
@@ -777,6 +793,7 @@ public class Controller {
             return 1;
         else {
             team.getSuspendedMembers().add(findUser(command));
+            team.getTeamMembers().remove(findUser(command));
             return 2;
         }
     }
@@ -1016,6 +1033,8 @@ public class Controller {
         }
         if (counter == teamsNames.length) {
             for (String string : teamsNames) {
+                findTeam(string).getTeamMembers().get(0).getUserTeams().remove(findTeam(string));
+                findTeam(string).getTeamMembers().get(0).getJoiningDate().remove(findTeam(string));
                 Team.getPendingTeams().remove(findTeam(string));
             }
             return 0;
@@ -1068,8 +1087,13 @@ public class Controller {
                 new LinkedList<Map.Entry<Team, Date>>(hashMap.entrySet());
         Comparator comparator = new Comparator<Map.Entry<Team, Date>>() {
             public int compare(Map.Entry<Team, Date> operand1, Map.Entry<Team, Date> operand2) {
-                return (Date.getDaysBetween(operand2.getValue(), comparingDate)).compareTo
-                        (Date.getDaysBetween(operand1.getValue(), comparingDate));
+                try {
+                    return (operand1.getValue().getDate()).compareTo
+                            (operand2.getValue().getDate());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                return 0;
             }
         };
         Collections.sort(valueList, comparator);

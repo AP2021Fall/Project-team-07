@@ -38,6 +38,7 @@ public class LeaderMenu {
                 suspendMember(user, team, Controller.controller.getCommandMatcher("suspend member --username ([^ ]+)", input).group(1));
             } else if (Controller.controller.getCommandMatcher("promote --username ([^ ]+) --rate ([^ ]+)", input).matches()) {
                 promoteMember(user, team, Controller.controller.getCommandMatcher("promote --username ([^ ]+) --rate ([^ ]+)", input).group(1));
+                if(!user.getRole().equals("Leader")) return;
             } else if (Controller.controller.getCommandMatcher("assign member --task ([^ ]+) --username ([^ ]+)", input).matches()) {
                 Matcher matcher = Controller.controller.getCommandMatcher("assign member --task ([^ ]+) --username ([^ ]+)", input);
                 assignMember(user, team, matcher.group(1), matcher.group(2));
