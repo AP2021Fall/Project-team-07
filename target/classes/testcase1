@@ -16,6 +16,8 @@ user create --username Amir --password1 2020 --password2 2020 --email Address Am
 user create --username mehrad --password1 2020 --password2 2020 --email Address Mehrad@gmail.com                           --> create
 1
 user create --username Laleh --password1 2020 --password2 2020 --email Address Laleh@gmail.com                             --> create
+1
+user create --username Zeinab --password1 2020 --password2 2020 --email Address Zeinab@gmail.com                           --> create
 2
 user login --username Sara --password 138014                                                                               --> username not exist
 2
@@ -51,3 +53,24 @@ show --pendingTeams                                                             
 accept --teams Yakuza1 Yakuza2 Yakuza3 Yakuza4 Yakuza7                                                                      --> checking team name exist
 show --pendingTeams
 accept --teams Yakuza1 Yakuza2 Yakuza3 Yakuza4 Yakuza5                                                                      --> accept teams
+show --pendingTeams
+reject --teams Yakuza6                                                                                                      --> reject team
+show --pendingTeams
+ban user --user Laleh                                                                                                       --> ban user
+back
+2
+user login --username AmirReza --password 138014                                                                            --> login
+5
+show --teams                                                                                                                --> show teams of leader
+show --team Yakuza7                                                                                                         --> error for existing
+show --team Yakuza1                                                                                                         --> show selected team
+Add member --username Amir                                                                                                  --> add member
+Add member --username Amirrrr                                                                                               --> error for existing
+Add member --username mehrad                                                                                                --> add member
+Add member --username Zeinab                                                                                                --> add member
+delete member --username Zeinab                                                                                             --> remove member
+Add member --username Zeinab                                                                                                --> add member
+show --members
+suspend member --username Zeinab                                                                                            --> suspend member
+show --members
+promote --username Amir --rate Leader
