@@ -3,6 +3,7 @@ package controller;
 import com.gilecode.yagson.YaGson;
 import com.gilecode.yagson.com.google.gson.reflect.TypeToken;
 import model.Date;
+import model.Task;
 import model.Team;
 import model.User;
 import org.junit.jupiter.api.BeforeEach;
@@ -90,6 +91,18 @@ public class controllerTest {
         int response = Controller.controller.makeBoard(user,team,"board");
         assertEquals(1,response);
     }
+    @Test void boardAddTask(){
+        JsonController.getInstance().readFromJson();
+        User user = User.getUserByUsername("AmirReza");
+        Team team = Team.getTeamByName("Yakuza1",Team.getAllTeams());
+        Task task = new Task("task1", new Date("1400/10/05|17:40"),new Date("1400/10/30|17:40"),team);
+        Controller.controller.makeBoard(user,team,"board");
+        int response = Controller.controller.boardAddTask(user,team,"board",
+                Integer.toString(task.getCreationId()));
+        assertEquals(7,response);
+    }
+    @Test void checkBoardDone(){
 
+    }
 
 }
