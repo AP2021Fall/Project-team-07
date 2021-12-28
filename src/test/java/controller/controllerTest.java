@@ -102,7 +102,12 @@ public class controllerTest {
         assertEquals(7,response);
     }
     @Test void checkBoardDone(){
-
+        JsonController.getInstance().readFromJson();
+        User user = User.getUserByUsername("AmirReza");
+        Team team = Team.getTeamByName("Yakuza1",Team.getAllTeams());
+        Controller.controller.makeBoard(user,team,"board");
+        int response = Controller.controller.boardDone(user,team,"board");
+        assertEquals(1,response);
     }
 
 }
