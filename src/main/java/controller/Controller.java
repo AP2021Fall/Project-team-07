@@ -90,13 +90,13 @@ public class Controller {
     public ArrayList<String> showTeams(User user) {
         ArrayList<String> result = new ArrayList<>();
         ArrayList<Integer> teamID = new ArrayList<>();
-        for (Team team: user.getUserTeams()){
+        for (Team team : user.getUserTeams()) {
             teamID.add(team.getTeamNumber());
         }
         Collections.sort(teamID);
-        for (Team team: user.getUserTeams()){
-            for (Integer id: teamID){
-                if (team.getTeamNumber() == id){
+        for (Team team : user.getUserTeams()) {
+            for (Integer id : teamID) {
+                if (team.getTeamNumber() == id) {
                     result.add(team.getTeamName());
                     break;
                 }
@@ -757,7 +757,7 @@ public class Controller {
         for (User user1 : team.getTeamMembers()) {
             names.add(user1.getUserName());
         }
-        for (User user2: team.getSuspendedMembers()){
+        for (User user2 : team.getSuspendedMembers()) {
             names.add(user2.getUserName() + "    (Suspended)");
         }
         Collections.sort(names);
@@ -964,7 +964,7 @@ public class Controller {
             return 1;
         }
         User findUser = User.getUserByUsername(username);
-        for(Team team: findUser.getUserTeams()){
+        for (Team team : findUser.getUserTeams()) {
             team.getScoreboard().getScores().remove(findUser);
             team.getTeamMembers().remove(findUser);
         }
