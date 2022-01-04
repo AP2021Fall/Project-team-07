@@ -1,0 +1,4 @@
+1
+user create --username mirzaeimahdi409 --password1 138014 --password2 138015 --email Address mirzaeimahdi409@gmail.com
+3
+1

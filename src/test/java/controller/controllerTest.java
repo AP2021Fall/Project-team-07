@@ -122,6 +122,16 @@ public class controllerTest {
         int response = Controller.controller.boardDone(user, team, "board");
         assertEquals(1, response);
     }
+    @Test
+    void boardAssignMember(){
+        JsonController.getInstance().readFromJson();
+        User user = User.getUserByUsername("AmirReza");
+        Team team = Team.getTeamByName("Yakuza1", Team.getAllTeams());
+        Controller.controller.makeBoard(user, team, "board");
+        int response = Controller.controller.boardAssignMember
+                (user,team,"Amir","board","invalid");
+        assertEquals(3,response);
+    }
 
     @Test
     void createTeam() {
@@ -286,5 +296,13 @@ public class controllerTest {
         int response3 = Controller.controller.removeAssignedUsers(user, task, user);
         assertEquals(0, response3);
     }
+    @Test
+    void changePassword(){
+        JsonController.getInstance().readFromJson();
+        User user = User.getUserByUsername("AmirReza");
+        int response = Controller.controller.changePassword(user,"invalid","invalid");
+        assertEquals(1,response);
+    }
+
 
 }
