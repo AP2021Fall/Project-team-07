@@ -12,11 +12,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import model.User;
 
 import java.text.ParseException;
 
 public class LoginView extends Application {
 
+    public static User LoginUser;
     public TextField username;
     public PasswordField password;
     public Button login;
@@ -39,6 +41,7 @@ public class LoginView extends Application {
     public void login(ActionEvent actionEvent) throws ParseException {
 
         int result = Controller.controller.logIn(username.getText(), password.getText());
+
 
         errorlabel.setText(Integer.toString(result));
 
