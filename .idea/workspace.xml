@@ -4,38 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1a23b712-9d27-49b8-9308-d8a7f14f07b1" name="Changes" comment="set Name">
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/view/RegisterView.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/Register.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/LoginView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/LoginView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/Login.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/Login.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/SignUp.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controller/Controller$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controller/Controller$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controller/Controller$3.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controller/Controller.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controller/Database.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controller/JsonController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/fxml/Login.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fxml/Login.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/fxml/SignUp.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/Board.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/Category.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/ChatRoom.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/Date.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/Log.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/Message.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/Notification.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/RoadMap.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/Scoreboard.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/Task.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/Team.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/User.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/view/LoginView.class" beforeDir="false" />
-    </list>
+    <list default="true" id="1a23b712-9d27-49b8-9308-d8a7f14f07b1" name="Changes" comment="Login and Register page" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -90,19 +59,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Application.LoginView" />
@@ -120,7 +76,7 @@
       <workItem from="1641413622317" duration="2179000" />
       <workItem from="1641415826953" duration="1275000" />
       <workItem from="1641563778004" duration="1096000" />
-      <workItem from="1641564897696" duration="7695000" />
+      <workItem from="1641564897696" duration="7899000" />
     </task>
     <task id="LOCAL-00001" summary="start phase2">
       <created>1641416456429</created>
@@ -136,7 +92,14 @@
       <option name="project" value="LOCAL" />
       <updated>1641416527674</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Login and Register page">
+      <created>1641574347632</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1641574347632</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -158,6 +121,7 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="start phase2" />
     <MESSAGE value="set Name" />
-    <option name="LAST_COMMIT_MESSAGE" value="set Name" />
+    <MESSAGE value="Login and Register page" />
+    <option name="LAST_COMMIT_MESSAGE" value="Login and Register page" />
   </component>
 </project>
