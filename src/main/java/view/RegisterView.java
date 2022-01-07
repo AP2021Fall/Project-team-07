@@ -20,6 +20,9 @@ public class RegisterView {
     public Label errorLabel2;
     public Label errorLabel3;
     public Button back;
+    public TextField fullName;
+    public DatePicker birthday;
+
 
     public void register(ActionEvent actionEvent) throws IOException {
         String currentUsername = username.getText();
