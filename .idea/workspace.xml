@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1a23b712-9d27-49b8-9308-d8a7f14f07b1" name="Changes" comment="Login and Register page" />
+    <list default="true" id="1a23b712-9d27-49b8-9308-d8a7f14f07b1" name="Changes" comment="Login and Register page #2" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -77,6 +77,7 @@
       <workItem from="1641415826953" duration="1275000" />
       <workItem from="1641563778004" duration="1096000" />
       <workItem from="1641564897696" duration="7899000" />
+      <workItem from="1641574783509" duration="285000" />
     </task>
     <task id="LOCAL-00001" summary="start phase2">
       <created>1641416456429</created>
@@ -99,7 +100,14 @@
       <option name="project" value="LOCAL" />
       <updated>1641574347632</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Login and Register page #2">
+      <created>1641575058812</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1641575058812</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -122,6 +130,7 @@
     <MESSAGE value="start phase2" />
     <MESSAGE value="set Name" />
     <MESSAGE value="Login and Register page" />
-    <option name="LAST_COMMIT_MESSAGE" value="Login and Register page" />
+    <MESSAGE value="Login and Register page #2" />
+    <option name="LAST_COMMIT_MESSAGE" value="Login and Register page #2" />
   </component>
 </project>
