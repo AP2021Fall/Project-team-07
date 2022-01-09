@@ -965,12 +965,12 @@ public class Controller {
         if (!isUsernameAvailable(username)) {
             return 1;
         }
-//        User findUser = User.getUserByUsername(username);
-//        for (Team team : findUser.getUserTeams()) {
-//            team.getScoreboard().getScores().remove(findUser);
-//            team.getTeamMembers().remove(findUser);
-//        }
-//        User.getUsers().remove(User.getUserByUsername(username));
+        User findUser = User.getUserByUsername(username);
+        for (Team team : findUser.getUserTeams()) {
+            team.getScoreboard().getScores().remove(findUser);
+            team.getTeamMembers().remove(findUser);
+        }
+        User.getUsers().remove(User.getUserByUsername(username));
         return 0;
     }
 
@@ -978,7 +978,7 @@ public class Controller {
         if (!isUsernameAvailable(username)) {
             return 1;
         }
-//        findUser(username).setRole(role);
+        findUser(username).setRole(role);
         return 0;
     }
 
@@ -1015,8 +1015,8 @@ public class Controller {
         }
         if (counter == teamsNames.length) {
             for (String string : teamsNames) {
-//                Team.getPendingTeams().remove(findTeam(string));
-//                Team.getAcceptedTeams().add(findTeam(string));
+                Team.getPendingTeams().remove(findTeam(string));
+                Team.getAcceptedTeams().add(findTeam(string));
             }
             return 0;
         }
@@ -1035,9 +1035,9 @@ public class Controller {
         }
         if (counter == teamsNames.length) {
             for (String string : teamsNames) {
-//                findTeam(string).getTeamMembers().get(0).getUserTeams().remove(findTeam(string));
-//                findTeam(string).getTeamMembers().get(0).getJoiningDate().remove(findTeam(string));
-//                Team.getPendingTeams().remove(findTeam(string));
+                findTeam(string).getTeamMembers().get(0).getUserTeams().remove(findTeam(string));
+                findTeam(string).getTeamMembers().get(0).getJoiningDate().remove(findTeam(string));
+                Team.getPendingTeams().remove(findTeam(string));
             }
             return 0;
         }
