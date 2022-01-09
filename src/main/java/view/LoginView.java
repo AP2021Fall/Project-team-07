@@ -26,7 +26,7 @@ public class LoginView extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/Users.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/Login.fxml"));
         primaryStage.setTitle("phase2");
         primaryStage.setResizable(false);
         primaryStage.setScene(new Scene(root));

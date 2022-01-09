@@ -9,7 +9,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import model.Team;
 import model.User;
 
 import java.io.IOException;
@@ -43,6 +45,12 @@ public class AdminMenuView {
     public Button ban;
     public Button changeRole;
     public TextField newRole;
+    public Label numberOfUsers;
+    public Label numberOfTeams;
+    public Label numberOfDoneTasks;
+    public Label numberOfFailedTasks;
+    public Button back3;
+    public Button refresh;
 
 
     public void goToUsers(ActionEvent actionEvent) throws IOException {
@@ -59,7 +67,9 @@ public class AdminMenuView {
     public void showPendingTeams(ActionEvent actionEvent) {
     }
 
-    public void showStatistic(ActionEvent actionEvent) {
+    public void showStatistic(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/Statistics.fxml"));
+        ((Stage) statistic.getScene().getWindow()).setScene(new Scene(root));
     }
 
     public void showListOfUsers(ActionEvent actionEvent) {
@@ -138,6 +148,11 @@ public class AdminMenuView {
             alert.setTitle("Error");
             alert.setContentText("You should fill the fields!");
             alert.showAndWait();
+        } else if (newRole.getText() == null || newRole.getText().equals("")) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setContentText("You should fill the fields!");
+            alert.showAndWait();
         } else {
             String newRole1 = newRole.getText();
             int response = Controller.controller.changeRole(user.getUserName(), newRole1);
@@ -148,5 +163,17 @@ public class AdminMenuView {
                 alert.showAndWait();
             }
         }
+    }
+
+    public void goToAdminPage2(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/AdminMenu.fxml"));
+        ((Stage) back3.getScene().getWindow()).setScene(new Scene(root));
+    }
+
+    public void refresh(ActionEvent actionEvent) {
+        numberOfUsers.setText(Integer.toString(User.getUsers().size()));
+        numberOfTeams.setText(Integer.toString(Team.getAllTeams().size()));
+        numberOfDoneTasks.setText("-");
+        numberOfFailedTasks.setText("-");
     }
 }

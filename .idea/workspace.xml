@@ -4,18 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1a23b712-9d27-49b8-9308-d8a7f14f07b1" name="Changes" comment="Beautification">
-      <change afterPath="$PROJECT_DIR$/src/main/java/view/AdminMenuView.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/AdminMenu.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/SearchUserForAdmin.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/Users.fxml" afterDir="false" />
+    <list default="true" id="1a23b712-9d27-49b8-9308-d8a7f14f07b1" name="Changes" comment="Admin Menu">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/Statistics.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/AdminMenuView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/AdminMenuView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/view/LoginView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/LoginView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/RegisterView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/RegisterView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controller/Controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/Controller.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/view/LoginView.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/view/LoginView.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/view/RegisterView.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/view/RegisterView.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,7 +98,7 @@
       <workItem from="1641577611394" duration="2551000" />
       <workItem from="1641586388773" duration="1633000" />
       <workItem from="1641591159631" duration="18000" />
-      <workItem from="1641738564243" duration="9867000" />
+      <workItem from="1641738564243" duration="12983000" />
     </task>
     <task id="LOCAL-00001" summary="start phase2">
       <created>1641416456429</created>
@@ -148,7 +142,14 @@
       <option name="project" value="LOCAL" />
       <updated>1641580153018</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Admin Menu">
+      <created>1641756023110</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1641756023110</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -174,6 +175,7 @@
     <MESSAGE value="Login and Register page #2" />
     <MESSAGE value="Login and Register page #3" />
     <MESSAGE value="Beautification" />
-    <option name="LAST_COMMIT_MESSAGE" value="Beautification" />
+    <MESSAGE value="Admin Menu" />
+    <option name="LAST_COMMIT_MESSAGE" value="Admin Menu" />
   </component>
 </project>
