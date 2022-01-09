@@ -1015,8 +1015,8 @@ public class Controller {
         }
         if (counter == teamsNames.length) {
             for (String string : teamsNames) {
-                Team.getPendingTeams().remove(findTeam(string));
-                Team.getAcceptedTeams().add(findTeam(string));
+//                Team.getPendingTeams().remove(findTeam(string));
+//                Team.getAcceptedTeams().add(findTeam(string));
             }
             return 0;
         }
@@ -1035,9 +1035,9 @@ public class Controller {
         }
         if (counter == teamsNames.length) {
             for (String string : teamsNames) {
-                findTeam(string).getTeamMembers().get(0).getUserTeams().remove(findTeam(string));
-                findTeam(string).getTeamMembers().get(0).getJoiningDate().remove(findTeam(string));
-                Team.getPendingTeams().remove(findTeam(string));
+//                findTeam(string).getTeamMembers().get(0).getUserTeams().remove(findTeam(string));
+//                findTeam(string).getTeamMembers().get(0).getJoiningDate().remove(findTeam(string));
+//                Team.getPendingTeams().remove(findTeam(string));
             }
             return 0;
         }

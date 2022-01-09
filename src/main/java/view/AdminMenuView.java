@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import model.Notification;
 import model.Team;
 import model.User;
 
@@ -51,6 +52,20 @@ public class AdminMenuView {
     public Label numberOfFailedTasks;
     public Button back3;
     public Button refresh;
+    public Label listOfPendingTeams;
+    public Button updateList2;
+    public Button accept;
+    public Button reject;
+    public TextField acceptTeams;
+    public TextField rejectTeams;
+    public Button back4;
+    public Button back5;
+    public TextField textOfNotification;
+    public Button sendToAll;
+    public Button sendToTeam;
+    public Button sendToUser;
+    public TextField nameOfTeam;
+    public TextField nameOfUser;
 
 
     public void goToUsers(ActionEvent actionEvent) throws IOException {
@@ -58,13 +73,18 @@ public class AdminMenuView {
         ((Stage) users.getScene().getWindow()).setScene(new Scene(root));
     }
 
-    public void goToNotification(ActionEvent actionEvent) {
+    public void goToNotification(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/SendNotification.fxml"));
+        ((Stage) notifications.getScene().getWindow()).setScene(new Scene(root));
     }
 
     public void goToScoreBoard(ActionEvent actionEvent) {
+        // go to scoreBoard page
     }
 
-    public void showPendingTeams(ActionEvent actionEvent) {
+    public void showPendingTeams(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/PendingTeams.fxml"));
+        ((Stage) pendingTeams.getScene().getWindow()).setScene(new Scene(root));
     }
 
     public void showStatistic(ActionEvent actionEvent) throws IOException {
@@ -175,5 +195,125 @@ public class AdminMenuView {
         numberOfTeams.setText(Integer.toString(Team.getAllTeams().size()));
         numberOfDoneTasks.setText("-");
         numberOfFailedTasks.setText("-");
+    }
+
+    public void showListOfPendingTeams(ActionEvent actionEvent) {
+        int response = Controller.controller.showPendingTeams();
+        if (response == 1){
+            listOfPendingTeams.setText("There are no Teams in Pending Status!");
+        }
+        else {
+            ArrayList<String> pending = new ArrayList<>();
+            int rank = 1;
+            for (Team team : Team.getPendingTeams()){
+                pending.add(rank + ". " + team.getTeamName() + "\n");
+                rank++;
+            }
+            listOfPendingTeams.setText(pending.toString().replaceAll(",", "").replaceAll("\\[", "").replaceAll("\\]", ""));
+        }
+    }
+
+    public void accept(ActionEvent actionEvent) {
+        if (acceptTeams.getText() == null || acceptTeams.getText().equals("")){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setContentText("You should fill the fields!");
+            alert.showAndWait();
+            return;
+        }
+        int response = Controller.controller.acceptTeam(acceptTeams.getText());
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        if (response == 1){
+            alert.setTitle("Error");
+            alert.setContentText("Some teams are not in pending status! Try again");
+        }else {
+            alert.setTitle("Success");
+            alert.setContentText("Teams accepted successfully!");
+        }
+        alert.showAndWait();
+    }
+
+    public void reject(ActionEvent actionEvent) {
+        if (rejectTeams.getText() == null || rejectTeams.getText().equals("")){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setContentText("You should fill the fields!");
+            alert.showAndWait();
+            return;
+        }
+        int response = Controller.controller.rejectTeam(rejectTeams.getText());
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        if (response == 1){
+            alert.setTitle("Error");
+            alert.setContentText("Some teams are not in pending status! Try again");
+        }else {
+            alert.setTitle("Success");
+            alert.setContentText("Teams rejected successfully!");
+        }
+        alert.showAndWait();
+    }
+
+    public void goToAdminPage3(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/AdminMenu.fxml"));
+        ((Stage) back5.getScene().getWindow()).setScene(new Scene(root));
+    }
+
+    public void sendToAll(ActionEvent actionEvent) {
+        if (textOfNotification.getText() == null || textOfNotification.getText().equals("")){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setContentText("You should fill the fields!");
+            alert.showAndWait();
+            return;
+        }
+        Notification notification = new Notification(textOfNotification.getText(), LoginView.LoginUser, 0);
+        for (User user : User.getUsers()) {
+            user.getNotifications().add(notification);
+        }
+    }
+
+    public void sendToTeam(ActionEvent actionEvent) {
+        if (textOfNotification.getText() == null || textOfNotification.getText().equals("")){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setContentText("You should fill the fields!");
+            alert.showAndWait();
+            return;
+        }
+        int response = Controller.controller.sendNotificationForTeam(nameOfTeam.getText());
+        if (response == 1){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setContentText("There is no team with this name");
+            alert.showAndWait();
+            return;
+        }
+        else {
+            Notification notification = new Notification(textOfNotification.getText(), LoginView.LoginUser, 1);
+            for (User user : Controller.controller.findTeam(nameOfTeam.getText()).getTeamMembers()) {
+                user.getNotifications().add(notification);
+            }
+        }
+    }
+
+    public void sendToUser(ActionEvent actionEvent) {
+        if (textOfNotification.getText() == null || textOfNotification.getText().equals("")){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setContentText("You should fill the fields!");
+            alert.showAndWait();
+            return;
+        }
+        int response = Controller.controller.sendNotificationForUser(nameOfUser.getText());
+        if (response == 1){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setContentText("There is no team with this name");
+            alert.showAndWait();
+        }
+        else {
+            Notification notification = new Notification(textOfNotification.getText(), LoginView.LoginUser, 1);
+            User.getUserByUsername(nameOfUser.getText()).getNotifications().add(notification);
+        }
     }
 }
