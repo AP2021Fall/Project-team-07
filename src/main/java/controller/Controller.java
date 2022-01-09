@@ -37,7 +37,7 @@ public class Controller {
         //View.print("user logged in successfully!");
         DateTimeFormatter currentDate = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
-        Log log = new Log(findUser(username), currentDate.format(now));
+//        Log log = new Log(findUser(username), currentDate.format(now));
         String role = User.getUserByUsername(username).getRole();
         if (role.equals("Member")) {
             //View.runMemberMenu(User.getUserByUsername(username));
@@ -965,12 +965,12 @@ public class Controller {
         if (!isUsernameAvailable(username)) {
             return 1;
         }
-        User findUser = User.getUserByUsername(username);
-        for (Team team : findUser.getUserTeams()) {
-            team.getScoreboard().getScores().remove(findUser);
-            team.getTeamMembers().remove(findUser);
-        }
-        User.getUsers().remove(User.getUserByUsername(username));
+//        User findUser = User.getUserByUsername(username);
+//        for (Team team : findUser.getUserTeams()) {
+//            team.getScoreboard().getScores().remove(findUser);
+//            team.getTeamMembers().remove(findUser);
+//        }
+//        User.getUsers().remove(User.getUserByUsername(username));
         return 0;
     }
 
@@ -978,7 +978,7 @@ public class Controller {
         if (!isUsernameAvailable(username)) {
             return 1;
         }
-        findUser(username).setRole(role);
+//        findUser(username).setRole(role);
         return 0;
     }
 

@@ -26,7 +26,7 @@ public class LoginView extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/Login.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/Users.fxml"));
         primaryStage.setTitle("phase2");
         primaryStage.setResizable(false);
         primaryStage.setScene(new Scene(root));
@@ -38,7 +38,7 @@ public class LoginView extends Application {
         launch(args);
     }
 
-    public void login(ActionEvent actionEvent) throws ParseException {
+    public void login(ActionEvent actionEvent) throws ParseException, IOException {
         String username1 = username.getText();
         String password1 = password.getText();
         int response = Controller.controller.logIn(username1, password1);
@@ -50,9 +50,13 @@ public class LoginView extends Application {
         }
         else if (response == 1){
             errorLabel.setText("There is not any user with username: " + username1 + "!");
+            username.clear();
+            password.clear();
         }
         else if (response == 2){
             errorLabel.setText("Username and password didn’t match!");
+            username.clear();
+            password.clear();
         }
         else if (response == 3){
             // go to memberMenu page
@@ -61,7 +65,8 @@ public class LoginView extends Application {
             // go to leaderMenu page
         }
         else if (response == 5){
-            // go to adminMenu page
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/AdminMenu.fxml"));
+            ((Stage) errorLabel.getScene().getWindow()).setScene(new Scene(root));
         }
     }
 

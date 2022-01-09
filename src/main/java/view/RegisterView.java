@@ -38,15 +38,35 @@ public class RegisterView {
         }
         else if (response == 1){
             errorLabel1.setText("user with username " + currentUsername + " already exists!");
+            username.clear();
+            password.clear();
+            password2.clear();
+            email.clear();
+            fullName.clear();
         }
         else if (response == 2){
             errorLabel2.setText("Your passwords are not the same!");
+            username.clear();
+            password.clear();
+            password2.clear();
+            email.clear();
+            fullName.clear();
         }
         else if (response == 3){
             errorLabel3.setText("User with this email already exists!");
+            username.clear();
+            password.clear();
+            password2.clear();
+            email.clear();
+            fullName.clear();
         }
         else if (response == 4){
             errorLabel3.setText("Email address is invalid!");
+            username.clear();
+            password.clear();
+            password2.clear();
+            email.clear();
+            fullName.clear();
         }
         else if (response == 0){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
