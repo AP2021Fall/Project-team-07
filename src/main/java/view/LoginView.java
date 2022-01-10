@@ -26,7 +26,7 @@ public class LoginView extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/AdminMenu.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/Login.fxml"));
         primaryStage.setTitle("phase2");
         primaryStage.setResizable(false);
         primaryStage.setScene(new Scene(root));
@@ -60,7 +60,8 @@ public class LoginView extends Application {
         }
         LoginUser = User.getUserByUsername(username1);
         if (response == 3){
-            // go to memberMenu page
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/MemberMenu.fxml"));
+            ((Stage) errorLabel.getScene().getWindow()).setScene(new Scene(root));
         }
         else if (response == 4){
             // go to leaderMenu page

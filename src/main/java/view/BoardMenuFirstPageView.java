@@ -11,7 +11,6 @@ import javafx.scene.layout.AnchorPane;
 import model.Board;
 import model.Team;
 import model.User;
-
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -41,7 +40,7 @@ public class BoardMenuFirstPageView {
         boardName.setCellValueFactory(new PropertyValueFactory<>("boardName"));
         tableView.getColumns().addAll(boardName);
         tableView.setItems(list);
-        tableView.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/CSS/Scoreboard.css")).toExternalForm());
+        tableView.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/CSS/Table.css")).toExternalForm());
         pane.getChildren().add(tableView);
     }
 
@@ -65,7 +64,13 @@ public class BoardMenuFirstPageView {
                 response.setText("board creation hasn't finished");
                 return;
             }
-        //go to next page
+        LoggedController.getInstance().setSelectedBoard(board);
+        if (user.getRole().equals("Member")){}
+            //go to MemberPage
+        else{
+            //go to LeaderPage
+        }
+
     }
     public void makeBoard(ActionEvent actionEvent){
         String boardNameText = boardName.getText();
