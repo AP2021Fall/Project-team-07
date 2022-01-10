@@ -1,0 +1,59 @@
+<changelist name="Uncommitted_changes_before_Update_at_1_10_2022_6_15_PM_[Changes]1" date="1641826019793" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_1_10_2022_6_15_PM_[Changes]1/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Update at 1/10/2022 6:15 PM [Changes]" />
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/view/LoginView.class" />
+    <option name="AFTER_PATH" value="target/classes/view/LoginView.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_1_10_2022_6_15_PM_[Changes]1/LoginView.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="src/main/resources/img/list.png" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_1_10_2022_6_15_PM_[Changes]1/list.png" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="src/main/resources/img/checklist.png" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_1_10_2022_6_15_PM_[Changes]1/checklist.png" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="src/main/resources/img/clipboard.png" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_1_10_2022_6_15_PM_[Changes]1/clipboard.png" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="src/main/resources/img/close_window_12px.png" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_1_10_2022_6_15_PM_[Changes]1/close_window_12px.png" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="src/main/resources/img/close_window_96px.png" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_1_10_2022_6_15_PM_[Changes]1/close_window_96px.png" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/controller/Controller.class" />
+    <option name="AFTER_PATH" value="target/classes/controller/Controller.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_1_10_2022_6_15_PM_[Changes]1/Controller.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="src/main/resources/img/to-do-list.png" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_1_10_2022_6_15_PM_[Changes]1/to-do-list.png" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/model/Team.class" />
+    <option name="AFTER_PATH" value="target/classes/model/Team.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_1_10_2022_6_15_PM_[Changes]1/Team.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/model/Task.class" />
+    <option name="AFTER_PATH" value="target/classes/model/Task.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_1_10_2022_6_15_PM_[Changes]1/Task.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="src/main/resources/img/list (1).png" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_1_10_2022_6_15_PM_[Changes]1/list (1).png" />
+  </binary>
+</changelist>

@@ -1,0 +1,1329 @@
+Index: src/main/java/view/TaskItemView.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/view/TaskItemView.java b/src/main/java/view/TaskItemView.java
+new file mode 100644
+--- /dev/null	
++++ b/src/main/java/view/TaskItemView.java	
+@@ -0,0 +1,53 @@
++package view;
++
++import javafx.event.ActionEvent;
++import javafx.event.EventHandler;
++import javafx.fxml.FXMLLoader;
++import javafx.fxml.Initializable;
++import javafx.scene.Node;
++import javafx.scene.Parent;
++import javafx.scene.Scene;
++import javafx.scene.control.Button;
++import javafx.scene.control.Label;
++import javafx.scene.layout.BorderPane;
++import javafx.stage.Stage;
++import model.Task;
++import model.User;
++
++import java.io.IOException;
++import java.net.URL;
++import java.util.Objects;
++import java.util.ResourceBundle;
++
++public class TaskItemView implements Initializable {
++    public BorderPane pane;
++    public Label lblTaskPriority;
++    public Button btnSelect;
++    public Label lblTaskTitle;
++    private Task selectTask;
++
++    @Override
++    public void initialize(URL location, ResourceBundle resources) {
++        btnSelect.setOnAction(new EventHandler<ActionEvent>() {
++            @Override
++            public void handle(ActionEvent event) {
++                Task.setSelectTask(selectTask);
++                Parent root = null;
++                try {
++                    root = FXMLLoader.load(getClass().getResource("/fxml/TaskPage.fxml"));
++                } catch (IOException e) {
++                    e.printStackTrace();
++                }
++
++                ((Stage) pane.getScene().getWindow()).setScene(new Scene(root));
++            }
++        });
++    }
++
++    public void setTask(Task task) {
++        lblTaskTitle.setText(task.getTitle());
++        lblTaskPriority.setText(task.getPriority());
++        selectTask = task;
++    }
++
++}
+Index: src/main/resources/json/Database.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>{\r\n  \"@type\": \"controller.Database\",\r\n  \"@val\": {\r\n    \"users\": [\r\n      {\r\n        \"creationId\": 1,\r\n        \"userName\": \"mirzaeimahdi409\",\r\n        \"password\": \"138014\",\r\n        \"email\": \"mirzaeimahdi409@gmail.com\",\r\n        \"role\": \"System Admin\",\r\n        \"score\": 0,\r\n        \"allLogs\": [\r\n          {\r\n            \"user\": \"@root.users.0\",\r\n            \"date\": \"2021/12/28 01:30:42\"\r\n          },\r\n          {\r\n            \"user\": \"@root.users.0\",\r\n            \"date\": \"2021/12/28 01:32:38\"\r\n          },\r\n          {\r\n            \"user\": \"@root.users.0\",\r\n            \"date\": \"2021/12/28 22:37:52\"\r\n          }\r\n        ],\r\n        \"allTasksForUser\": [],\r\n        \"notifications\": [\r\n          {\r\n            \"text\": \"Hello everyone\",\r\n            \"sender\": \"@root.users.0\",\r\n            \"type\": 0\r\n          }\r\n        ],\r\n        \"userTeams\": [],\r\n        \"joiningDate\": {}\r\n      },\r\n      {\r\n        \"creationId\": 2,\r\n        \"userName\": \"AmirReza\",\r\n        \"password\": \"138014\",\r\n        \"email\": \"AmirReza@gmail.com\",\r\n        \"role\": \"Member\",\r\n        \"score\": 0,\r\n        \"allLogs\": [\r\n          {\r\n            \"user\": \"@root.users.1\",\r\n            \"date\": \"2021/12/28 01:31:27\"\r\n          },\r\n          {\r\n            \"user\": \"@root.users.1\",\r\n            \"date\": \"2021/12/28 22:40:34\"\r\n          },\r\n          {\r\n            \"user\": \"@root.users.1\",\r\n            \"date\": \"2021/12/28 23:17:11\"\r\n          },\r\n          {\r\n            \"user\": \"@root.users.1\",\r\n            \"date\": \"2021/12/28 23:55:14\"\r\n          }\r\n        ],\r\n        \"allTasksForUser\": [],\r\n        \"notifications\": [\r\n          \"@root.users.0.notifications.0\"\r\n        ],\r\n        \"userTeams\": [\r\n          {\r\n            \"teamNumber\": 2,\r\n            \"teamName\": \"Yakuza2\",\r\n            \"teamMembers\": [],\r\n            \"suspendedMembers\": [],\r\n            \"boards\": [],\r\n            \"teamLeader\": \"@root.users.1\",\r\n            \"scoreboard\": {\r\n              \"team\": \"@root.users.1.userTeams.0\",\r\n              \"scores\": {}\r\n            },\r\n            \"roadMap\": {\r\n              \"team\": \"@root.users.1.userTeams.0\",\r\n              \"tasksStatus\": {},\r\n              \"creationDates\": {}\r\n            },\r\n            \"allTasks\": [],\r\n            \"notifications\": [],\r\n            \"creationDate\": {\r\n              \"localDate\": {\r\n                \"date\": {\r\n                  \"year\": 2021,\r\n                  \"month\": 12,\r\n                  \"day\": 28\r\n                },\r\n                \"time\": {\r\n                  \"hour\": 1,\r\n                  \"minute\": 31,\r\n                  \"second\": 0,\r\n                  \"nano\": 0\r\n                }\r\n              },\r\n              \"date\": \"2021/12/28|01:31\"\r\n            }\r\n          },\r\n          {\r\n            \"teamNumber\": 3,\r\n            \"teamName\": \"Yakuza3\",\r\n            \"teamMembers\": [],\r\n            \"suspendedMembers\": [],\r\n            \"boards\": [],\r\n            \"teamLeader\": \"@root.users.1\",\r\n            \"scoreboard\": {\r\n              \"team\": \"@root.users.1.userTeams.1\",\r\n              \"scores\": {}\r\n            },\r\n            \"roadMap\": {\r\n              \"team\": \"@root.users.1.userTeams.1\",\r\n              \"tasksStatus\": {},\r\n              \"creationDates\": {}\r\n            },\r\n            \"allTasks\": [],\r\n            \"notifications\": [],\r\n            \"creationDate\": {\r\n              \"localDate\": {\r\n                \"date\": {\r\n                  \"year\": 2021,\r\n                  \"month\": 12,\r\n                  \"day\": 28\r\n                },\r\n                \"time\": {\r\n                  \"hour\": 1,\r\n                  \"minute\": 31,\r\n                  \"second\": 0,\r\n                  \"nano\": 0\r\n                }\r\n              },\r\n              \"date\": \"2021/12/28|01:31\"\r\n            }\r\n          },\r\n          {\r\n            \"teamNumber\": 4,\r\n            \"teamName\": \"Yakuza4\",\r\n            \"teamMembers\": [],\r\n            \"suspendedMembers\": [],\r\n            \"boards\": [],\r\n            \"teamLeader\": \"@root.users.1\",\r\n            \"scoreboard\": {\r\n              \"team\": \"@root.users.1.userTeams.2\",\r\n              \"scores\": {}\r\n            },\r\n            \"roadMap\": {\r\n              \"team\": \"@root.users.1.userTeams.2\",\r\n              \"tasksStatus\": {},\r\n              \"creationDates\": {}\r\n            },\r\n            \"allTasks\": [],\r\n            \"notifications\": [],\r\n            \"creationDate\": {\r\n              \"localDate\": {\r\n                \"date\": {\r\n                  \"year\": 2021,\r\n                  \"month\": 12,\r\n                  \"day\": 28\r\n                },\r\n                \"time\": {\r\n                  \"hour\": 1,\r\n                  \"minute\": 32,\r\n                  \"second\": 0,\r\n                  \"nano\": 0\r\n                }\r\n              },\r\n              \"date\": \"2021/12/28|01:32\"\r\n            }\r\n          },\r\n          {\r\n            \"teamNumber\": 5,\r\n            \"teamName\": \"Yakuza5\",\r\n            \"teamMembers\": [],\r\n            \"suspendedMembers\": [],\r\n            \"boards\": [],\r\n            \"teamLeader\": \"@root.users.1\",\r\n            \"scoreboard\": {\r\n              \"team\": \"@root.users.1.userTeams.3\",\r\n              \"scores\": {}\r\n            },\r\n            \"roadMap\": {\r\n              \"team\": \"@root.users.1.userTeams.3\",\r\n              \"tasksStatus\": {},\r\n              \"creationDates\": {}\r\n            },\r\n            \"allTasks\": [],\r\n            \"notifications\": [],\r\n            \"creationDate\": {\r\n              \"localDate\": {\r\n                \"date\": {\r\n                  \"year\": 2021,\r\n                  \"month\": 12,\r\n                  \"day\": 28\r\n                },\r\n                \"time\": {\r\n                  \"hour\": 1,\r\n                  \"minute\": 32,\r\n                  \"second\": 0,\r\n                  \"nano\": 0\r\n                }\r\n              },\r\n              \"date\": \"2021/12/28|01:32\"\r\n            }\r\n          },\r\n          {\r\n            \"teamNumber\": 6,\r\n            \"teamName\": \"Yakuza6\",\r\n            \"teamMembers\": [],\r\n            \"suspendedMembers\": [],\r\n            \"boards\": [],\r\n            \"teamLeader\": \"@root.users.1\",\r\n            \"scoreboard\": {\r\n              \"team\": \"@root.users.1.userTeams.4\",\r\n              \"scores\": {}\r\n            },\r\n            \"roadMap\": {\r\n              \"team\": \"@root.users.1.userTeams.4\",\r\n              \"tasksStatus\": {},\r\n              \"creationDates\": {}\r\n            },\r\n            \"allTasks\": [],\r\n            \"notifications\": [],\r\n            \"creationDate\": {\r\n              \"localDate\": {\r\n                \"date\": {\r\n                  \"year\": 2021,\r\n                  \"month\": 12,\r\n                  \"day\": 28\r\n                },\r\n                \"time\": {\r\n                  \"hour\": 1,\r\n                  \"minute\": 32,\r\n                  \"second\": 0,\r\n                  \"nano\": 0\r\n                }\r\n              },\r\n              \"date\": \"2021/12/28|01:32\"\r\n            }\r\n          },\r\n          {\r\n            \"teamNumber\": 1,\r\n            \"teamName\": \"Yakuza1\",\r\n            \"teamMembers\": [\r\n              {\r\n                \"creationId\": 4,\r\n                \"userName\": \"mehrad\",\r\n                \"password\": \"2020\",\r\n                \"email\": \"Mehrad@gmail.com\",\r\n                \"role\": \"Member\",\r\n                \"score\": 0,\r\n                \"allLogs\": [],\r\n                \"allTasksForUser\": [],\r\n                \"notifications\": [\r\n                  \"@root.users.0.notifications.0\"\r\n                ],\r\n                \"userTeams\": [\r\n                  \"@root.users.1.userTeams.5\"\r\n                ],\r\n                \"joiningDate\": {\r\n                  \"@root.users.1.userTeams.5\": {\r\n                    \"localDate\": {\r\n                      \"date\": {\r\n                        \"year\": 2021,\r\n                        \"month\": 12,\r\n                        \"day\": 28\r\n                      },\r\n                      \"time\": {\r\n                        \"hour\": 1,\r\n                        \"minute\": 31,\r\n                        \"second\": 0,\r\n                        \"nano\": 0\r\n                      }\r\n                    },\r\n                    \"date\": \"2021/12/28|01:31\"\r\n                  }\r\n                }\r\n              },\r\n              \"@root.users.1\"\r\n            ],\r\n            \"suspendedMembers\": [],\r\n            \"boards\": [],\r\n            \"teamLeader\": {\r\n              \"creationId\": 3,\r\n              \"userName\": \"Amir\",\r\n              \"password\": \"2020\",\r\n              \"email\": \"Amir@gmail.com\",\r\n              \"role\": \"Leader\",\r\n              \"score\": 0,\r\n              \"allLogs\": [\r\n                {\r\n                  \"user\": \"@root.users.1.userTeams.5.teamLeader\",\r\n                  \"date\": \"2021/12/28 23:56:28\"\r\n                },\r\n                {\r\n                  \"user\": \"@root.users.1.userTeams.5.teamLeader\",\r\n                  \"date\": \"2022/01/03 11:14:49\"\r\n                }\r\n              ],\r\n              \"allTasksForUser\": [],\r\n              \"notifications\": [\r\n                \"@root.users.0.notifications.0\",\r\n                {\r\n                  \"text\": \"Hi Amir\",\r\n                  \"sender\": \"@root.users.0\",\r\n                  \"type\": 0\r\n                }\r\n              ],\r\n              \"userTeams\": [],\r\n              \"joiningDate\": {}\r\n            },\r\n            \"scoreboard\": {\r\n              \"team\": \"@root.users.1.userTeams.5\",\r\n              \"scores\": {\r\n                \"@root.users.1\": 0,\r\n                \"@root.users.1.userTeams.5.teamMembers.0\": 0\r\n              }\r\n            },\r\n            \"roadMap\": {\r\n              \"team\": \"@root.users.1.userTeams.5\",\r\n              \"tasksStatus\": {},\r\n              \"creationDates\": [\r\n                [\r\n                  {\r\n                    \"creationId\": 1,\r\n                    \"title\": \"Task1\",\r\n                    \"description\": \"\",\r\n                    \"priority\": \"Lowest\",\r\n                    \"dateOfCreation\": {\r\n                      \"localDate\": {\r\n                        \"date\": {\r\n                          \"year\": 1400,\r\n                          \"month\": 10,\r\n                          \"day\": 5\r\n                        },\r\n                        \"time\": {\r\n                          \"hour\": 17,\r\n                          \"minute\": 40,\r\n                          \"second\": 0,\r\n                          \"nano\": 0\r\n                        }\r\n                      },\r\n                      \"date\": \"1400/10/05|17:40\"\r\n                    },\r\n                    \"deadline\": {\r\n                      \"localDate\": {\r\n                        \"date\": {\r\n                          \"year\": 1400,\r\n                          \"month\": 10,\r\n                          \"day\": 30\r\n                        },\r\n                        \"time\": {\r\n                          \"hour\": 17,\r\n                          \"minute\": 40,\r\n                          \"second\": 0,\r\n                          \"nano\": 0\r\n                        }\r\n                      },\r\n                      \"date\": \"1400/10/30|17:40\"\r\n                    },\r\n                    \"assignedUser\": [],\r\n                    \"team\": \"@root.users.1.userTeams.5\",\r\n                    \"comments\": []\r\n                  },\r\n                  \"@root.users.1.userTeams.5.roadMap.creationDates.0-key.dateOfCreation\"\r\n                ]\r\n              ]\r\n            },\r\n            \"allTasks\": [\r\n              \"@root.users.1.userTeams.5.roadMap.creationDates.0-key\"\r\n            ],\r\n            \"notifications\": [],\r\n            \"creationDate\": \"@root.users.1.userTeams.5.teamMembers.0.joiningDate.0-val\"\r\n          },\r\n          \"@.5\"\r\n        ],\r\n        \"joiningDate\": {\r\n          \"@root.users.1.userTeams.5\": \"@root.users.1.userTeams.5.teamMembers.0.joiningDate.0-val\",\r\n          \"@root.users.1.userTeams.0\": \"@root.users.1.userTeams.0.creationDate\",\r\n          \"@root.users.1.userTeams.3\": \"@root.users.1.userTeams.3.creationDate\",\r\n          \"@root.users.1.userTeams.2\": \"@root.users.1.userTeams.2.creationDate\",\r\n          \"@root.users.1.userTeams.1\": \"@root.users.1.userTeams.1.creationDate\",\r\n          \"@root.users.1.userTeams.4\": \"@root.users.1.userTeams.4.creationDate\"\r\n        }\r\n      },\r\n      \"@root.users.1.userTeams.5.teamLeader\",\r\n      \"@root.users.1.userTeams.5.teamMembers.0\",\r\n      {\r\n        \"creationId\": 6,\r\n        \"userName\": \"Zeinab\",\r\n        \"password\": \"2020\",\r\n        \"email\": \"Zeinab@gmail.com\",\r\n        \"role\": \"Member\",\r\n        \"score\": 0,\r\n        \"allLogs\": [],\r\n        \"allTasksForUser\": [],\r\n        \"notifications\": [],\r\n        \"userTeams\": [],\r\n        \"joiningDate\": {}\r\n      }\r\n    ],\r\n    \"teams\": [\r\n      \"@root.users.1.userTeams.5\",\r\n      \"@root.users.1.userTeams.0\",\r\n      \"@root.users.1.userTeams.1\",\r\n      \"@root.users.1.userTeams.2\",\r\n      \"@root.users.1.userTeams.3\",\r\n      \"@root.users.1.userTeams.4\"\r\n    ],\r\n    \"pending\": [],\r\n    \"accepted\": [\r\n      \"@root.users.1.userTeams.5\",\r\n      \"@root.users.1.userTeams.0\",\r\n      \"@root.users.1.userTeams.1\",\r\n      \"@root.users.1.userTeams.2\",\r\n      \"@root.users.1.userTeams.3\"\r\n    ],\r\n    \"tasks\": [\r\n      \"@root.users.1.userTeams.5.roadMap.creationDates.0-key\"\r\n    ],\r\n    \"boards\": [],\r\n    \"uI\": 7,\r\n    \"tI\": 7,\r\n    \"taI\": 2,\r\n    \"bI\": 1\r\n  }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/resources/json/Database.json b/src/main/resources/json/Database.json
+--- a/src/main/resources/json/Database.json	
++++ b/src/main/resources/json/Database.json	
+@@ -296,6 +296,10 @@
+                 {
+                   "user": "@root.users.1.userTeams.5.teamLeader",
+                   "date": "2022/01/03 11:14:49"
++                },
++                {
++                  "user": "@root.users.1.userTeams.5.teamLeader",
++                  "date": "2022/01/09 12:35:04"
+                 }
+               ],
+               "allTasksForUser": [],
+@@ -323,6 +327,50 @@
+               "creationDates": [
+                 [
+                   {
++                    "creationId": 2,
++                    "title": "Task2",
++                    "description": "",
++                    "priority": "Lowest",
++                    "dateOfCreation": {
++                      "localDate": {
++                        "date": {
++                          "year": 1400,
++                          "month": 10,
++                          "day": 5
++                        },
++                        "time": {
++                          "hour": 17,
++                          "minute": 40,
++                          "second": 0,
++                          "nano": 0
++                        }
++                      },
++                      "date": "1400/10/05|17:40"
++                    },
++                    "deadline": {
++                      "localDate": {
++                        "date": {
++                          "year": 1400,
++                          "month": 10,
++                          "day": 30
++                        },
++                        "time": {
++                          "hour": 17,
++                          "minute": 40,
++                          "second": 0,
++                          "nano": 0
++                        }
++                      },
++                      "date": "1400/10/30|17:40"
++                    },
++                    "assignedUser": [],
++                    "team": "@root.users.1.userTeams.5",
++                    "comments": []
++                  },
++                  "@root.users.1.userTeams.5.roadMap.creationDates.0-key.dateOfCreation"
++                ],
++                [
++                  {
+                     "creationId": 1,
+                     "title": "Task1",
+                     "description": "",
+@@ -363,11 +411,12 @@
+                     "team": "@root.users.1.userTeams.5",
+                     "comments": []
+                   },
+-                  "@root.users.1.userTeams.5.roadMap.creationDates.0-key.dateOfCreation"
++                  "@root.users.1.userTeams.5.roadMap.creationDates.1-key.dateOfCreation"
+                 ]
+               ]
+             },
+             "allTasks": [
++              "@root.users.1.userTeams.5.roadMap.creationDates.1-key",
+               "@root.users.1.userTeams.5.roadMap.creationDates.0-key"
+             ],
+             "notifications": [],
+@@ -377,11 +426,11 @@
+         ],
+         "joiningDate": {
+           "@root.users.1.userTeams.5": "@root.users.1.userTeams.5.teamMembers.0.joiningDate.0-val",
+-          "@root.users.1.userTeams.0": "@root.users.1.userTeams.0.creationDate",
+-          "@root.users.1.userTeams.3": "@root.users.1.userTeams.3.creationDate",
+           "@root.users.1.userTeams.2": "@root.users.1.userTeams.2.creationDate",
+           "@root.users.1.userTeams.1": "@root.users.1.userTeams.1.creationDate",
+-          "@root.users.1.userTeams.4": "@root.users.1.userTeams.4.creationDate"
++          "@root.users.1.userTeams.0": "@root.users.1.userTeams.0.creationDate",
++          "@root.users.1.userTeams.4": "@root.users.1.userTeams.4.creationDate",
++          "@root.users.1.userTeams.3": "@root.users.1.userTeams.3.creationDate"
+         }
+       },
+       "@root.users.1.userTeams.5.teamLeader",
+@@ -417,12 +466,13 @@
+       "@root.users.1.userTeams.3"
+     ],
+     "tasks": [
++      "@root.users.1.userTeams.5.roadMap.creationDates.1-key",
+       "@root.users.1.userTeams.5.roadMap.creationDates.0-key"
+     ],
+     "boards": [],
+     "uI": 7,
+     "tI": 7,
+-    "taI": 2,
++    "taI": 3,
+     "bI": 1
+   }
+ }
+\ No newline at end of file
+Index: src/main/java/model/Team.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package model;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.HashMap;\r\n\r\npublic class Team {\r\n\r\n    private static ArrayList<Team> acceptedTeams = new ArrayList<>();\r\n    private static ArrayList<Team> pendingTeams = new ArrayList<>();\r\n    private static ArrayList<Team> allTeams = new ArrayList<>();\r\n    private static int teamNumberCreator = 1;\r\n    private int teamNumber;\r\n    private String teamName;\r\n    private ArrayList<User> teamMembers;\r\n    private ArrayList<User> suspendedMembers;\r\n    private ArrayList<Board> boards;\r\n    private User teamLeader;\r\n    private Scoreboard scoreboard;\r\n    private RoadMap roadMap;\r\n    private ChatRoom chatRoom;\r\n    private ArrayList<Task> allTasks;\r\n    private ArrayList<Notification> notifications;\r\n    private Date creationDate;\r\n    private HashMap<User, Date> joiningDateForMembers;\r\n\r\n\r\n    public Team(String teamName, User teamLeader, Date creationDate) {\r\n        this.teamName = teamName;\r\n        this.teamLeader = teamLeader;\r\n        this.creationDate = creationDate;\r\n        this.teamNumber = teamNumberCreator;\r\n        teamNumberCreator++;\r\n        pendingTeams.add(this);\r\n        allTeams.add(this);\r\n        roadMap = new RoadMap(this);\r\n        this.teamMembers = new ArrayList<>();\r\n        this.allTasks = new ArrayList<>();\r\n        this.suspendedMembers = new ArrayList<>();\r\n        this.notifications = new ArrayList<>();\r\n        this.boards = new ArrayList<>();\r\n        teamLeader.getJoiningDate().put(this, this.creationDate);\r\n        teamLeader.getUserTeams().add(this);\r\n        this.scoreboard = new Scoreboard(this);\r\n    }\r\n\r\n    public static Team getTeamByName(String teamName, ArrayList<Team> teams) {\r\n        for (Team team : teams) {\r\n            if (team.teamName.equals(teamName)) return team;\r\n        }\r\n        return null;\r\n    }\r\n\r\n    public Date getCreationDate() {\r\n        return creationDate;\r\n    }\r\n\r\n    public static void setAcceptedTeams(ArrayList<Team> acceptedTeams) {\r\n        Team.acceptedTeams = acceptedTeams;\r\n    }\r\n\r\n    public static void setPendingTeams(ArrayList<Team> pendingTeams) {\r\n        Team.pendingTeams = pendingTeams;\r\n    }\r\n\r\n    public static void setAllTeams(ArrayList<Team> allTeams) {\r\n        Team.allTeams = allTeams;\r\n    }\r\n\r\n    public static int getTeamNumberCreator() {\r\n        return teamNumberCreator;\r\n    }\r\n\r\n    public static void setTeamNumberCreator(int teamNumberCreator) {\r\n        Team.teamNumberCreator = teamNumberCreator;\r\n    }\r\n\r\n    public void setTeamLeader(User teamLeader) {\r\n        this.teamLeader = teamLeader;\r\n    }\r\n\r\n    public void setScoreboard(Scoreboard scoreboard) {\r\n        this.scoreboard = scoreboard;\r\n    }\r\n\r\n    public void setRoadMap(RoadMap roadMap) {\r\n        this.roadMap = roadMap;\r\n    }\r\n\r\n    public void setChatRoom(ChatRoom chatRoom) {\r\n        this.chatRoom = chatRoom;\r\n    }\r\n\r\n    public static ArrayList<Team> getAcceptedTeams() {\r\n        return acceptedTeams;\r\n    }\r\n\r\n    public static ArrayList<Team> getPendingTeams() {\r\n        return pendingTeams;\r\n    }\r\n\r\n    public ArrayList<Notification> getNotifications() {\r\n        return notifications;\r\n    }\r\n\r\n    public int getTeamNumber() {\r\n        return teamNumber;\r\n    }\r\n\r\n    public String getTeamName() {\r\n        return teamName;\r\n    }\r\n\r\n    public ArrayList<User> getTeamMembers() {\r\n        return teamMembers;\r\n    }\r\n\r\n    public User getTeamLeader() {\r\n        return teamLeader;\r\n    }\r\n\r\n    public Scoreboard getScoreboard() {\r\n        return scoreboard;\r\n    }\r\n\r\n    public RoadMap getRoadMap() {\r\n        return roadMap;\r\n    }\r\n\r\n    public ChatRoom getChatRoom() {\r\n        return chatRoom;\r\n    }\r\n\r\n    public ArrayList<Task> getAllTasks() {\r\n        return allTasks;\r\n    }\r\n\r\n    public ArrayList<User> getSuspendedMembers() {\r\n        return suspendedMembers;\r\n    }\r\n\r\n    public static ArrayList<Team> getAllTeams() {\r\n        return allTeams;\r\n    }\r\n\r\n    public ArrayList<Board> getBoards() {\r\n        return boards;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/model/Team.java b/src/main/java/model/Team.java
+--- a/src/main/java/model/Team.java	
++++ b/src/main/java/model/Team.java	
+@@ -9,6 +9,7 @@
+     private static ArrayList<Team> pendingTeams = new ArrayList<>();
+     private static ArrayList<Team> allTeams = new ArrayList<>();
+     private static int teamNumberCreator = 1;
++    private static Team selectTeam;
+     private int teamNumber;
+     private String teamName;
+     private ArrayList<User> teamMembers;
+@@ -70,6 +71,14 @@
+         return teamNumberCreator;
+     }
+ 
++    public static Team getSelectTeam() {
++        return selectTeam;
++    }
++
++    public static void setSelectTeam(Team selectTeam) {
++        Team.selectTeam = selectTeam;
++    }
++
+     public static void setTeamNumberCreator(int teamNumberCreator) {
+         Team.teamNumberCreator = teamNumberCreator;
+     }
+Index: src/main/java/view/TaskPageView.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/view/TaskPageView.java b/src/main/java/view/TaskPageView.java
+new file mode 100644
+--- /dev/null	
++++ b/src/main/java/view/TaskPageView.java	
+@@ -0,0 +1,53 @@
++package view;
++
++import javafx.event.ActionEvent;
++import javafx.fxml.FXMLLoader;
++import javafx.fxml.Initializable;
++import javafx.scene.Parent;
++import javafx.scene.Scene;
++import javafx.scene.control.Button;
++import javafx.scene.control.Label;
++import javafx.scene.control.TextField;
++import javafx.scene.input.MouseEvent;
++import javafx.scene.layout.AnchorPane;
++import javafx.stage.Stage;
++import model.Task;
++
++import java.io.IOException;
++import java.net.URL;
++import java.util.ResourceBundle;
++
++public class TaskPageView implements Initializable {
++    public Button btnTaskList;
++    public Label lblDateOfCreation;
++    public Label lblDeadline;
++    public Label lblTaskTitle;
++    public Label lblDescription;
++    public Label lblPriority;
++    private final Task selectTask = Task.getSelectTask();
++    public AnchorPane pane;
++
++
++    public void goToTaskList(ActionEvent actionEvent) throws IOException {
++        Task.setSelectTask(null);
++        Parent root = FXMLLoader.load(getClass().getResource("/fxml/TaskList.fxml"));
++        ((Stage) pane.getScene().getWindow()).setScene(new Scene(root));
++    }
++
++    @Override
++    public void initialize(URL location, ResourceBundle resources) {
++        lblTaskTitle.setText(selectTask.getTitle());
++        lblDeadline.setText(selectTask.getDeadline().toString());
++        lblPriority.setText(selectTask.getPriority());
++        lblDateOfCreation.setText(selectTask.getDateOfCreation().toString());
++        if (selectTask.getDescription().equals(""))
++            lblDescription.setText("description is null!");
++        else
++            lblDescription.setText(selectTask.getDescription());
++
++
++    }
++
++    public void exit(MouseEvent mouseEvent) {
++    }
++}
+Index: src/main/resources/fxml/TaskPage.fxml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/resources/fxml/TaskPage.fxml b/src/main/resources/fxml/TaskPage.fxml
+new file mode 100644
+--- /dev/null	
++++ b/src/main/resources/fxml/TaskPage.fxml	
+@@ -0,0 +1,78 @@
++<?xml version="1.0" encoding="UTF-8"?>
++
++<?import javafx.geometry.Insets?>
++<?import javafx.scene.control.Button?>
++<?import javafx.scene.control.Label?>
++<?import javafx.scene.image.Image?>
++<?import javafx.scene.image.ImageView?>
++<?import javafx.scene.layout.AnchorPane?>
++<?import javafx.scene.layout.VBox?>
++<?import javafx.scene.text.Font?>
++
++<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
++            prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
++            fx:controller="view.TaskPageView">
++    <children>
++        <AnchorPane prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #949292;"
++                    AnchorPane.bottomAnchor="360.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
++                    AnchorPane.topAnchor="0.0">
++            <children>
++                <Label layoutX="24.0" layoutY="11.0" text="Task Page"/>
++                <ImageView fx:id="exit" fitHeight="28.0" fitWidth="31.0" layoutX="564.0" layoutY="6.0"
++                           onDragDetected="#exit" pickOnBounds="true" preserveRatio="true"
++                           AnchorPane.rightAnchor="10.0">
++                    <image>
++                        <Image url="@../img/close_window_96px.png"/>
++                    </image>
++                </ImageView>
++            </children>
++        </AnchorPane>
++        <AnchorPane layoutY="40.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="360.0" prefWidth="100.0"
++                    AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="40.0">
++            <children>
++                <VBox alignment="TOP_CENTER" layoutY="-1.0" prefHeight="361.0" prefWidth="100.0" spacing="9.0"
++                      style="-fx-background-color: #C8C5C4;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
++                    <children>
++                        <Button fx:id="btnTaskList" mnemonicParsing="false" onAction="#goToTaskList" prefHeight="50.0"
++                                prefWidth="80.0" text="Task List">
++                            <VBox.margin>
++                                <Insets top="7.0"/>
++                            </VBox.margin>
++                            <font>
++                                <Font size="10.0"/>
++                            </font>
++                        </Button>
++                    </children>
++                </VBox>
++            </children>
++        </AnchorPane>
++        <AnchorPane layoutX="98.0" layoutY="40.0" prefHeight="362.0" prefWidth="502.0"
++                    style="-fx-background-color: #E7E2E1;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="110.0"
++                    AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
++            <children>
++                <Label fx:id="lblTaskTitle" alignment="CENTER" layoutX="164.0" layoutY="14.0" prefHeight="35.0"
++                       prefWidth="151.0" text="Task Title">
++                    <font>
++                        <Font size="24.0"/>
++                    </font>
++                </Label>
++                <Label fx:id="lblDescription" alignment="CENTER" layoutX="10.0" layoutY="66.0" prefHeight="35.0"
++                       prefWidth="455.0" text="description" textAlignment="CENTER">
++                    <font>
++                        <Font size="14.0"/>
++                    </font>
++                </Label>
++                <Label fx:id="lblPriority" alignment="CENTER" layoutX="25.0" layoutY="23.0" prefHeight="18.0"
++                       prefWidth="62.0" text="Priority"/>
++                <Label alignment="CENTER" layoutX="93.0" layoutY="119.0" prefHeight="35.0" prefWidth="138.0"
++                       text="dateOfCreation"/>
++                <Label alignment="CENTER" layoutX="93.0" layoutY="155.0" prefHeight="35.0" prefWidth="138.0"
++                       text="deadline"/>
++                <Label fx:id="lblDateOfCreation" alignment="CENTER" layoutX="250.0" layoutY="119.0" prefHeight="35.0"
++                       prefWidth="166.0" text="dateOfCreation"/>
++                <Label fx:id="lblDeadline" alignment="CENTER" layoutX="250.0" layoutY="154.0" prefHeight="35.0"
++                       prefWidth="166.0" text="deadline"/>
++            </children>
++        </AnchorPane>
++    </children>
++</AnchorPane>
+Index: src/main/resources/fxml/TaskPageForLeader.fxml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/resources/fxml/TaskPageForLeader.fxml b/src/main/resources/fxml/TaskPageForLeader.fxml
+new file mode 100644
+--- /dev/null	
++++ b/src/main/resources/fxml/TaskPageForLeader.fxml	
+@@ -0,0 +1,90 @@
++<?xml version="1.0" encoding="UTF-8"?>
++
++<?import javafx.geometry.Insets?>
++<?import javafx.scene.control.Button?>
++<?import javafx.scene.control.Label?>
++<?import javafx.scene.control.ListView?>
++<?import javafx.scene.control.TextField?>
++<?import javafx.scene.image.Image?>
++<?import javafx.scene.image.ImageView?>
++<?import javafx.scene.layout.AnchorPane?>
++<?import javafx.scene.layout.VBox?>
++<?import javafx.scene.text.Font?>
++
++<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
++            prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
++            fx:controller="view.TaskPageForLeaderView">
++    <children>
++        <AnchorPane prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #949292;"
++                    AnchorPane.bottomAnchor="360.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
++                    AnchorPane.topAnchor="0.0">
++            <children>
++                <Label layoutX="24.0" layoutY="11.0" text="Task Page"/>
++                <ImageView fx:id="exit" fitHeight="28.0" fitWidth="31.0" layoutX="570.0" layoutY="6.0"
++                           onDragDetected="#exit" pickOnBounds="true" preserveRatio="true"
++                           AnchorPane.rightAnchor="10.0">
++                    <image>
++                        <Image url="@../img/close_window_96px.png"/>
++                    </image>
++                </ImageView>
++            </children>
++        </AnchorPane>
++        <AnchorPane layoutY="40.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="360.0" prefWidth="100.0"
++                    AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="40.0">
++            <children>
++                <VBox alignment="TOP_CENTER" layoutY="-1.0" prefHeight="361.0" prefWidth="100.0" spacing="9.0"
++                      style="-fx-background-color: #C8C5C4;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
++                    <children>
++                        <Button fx:id="btnTaskList" mnemonicParsing="false" onAction="#goToTaskList" prefHeight="50.0"
++                                prefWidth="80.0" text="Task List">
++                            <VBox.margin>
++                                <Insets top="7.0"/>
++                            </VBox.margin>
++                            <font>
++                                <Font size="10.0"/>
++                            </font>
++                        </Button>
++                        <Button fx:id="btnCreateTask" mnemonicParsing="false" onAction="#goToCreateTask"
++                                prefHeight="50.0" prefWidth="80.0" text="Create Task">
++                            <font>
++                                <Font size="10.0"/>
++                            </font>
++                        </Button>
++                    </children>
++                </VBox>
++            </children>
++        </AnchorPane>
++        <AnchorPane layoutX="98.0" layoutY="40.0" prefHeight="362.0" prefWidth="502.0"
++                    style="-fx-background-color: #E7E2E1;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="110.0"
++                    AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
++            <children>
++                <Label alignment="CENTER" layoutX="21.0" layoutY="149.0" prefHeight="35.0" prefWidth="100.0"
++                       text="dateOfCreation"/>
++                <Label alignment="CENTER" layoutX="21.0" layoutY="185.0" prefHeight="35.0" prefWidth="100.0"
++                       text="deadline"/>
++                <TextField fx:id="deadlineFiled" alignment="CENTER" layoutX="121.0" layoutY="185.0" prefHeight="35.0"
++                           prefWidth="166.0" promptText="deadline"/>
++                <TextField fx:id="descriptionField" alignment="CENTER" layoutX="12.0" layoutY="88.0" prefHeight="35.0"
++                           prefWidth="455.0" promptText="description"/>
++                <TextField fx:id="PriorityField" alignment="CENTER" layoutX="30.0" layoutY="22.0" prefHeight="29.0"
++                           prefWidth="62.0" promptText="Priority">
++                    <font>
++                        <Font size="11.0"/>
++                    </font>
++                </TextField>
++                <TextField fx:id="taskTitleField" alignment="CENTER" layoutX="156.0" layoutY="14.0" prefHeight="35.0"
++                           prefWidth="166.0" promptText="Task Title">
++                    <font>
++                        <Font size="24.0"/>
++                    </font>
++                </TextField>
++                <Button fx:id="btnEdit" layoutX="110.0" layoutY="236.0" mnemonicParsing="false" onAction="#Edit"
++                        prefHeight="35.0" prefWidth="72.0" text="edit"/>
++                <Label fx:id="lblError" layoutX="225.0" layoutY="294.0" textFill="RED"/>
++                <Label fx:id="lblDateOfCreation" alignment="CENTER" layoutX="121.0" layoutY="149.0" prefHeight="35.0"
++                       prefWidth="166.0" text="dateOfCreation" textAlignment="CENTER"/>
++                <ListView fx:id="membersList" layoutX="310.0" layoutY="149.0" prefHeight="148.0" prefWidth="156.0"/>
++            </children>
++        </AnchorPane>
++    </children>
++</AnchorPane>
+Index: src/main/java/view/TaskListForLeaderView.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/view/TaskListForLeaderView.java b/src/main/java/view/TaskListForLeaderView.java
+new file mode 100644
+--- /dev/null	
++++ b/src/main/java/view/TaskListForLeaderView.java	
+@@ -0,0 +1,61 @@
++package view;
++
++import controller.JsonController;
++import javafx.event.ActionEvent;
++import javafx.fxml.FXML;
++import javafx.fxml.FXMLLoader;
++import javafx.fxml.Initializable;
++import javafx.scene.Node;
++import javafx.scene.Parent;
++import javafx.scene.Scene;
++import javafx.scene.control.Button;
++import javafx.scene.image.ImageView;
++import javafx.scene.input.MouseEvent;
++import javafx.scene.layout.AnchorPane;
++import javafx.scene.layout.VBox;
++import javafx.stage.Stage;
++import model.Task;
++import model.Team;
++
++import java.io.IOException;
++import java.net.URL;
++import java.util.ArrayList;
++import java.util.ResourceBundle;
++
++public class TaskListForLeaderView implements Initializable {
++    @FXML
++    public VBox vTaskItem;
++    public AnchorPane pane;
++    public Button btnCreateTask;
++    public ImageView exit;
++
++
++    @Override
++    public void initialize(URL location, ResourceBundle resources) {
++        Team team = Team.getTeamByName("Yakuza1", Team.getAllTeams());
++        ArrayList<Task> tasks = team.getAllTasks();
++        Node[] nodes = new Node[tasks.size()];
++        for (int i = 0; i < nodes.length; i++) {
++            try {
++                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/TaskItem.fxml"));
++                TaskItemForLeaderView controller = new TaskItemForLeaderView();
++                loader.setController(controller);
++                nodes[i] = loader.load();
++                vTaskItem.getChildren().add(nodes[i]);
++                controller.setTask(tasks.get(i));
++            } catch (Exception e) {
++                e.printStackTrace();
++            }
++        }
++    }
++
++    public void goToCreateTaskPage(ActionEvent actionEvent) throws IOException {
++        Parent root = FXMLLoader.load(getClass().getResource("/fxml/CreateTaskPageForLeader.fxml"));
++        ((Stage) pane.getScene().getWindow()).setScene(new Scene(root));
++    }
++
++    public void exit(MouseEvent mouseEvent) {
++        JsonController.getInstance().updateJson();
++        System.exit(0);
++    }
++}
+Index: target/classes/json/Database.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>{\r\n  \"@type\": \"controller.Database\",\r\n  \"@val\": {\r\n    \"users\": [\r\n      {\r\n        \"creationId\": 1,\r\n        \"userName\": \"mirzaeimahdi409\",\r\n        \"password\": \"138014\",\r\n        \"email\": \"mirzaeimahdi409@gmail.com\",\r\n        \"role\": \"System Admin\",\r\n        \"score\": 0,\r\n        \"allLogs\": [\r\n          {\r\n            \"user\": \"@root.users.0\",\r\n            \"date\": \"2021/12/28 01:30:42\"\r\n          },\r\n          {\r\n            \"user\": \"@root.users.0\",\r\n            \"date\": \"2021/12/28 01:32:38\"\r\n          },\r\n          {\r\n            \"user\": \"@root.users.0\",\r\n            \"date\": \"2021/12/28 22:37:52\"\r\n          }\r\n        ],\r\n        \"allTasksForUser\": [],\r\n        \"notifications\": [\r\n          {\r\n            \"text\": \"Hello everyone\",\r\n            \"sender\": \"@root.users.0\",\r\n            \"type\": 0\r\n          }\r\n        ],\r\n        \"userTeams\": [],\r\n        \"joiningDate\": {}\r\n      },\r\n      {\r\n        \"creationId\": 2,\r\n        \"userName\": \"AmirReza\",\r\n        \"password\": \"138014\",\r\n        \"email\": \"AmirReza@gmail.com\",\r\n        \"role\": \"Member\",\r\n        \"score\": 0,\r\n        \"allLogs\": [\r\n          {\r\n            \"user\": \"@root.users.1\",\r\n            \"date\": \"2021/12/28 01:31:27\"\r\n          },\r\n          {\r\n            \"user\": \"@root.users.1\",\r\n            \"date\": \"2021/12/28 22:40:34\"\r\n          },\r\n          {\r\n            \"user\": \"@root.users.1\",\r\n            \"date\": \"2021/12/28 23:17:11\"\r\n          },\r\n          {\r\n            \"user\": \"@root.users.1\",\r\n            \"date\": \"2021/12/28 23:55:14\"\r\n          }\r\n        ],\r\n        \"allTasksForUser\": [],\r\n        \"notifications\": [\r\n          \"@root.users.0.notifications.0\"\r\n        ],\r\n        \"userTeams\": [\r\n          {\r\n            \"teamNumber\": 2,\r\n            \"teamName\": \"Yakuza2\",\r\n            \"teamMembers\": [],\r\n            \"suspendedMembers\": [],\r\n            \"boards\": [],\r\n            \"teamLeader\": \"@root.users.1\",\r\n            \"scoreboard\": {\r\n              \"team\": \"@root.users.1.userTeams.0\",\r\n              \"scores\": {}\r\n            },\r\n            \"roadMap\": {\r\n              \"team\": \"@root.users.1.userTeams.0\",\r\n              \"tasksStatus\": {},\r\n              \"creationDates\": {}\r\n            },\r\n            \"allTasks\": [],\r\n            \"notifications\": [],\r\n            \"creationDate\": {\r\n              \"localDate\": {\r\n                \"date\": {\r\n                  \"year\": 2021,\r\n                  \"month\": 12,\r\n                  \"day\": 28\r\n                },\r\n                \"time\": {\r\n                  \"hour\": 1,\r\n                  \"minute\": 31,\r\n                  \"second\": 0,\r\n                  \"nano\": 0\r\n                }\r\n              },\r\n              \"date\": \"2021/12/28|01:31\"\r\n            }\r\n          },\r\n          {\r\n            \"teamNumber\": 3,\r\n            \"teamName\": \"Yakuza3\",\r\n            \"teamMembers\": [],\r\n            \"suspendedMembers\": [],\r\n            \"boards\": [],\r\n            \"teamLeader\": \"@root.users.1\",\r\n            \"scoreboard\": {\r\n              \"team\": \"@root.users.1.userTeams.1\",\r\n              \"scores\": {}\r\n            },\r\n            \"roadMap\": {\r\n              \"team\": \"@root.users.1.userTeams.1\",\r\n              \"tasksStatus\": {},\r\n              \"creationDates\": {}\r\n            },\r\n            \"allTasks\": [],\r\n            \"notifications\": [],\r\n            \"creationDate\": {\r\n              \"localDate\": {\r\n                \"date\": {\r\n                  \"year\": 2021,\r\n                  \"month\": 12,\r\n                  \"day\": 28\r\n                },\r\n                \"time\": {\r\n                  \"hour\": 1,\r\n                  \"minute\": 31,\r\n                  \"second\": 0,\r\n                  \"nano\": 0\r\n                }\r\n              },\r\n              \"date\": \"2021/12/28|01:31\"\r\n            }\r\n          },\r\n          {\r\n            \"teamNumber\": 4,\r\n            \"teamName\": \"Yakuza4\",\r\n            \"teamMembers\": [],\r\n            \"suspendedMembers\": [],\r\n            \"boards\": [],\r\n            \"teamLeader\": \"@root.users.1\",\r\n            \"scoreboard\": {\r\n              \"team\": \"@root.users.1.userTeams.2\",\r\n              \"scores\": {}\r\n            },\r\n            \"roadMap\": {\r\n              \"team\": \"@root.users.1.userTeams.2\",\r\n              \"tasksStatus\": {},\r\n              \"creationDates\": {}\r\n            },\r\n            \"allTasks\": [],\r\n            \"notifications\": [],\r\n            \"creationDate\": {\r\n              \"localDate\": {\r\n                \"date\": {\r\n                  \"year\": 2021,\r\n                  \"month\": 12,\r\n                  \"day\": 28\r\n                },\r\n                \"time\": {\r\n                  \"hour\": 1,\r\n                  \"minute\": 32,\r\n                  \"second\": 0,\r\n                  \"nano\": 0\r\n                }\r\n              },\r\n              \"date\": \"2021/12/28|01:32\"\r\n            }\r\n          },\r\n          {\r\n            \"teamNumber\": 5,\r\n            \"teamName\": \"Yakuza5\",\r\n            \"teamMembers\": [],\r\n            \"suspendedMembers\": [],\r\n            \"boards\": [],\r\n            \"teamLeader\": \"@root.users.1\",\r\n            \"scoreboard\": {\r\n              \"team\": \"@root.users.1.userTeams.3\",\r\n              \"scores\": {}\r\n            },\r\n            \"roadMap\": {\r\n              \"team\": \"@root.users.1.userTeams.3\",\r\n              \"tasksStatus\": {},\r\n              \"creationDates\": {}\r\n            },\r\n            \"allTasks\": [],\r\n            \"notifications\": [],\r\n            \"creationDate\": {\r\n              \"localDate\": {\r\n                \"date\": {\r\n                  \"year\": 2021,\r\n                  \"month\": 12,\r\n                  \"day\": 28\r\n                },\r\n                \"time\": {\r\n                  \"hour\": 1,\r\n                  \"minute\": 32,\r\n                  \"second\": 0,\r\n                  \"nano\": 0\r\n                }\r\n              },\r\n              \"date\": \"2021/12/28|01:32\"\r\n            }\r\n          },\r\n          {\r\n            \"teamNumber\": 6,\r\n            \"teamName\": \"Yakuza6\",\r\n            \"teamMembers\": [],\r\n            \"suspendedMembers\": [],\r\n            \"boards\": [],\r\n            \"teamLeader\": \"@root.users.1\",\r\n            \"scoreboard\": {\r\n              \"team\": \"@root.users.1.userTeams.4\",\r\n              \"scores\": {}\r\n            },\r\n            \"roadMap\": {\r\n              \"team\": \"@root.users.1.userTeams.4\",\r\n              \"tasksStatus\": {},\r\n              \"creationDates\": {}\r\n            },\r\n            \"allTasks\": [],\r\n            \"notifications\": [],\r\n            \"creationDate\": {\r\n              \"localDate\": {\r\n                \"date\": {\r\n                  \"year\": 2021,\r\n                  \"month\": 12,\r\n                  \"day\": 28\r\n                },\r\n                \"time\": {\r\n                  \"hour\": 1,\r\n                  \"minute\": 32,\r\n                  \"second\": 0,\r\n                  \"nano\": 0\r\n                }\r\n              },\r\n              \"date\": \"2021/12/28|01:32\"\r\n            }\r\n          },\r\n          {\r\n            \"teamNumber\": 1,\r\n            \"teamName\": \"Yakuza1\",\r\n            \"teamMembers\": [\r\n              {\r\n                \"creationId\": 4,\r\n                \"userName\": \"mehrad\",\r\n                \"password\": \"2020\",\r\n                \"email\": \"Mehrad@gmail.com\",\r\n                \"role\": \"Member\",\r\n                \"score\": 0,\r\n                \"allLogs\": [],\r\n                \"allTasksForUser\": [],\r\n                \"notifications\": [\r\n                  \"@root.users.0.notifications.0\"\r\n                ],\r\n                \"userTeams\": [\r\n                  \"@root.users.1.userTeams.5\"\r\n                ],\r\n                \"joiningDate\": {\r\n                  \"@root.users.1.userTeams.5\": {\r\n                    \"localDate\": {\r\n                      \"date\": {\r\n                        \"year\": 2021,\r\n                        \"month\": 12,\r\n                        \"day\": 28\r\n                      },\r\n                      \"time\": {\r\n                        \"hour\": 1,\r\n                        \"minute\": 31,\r\n                        \"second\": 0,\r\n                        \"nano\": 0\r\n                      }\r\n                    },\r\n                    \"date\": \"2021/12/28|01:31\"\r\n                  }\r\n                }\r\n              },\r\n              \"@root.users.1\"\r\n            ],\r\n            \"suspendedMembers\": [],\r\n            \"boards\": [],\r\n            \"teamLeader\": {\r\n              \"creationId\": 3,\r\n              \"userName\": \"Amir\",\r\n              \"password\": \"2020\",\r\n              \"email\": \"Amir@gmail.com\",\r\n              \"role\": \"Leader\",\r\n              \"score\": 0,\r\n              \"allLogs\": [\r\n                {\r\n                  \"user\": \"@root.users.1.userTeams.5.teamLeader\",\r\n                  \"date\": \"2021/12/28 23:56:28\"\r\n                },\r\n                {\r\n                  \"user\": \"@root.users.1.userTeams.5.teamLeader\",\r\n                  \"date\": \"2022/01/03 11:14:49\"\r\n                }\r\n              ],\r\n              \"allTasksForUser\": [],\r\n              \"notifications\": [\r\n                \"@root.users.0.notifications.0\",\r\n                {\r\n                  \"text\": \"Hi Amir\",\r\n                  \"sender\": \"@root.users.0\",\r\n                  \"type\": 0\r\n                }\r\n              ],\r\n              \"userTeams\": [],\r\n              \"joiningDate\": {}\r\n            },\r\n            \"scoreboard\": {\r\n              \"team\": \"@root.users.1.userTeams.5\",\r\n              \"scores\": {\r\n                \"@root.users.1\": 0,\r\n                \"@root.users.1.userTeams.5.teamMembers.0\": 0\r\n              }\r\n            },\r\n            \"roadMap\": {\r\n              \"team\": \"@root.users.1.userTeams.5\",\r\n              \"tasksStatus\": {},\r\n              \"creationDates\": [\r\n                [\r\n                  {\r\n                    \"creationId\": 1,\r\n                    \"title\": \"Task1\",\r\n                    \"description\": \"\",\r\n                    \"priority\": \"Lowest\",\r\n                    \"dateOfCreation\": {\r\n                      \"localDate\": {\r\n                        \"date\": {\r\n                          \"year\": 1400,\r\n                          \"month\": 10,\r\n                          \"day\": 5\r\n                        },\r\n                        \"time\": {\r\n                          \"hour\": 17,\r\n                          \"minute\": 40,\r\n                          \"second\": 0,\r\n                          \"nano\": 0\r\n                        }\r\n                      },\r\n                      \"date\": \"1400/10/05|17:40\"\r\n                    },\r\n                    \"deadline\": {\r\n                      \"localDate\": {\r\n                        \"date\": {\r\n                          \"year\": 1400,\r\n                          \"month\": 10,\r\n                          \"day\": 30\r\n                        },\r\n                        \"time\": {\r\n                          \"hour\": 17,\r\n                          \"minute\": 40,\r\n                          \"second\": 0,\r\n                          \"nano\": 0\r\n                        }\r\n                      },\r\n                      \"date\": \"1400/10/30|17:40\"\r\n                    },\r\n                    \"assignedUser\": [],\r\n                    \"team\": \"@root.users.1.userTeams.5\",\r\n                    \"comments\": []\r\n                  },\r\n                  \"@root.users.1.userTeams.5.roadMap.creationDates.0-key.dateOfCreation\"\r\n                ]\r\n              ]\r\n            },\r\n            \"allTasks\": [\r\n              \"@root.users.1.userTeams.5.roadMap.creationDates.0-key\"\r\n            ],\r\n            \"notifications\": [],\r\n            \"creationDate\": \"@root.users.1.userTeams.5.teamMembers.0.joiningDate.0-val\"\r\n          },\r\n          \"@.5\"\r\n        ],\r\n        \"joiningDate\": {\r\n          \"@root.users.1.userTeams.5\": \"@root.users.1.userTeams.5.teamMembers.0.joiningDate.0-val\",\r\n          \"@root.users.1.userTeams.0\": \"@root.users.1.userTeams.0.creationDate\",\r\n          \"@root.users.1.userTeams.3\": \"@root.users.1.userTeams.3.creationDate\",\r\n          \"@root.users.1.userTeams.2\": \"@root.users.1.userTeams.2.creationDate\",\r\n          \"@root.users.1.userTeams.1\": \"@root.users.1.userTeams.1.creationDate\",\r\n          \"@root.users.1.userTeams.4\": \"@root.users.1.userTeams.4.creationDate\"\r\n        }\r\n      },\r\n      \"@root.users.1.userTeams.5.teamLeader\",\r\n      \"@root.users.1.userTeams.5.teamMembers.0\",\r\n      {\r\n        \"creationId\": 6,\r\n        \"userName\": \"Zeinab\",\r\n        \"password\": \"2020\",\r\n        \"email\": \"Zeinab@gmail.com\",\r\n        \"role\": \"Member\",\r\n        \"score\": 0,\r\n        \"allLogs\": [],\r\n        \"allTasksForUser\": [],\r\n        \"notifications\": [],\r\n        \"userTeams\": [],\r\n        \"joiningDate\": {}\r\n      }\r\n    ],\r\n    \"teams\": [\r\n      \"@root.users.1.userTeams.5\",\r\n      \"@root.users.1.userTeams.0\",\r\n      \"@root.users.1.userTeams.1\",\r\n      \"@root.users.1.userTeams.2\",\r\n      \"@root.users.1.userTeams.3\",\r\n      \"@root.users.1.userTeams.4\"\r\n    ],\r\n    \"pending\": [],\r\n    \"accepted\": [\r\n      \"@root.users.1.userTeams.5\",\r\n      \"@root.users.1.userTeams.0\",\r\n      \"@root.users.1.userTeams.1\",\r\n      \"@root.users.1.userTeams.2\",\r\n      \"@root.users.1.userTeams.3\"\r\n    ],\r\n    \"tasks\": [\r\n      \"@root.users.1.userTeams.5.roadMap.creationDates.0-key\"\r\n    ],\r\n    \"boards\": [],\r\n    \"uI\": 7,\r\n    \"tI\": 7,\r\n    \"taI\": 2,\r\n    \"bI\": 1\r\n  }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/target/classes/json/Database.json b/target/classes/json/Database.json
+--- a/target/classes/json/Database.json	
++++ b/target/classes/json/Database.json	
+@@ -296,6 +296,10 @@
+                 {
+                   "user": "@root.users.1.userTeams.5.teamLeader",
+                   "date": "2022/01/03 11:14:49"
++                },
++                {
++                  "user": "@root.users.1.userTeams.5.teamLeader",
++                  "date": "2022/01/09 12:35:04"
+                 }
+               ],
+               "allTasksForUser": [],
+@@ -323,6 +327,50 @@
+               "creationDates": [
+                 [
+                   {
++                    "creationId": 2,
++                    "title": "Task2",
++                    "description": "",
++                    "priority": "Lowest",
++                    "dateOfCreation": {
++                      "localDate": {
++                        "date": {
++                          "year": 1400,
++                          "month": 10,
++                          "day": 5
++                        },
++                        "time": {
++                          "hour": 17,
++                          "minute": 40,
++                          "second": 0,
++                          "nano": 0
++                        }
++                      },
++                      "date": "1400/10/05|17:40"
++                    },
++                    "deadline": {
++                      "localDate": {
++                        "date": {
++                          "year": 1400,
++                          "month": 10,
++                          "day": 30
++                        },
++                        "time": {
++                          "hour": 17,
++                          "minute": 40,
++                          "second": 0,
++                          "nano": 0
++                        }
++                      },
++                      "date": "1400/10/30|17:40"
++                    },
++                    "assignedUser": [],
++                    "team": "@root.users.1.userTeams.5",
++                    "comments": []
++                  },
++                  "@root.users.1.userTeams.5.roadMap.creationDates.0-key.dateOfCreation"
++                ],
++                [
++                  {
+                     "creationId": 1,
+                     "title": "Task1",
+                     "description": "",
+@@ -363,11 +411,12 @@
+                     "team": "@root.users.1.userTeams.5",
+                     "comments": []
+                   },
+-                  "@root.users.1.userTeams.5.roadMap.creationDates.0-key.dateOfCreation"
++                  "@root.users.1.userTeams.5.roadMap.creationDates.1-key.dateOfCreation"
+                 ]
+               ]
+             },
+             "allTasks": [
++              "@root.users.1.userTeams.5.roadMap.creationDates.1-key",
+               "@root.users.1.userTeams.5.roadMap.creationDates.0-key"
+             ],
+             "notifications": [],
+@@ -377,11 +426,11 @@
+         ],
+         "joiningDate": {
+           "@root.users.1.userTeams.5": "@root.users.1.userTeams.5.teamMembers.0.joiningDate.0-val",
+-          "@root.users.1.userTeams.0": "@root.users.1.userTeams.0.creationDate",
+-          "@root.users.1.userTeams.3": "@root.users.1.userTeams.3.creationDate",
+           "@root.users.1.userTeams.2": "@root.users.1.userTeams.2.creationDate",
+           "@root.users.1.userTeams.1": "@root.users.1.userTeams.1.creationDate",
+-          "@root.users.1.userTeams.4": "@root.users.1.userTeams.4.creationDate"
++          "@root.users.1.userTeams.0": "@root.users.1.userTeams.0.creationDate",
++          "@root.users.1.userTeams.4": "@root.users.1.userTeams.4.creationDate",
++          "@root.users.1.userTeams.3": "@root.users.1.userTeams.3.creationDate"
+         }
+       },
+       "@root.users.1.userTeams.5.teamLeader",
+@@ -417,12 +466,13 @@
+       "@root.users.1.userTeams.3"
+     ],
+     "tasks": [
++      "@root.users.1.userTeams.5.roadMap.creationDates.1-key",
+       "@root.users.1.userTeams.5.roadMap.creationDates.0-key"
+     ],
+     "boards": [],
+     "uI": 7,
+     "tI": 7,
+-    "taI": 2,
++    "taI": 3,
+     "bI": 1
+   }
+ }
+\ No newline at end of file
+Index: src/main/resources/fxml/TaskListForLeader.fxml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/resources/fxml/TaskListForLeader.fxml b/src/main/resources/fxml/TaskListForLeader.fxml
+new file mode 100644
+--- /dev/null	
++++ b/src/main/resources/fxml/TaskListForLeader.fxml	
+@@ -0,0 +1,73 @@
++<?xml version="1.0" encoding="UTF-8"?>
++
++<?import javafx.geometry.Insets?>
++<?import javafx.scene.control.Button?>
++<?import javafx.scene.control.Label?>
++<?import javafx.scene.control.ScrollPane?>
++<?import javafx.scene.image.Image?>
++<?import javafx.scene.image.ImageView?>
++<?import javafx.scene.layout.AnchorPane?>
++<?import javafx.scene.layout.VBox?>
++<?import javafx.scene.text.Font?>
++
++<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
++            prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
++            fx:controller="view.TaskListForLeaderView">
++    <children>
++        <AnchorPane prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #949292;"
++                    AnchorPane.bottomAnchor="360.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
++                    AnchorPane.topAnchor="0.0">
++            <children>
++                <Label layoutX="25.0" layoutY="11.0" text="Task List"/>
++                <ImageView fx:id="exit" fitHeight="28.0" fitWidth="31.0" layoutX="573.0" layoutY="4.0"
++                           onDragDetected="#exit" pickOnBounds="true" preserveRatio="true"
++                           AnchorPane.rightAnchor="10.0">
++                    <image>
++                        <Image url="@../img/close_window_96px.png"/>
++                    </image>
++                </ImageView>
++            </children>
++        </AnchorPane>
++        <AnchorPane layoutY="40.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="360.0" prefWidth="100.0"
++                    AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="40.0">
++            <children>
++                <VBox alignment="TOP_CENTER" layoutY="-1.0" prefHeight="361.0" prefWidth="100.0" spacing="9.0"
++                      style="-fx-background-color: #C8C5C4;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
++                    <children>
++                        <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="80.0" text="Task List">
++                            <VBox.margin>
++                                <Insets top="7.0"/>
++                            </VBox.margin>
++                            <font>
++                                <Font size="10.0"/>
++                            </font>
++                        </Button>
++                        <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="80.0" text="Task Page">
++                            <font>
++                                <Font size="10.0"/>
++                            </font>
++                        </Button>
++                        <Button fx:id="btnCreateTask" mnemonicParsing="false" onAction="#goToCreateTaskPage"
++                                prefHeight="50.0" prefWidth="80.0" text="Create Task">
++                            <font>
++                                <Font size="10.0"/>
++                            </font>
++                        </Button>
++                    </children>
++                </VBox>
++            </children>
++        </AnchorPane>
++        <AnchorPane layoutX="98.0" layoutY="40.0" prefHeight="362.0" prefWidth="502.0"
++                    style="-fx-background-color: #E7E2E1;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="110.0"
++                    AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
++            <children>
++                <ScrollPane prefHeight="340.0" prefWidth="480.0" AnchorPane.bottomAnchor="0.0"
++                            AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
++                    <content>
++                        <VBox fx:id="vTaskItem" prefHeight="338.0" prefWidth="478.0"/>
++                    </content>
++                </ScrollPane>
++            </children>
++        </AnchorPane>
++    </children>
++</AnchorPane>
+Index: src/main/java/view/TaskPageForLeaderView.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/view/TaskPageForLeaderView.java b/src/main/java/view/TaskPageForLeaderView.java
+new file mode 100644
+--- /dev/null	
++++ b/src/main/java/view/TaskPageForLeaderView.java	
+@@ -0,0 +1,90 @@
++package view;
++
++import controller.Controller;
++import controller.JsonController;
++import javafx.event.ActionEvent;
++import javafx.fxml.FXMLLoader;
++import javafx.fxml.Initializable;
++import javafx.scene.Parent;
++import javafx.scene.Scene;
++import javafx.scene.control.Button;
++import javafx.scene.control.Label;
++import javafx.scene.control.ListView;
++import javafx.scene.control.TextField;
++import javafx.scene.image.ImageView;
++import javafx.scene.input.MouseEvent;
++import javafx.scene.layout.AnchorPane;
++import javafx.stage.Stage;
++import model.Task;
++import model.User;
++
++import java.io.IOException;
++import java.net.URL;
++import java.text.ParseException;
++import java.util.ResourceBundle;
++
++public class TaskPageForLeaderView implements Initializable {
++    private final Task selectTask = Task.getSelectTask();
++    public AnchorPane pane;
++    public TextField deadlineFiled;
++    public TextField descriptionField;
++    public TextField PriorityField;
++    public TextField taskTitleField;
++    public Button btnTaskList;
++    public Button btnEdit;
++    public Label lblError;
++    public Label lblDateOfCreation;
++    public ListView membersList;
++    public Button btnCreateTask;
++    public ImageView exit;
++    private int result;
++
++    public void goToTaskList(ActionEvent actionEvent) throws IOException {
++        Task.setSelectTask(null);
++        Parent root = FXMLLoader.load(getClass().getResource("/fxml/TaskListForLeader.fxml"));
++        ((Stage) pane.getScene().getWindow()).setScene(new Scene(root));
++    }
++
++    @Override
++    public void initialize(URL location, ResourceBundle resources) {
++        taskTitleField.setText(selectTask.getTitle());
++        deadlineFiled.setText(selectTask.getDeadline().toString());
++        PriorityField.setText(selectTask.getPriority());
++        lblDateOfCreation.setText(selectTask.getDateOfCreation().toString());
++        if (selectTask.getDescription().equals(""))
++            descriptionField.setText("description is null!");
++        else
++            descriptionField.setText(selectTask.getDescription());
++        for (User user : selectTask.getAssignedUser()) {
++            membersList.getItems().add(user.getUserName());
++        }
++
++    }
++
++    public void Edit(ActionEvent actionEvent) throws ParseException {
++        if (!taskTitleField.getText().equals(selectTask.getTitle())) {
++            Controller.controller.editTaskTitle(LoginView.LoginUser, selectTask, taskTitleField.getText());
++        }
++        if (!PriorityField.getText().equals(selectTask.getPriority()))
++            Controller.controller.editTaskPriority(LoginView.LoginUser, selectTask, taskTitleField.getText());
++        if (!descriptionField.getText().equals(selectTask.getDescription()))
++            Controller.controller.editTaskDescription(LoginView.LoginUser, selectTask, taskTitleField.getText());
++        if (!deadlineFiled.getText().equals(selectTask.getDeadline()))
++            result = Controller.controller.editTaskDeadline(LoginView.LoginUser, selectTask, taskTitleField.getText());
++        if (result == 1) {
++            lblError.setText("New deadline is invalid!");
++        } else
++            lblError.setText("Task updated successfully!");
++    }
++
++    public void goToCreateTask(ActionEvent actionEvent) throws IOException {
++        Task.setSelectTask(null);
++        Parent root = FXMLLoader.load(getClass().getResource("/fxml/CreateTaskPageForLeader.fxml"));
++        ((Stage) pane.getScene().getWindow()).setScene(new Scene(root));
++    }
++
++    public void exit(MouseEvent mouseEvent) {
++        JsonController.getInstance().updateJson();
++        System.exit(0);
++    }
++}
+Index: src/main/java/model/Task.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package model;\r\n\r\nimport model.Date;\r\n\r\nimport java.util.ArrayList;\r\n\r\npublic class Task {\r\n    private static ArrayList<Task> allTasks = new ArrayList<>();\r\n    private static int idCreator = 1;\r\n    private int creationId;\r\n    private String title;\r\n    private String description = \"\";\r\n    private String priority = \"Lowest\";\r\n    // model.date\r\n    private Date dateOfCreation;\r\n    private Date deadline;\r\n    private ArrayList<User> assignedUser;\r\n    private Team team;\r\n    private ArrayList<Message> comments;\r\n\r\n    public Task(String title, Date dateOfCreation,\r\n                Date deadline, Team team) {\r\n        this.title = title;\r\n        this.dateOfCreation = dateOfCreation;\r\n        this.deadline = deadline;\r\n        this.team = team;\r\n        this.creationId = idCreator;\r\n        idCreator++;\r\n        this.assignedUser = new ArrayList<>();\r\n        this.comments = new ArrayList<>();\r\n        this.team.getRoadMap().getCreationDates().put(this, dateOfCreation);\r\n        allTasks.add(this);\r\n    }\r\n\r\n    public static Task getTaskById(Team team, String id) {\r\n        for (Task task : team.getAllTasks()) {\r\n            if (task.getCreationId() == Integer.parseInt(id))\r\n                return task;\r\n\r\n        }\r\n        return null;\r\n\r\n    }\r\n\r\n    public static int getIdCreator() {\r\n        return idCreator;\r\n    }\r\n\r\n    public static void setIdCreator(int idCreator) {\r\n        Task.idCreator = idCreator;\r\n    }\r\n\r\n    public static Task getTaskByTitle(ArrayList<Task> tasks, String title) {\r\n        for (Task task : tasks) {\r\n            if (task.getTitle().equals(title))\r\n                return task;\r\n\r\n        }\r\n        return null;\r\n\r\n    }\r\n\r\n    public static ArrayList<Task> getAllTasks() {\r\n\r\n        return allTasks;\r\n\r\n    }\r\n\r\n    public static void setAllTasks(ArrayList<Task> allTasks) {\r\n        Task.allTasks = allTasks;\r\n    }\r\n\r\n    public static Task getTaskByIdWithoutTeam(String taskId) {\r\n        for (Task task : Task.allTasks) {\r\n            if (task.getCreationId() == Integer.parseInt(taskId))\r\n                return task;\r\n\r\n        }\r\n        return null;\r\n    }\r\n\r\n    public void setDeadline(Date deadline) {\r\n        this.deadline = deadline;\r\n    }\r\n\r\n    public void setDescription(String description) {\r\n        this.description = description;\r\n    }\r\n\r\n    public void setPriority(String priority) {\r\n        this.priority = priority;\r\n    }\r\n\r\n    public int getCreationId() {\r\n        return creationId;\r\n    }\r\n\r\n    public String getTitle() {\r\n        return title;\r\n    }\r\n\r\n    public String getDescription() {\r\n        return description;\r\n    }\r\n\r\n    public String getPriority() {\r\n        return priority;\r\n    }\r\n\r\n    public Date getDateOfCreation() {\r\n        return dateOfCreation;\r\n    }\r\n\r\n    public Date getDeadline() {\r\n        return deadline;\r\n    }\r\n\r\n    public ArrayList<User> getAssignedUser() {\r\n        return assignedUser;\r\n    }\r\n\r\n    public Team getTeam() {\r\n        return team;\r\n    }\r\n\r\n    public ArrayList<Message> getComments() {\r\n        return comments;\r\n    }\r\n\r\n    public void setTitle(String title) {\r\n        this.title = title;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/model/Task.java b/src/main/java/model/Task.java
+--- a/src/main/java/model/Task.java	
++++ b/src/main/java/model/Task.java	
+@@ -6,11 +6,12 @@
+ 
+ public class Task {
+     private static ArrayList<Task> allTasks = new ArrayList<>();
++    private static Task selectTask;
+     private static int idCreator = 1;
+     private int creationId;
+     private String title;
+     private String description = "";
+-    private String priority = "Lowest";
++    private String priority ;
+     // model.date
+     private Date dateOfCreation;
+     private Date deadline;
+@@ -19,10 +20,12 @@
+     private ArrayList<Message> comments;
+ 
+     public Task(String title, Date dateOfCreation,
+-                Date deadline, Team team) {
++                Date deadline, Team team, String description, String priority) {
+         this.title = title;
+         this.dateOfCreation = dateOfCreation;
+         this.deadline = deadline;
++        this.priority=priority;
++        this.description = description;
+         this.team = team;
+         this.creationId = idCreator;
+         idCreator++;
+@@ -66,6 +69,14 @@
+ 
+     }
+ 
++    public static Task getSelectTask() {
++        return selectTask;
++    }
++
++    public static void setSelectTask(Task selectTask) {
++        Task.selectTask = selectTask;
++    }
++
+     public static void setAllTasks(ArrayList<Task> allTasks) {
+         Task.allTasks = allTasks;
+     }
+Index: src/main/resources/fxml/TaskItem.fxml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/resources/fxml/TaskItem.fxml b/src/main/resources/fxml/TaskItem.fxml
+new file mode 100644
+--- /dev/null	
++++ b/src/main/resources/fxml/TaskItem.fxml	
+@@ -0,0 +1,30 @@
++<?xml version="1.0" encoding="UTF-8"?>
++
++<?import javafx.geometry.Insets?>
++<?import javafx.scene.control.Button?>
++<?import javafx.scene.control.Label?>
++<?import javafx.scene.layout.BorderPane?>
++
++<BorderPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0"
++            prefWidth="478.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
++    <center>
++        <Label fx:id="lblTaskPriority" alignment="CENTER" prefHeight="18.0" prefWidth="153.0" text="Priority"
++               BorderPane.alignment="CENTER"/>
++    </center>
++    <right>
++        <Button fx:id="btnSelect" mnemonicParsing="false" prefHeight="26.0" prefWidth="95.0"
++                style="-fx-background-color: #49BEF5; -fx-background-radius: 1em;" text="Button" textAlignment="CENTER"
++                BorderPane.alignment="CENTER">
++            <BorderPane.margin>
++                <Insets right="10.0"/>
++            </BorderPane.margin>
++        </Button>
++    </right>
++    <left>
++        <Label fx:id="lblTaskTitle" prefHeight="18.0" prefWidth="219.0" text="Title Task" BorderPane.alignment="CENTER">
++            <BorderPane.margin>
++                <Insets left="10.0"/>
++            </BorderPane.margin>
++        </Label>
++    </left>
++</BorderPane>
+Index: src/main/java/view/TaskItemForLeaderView.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/view/TaskItemForLeaderView.java b/src/main/java/view/TaskItemForLeaderView.java
+new file mode 100644
+--- /dev/null	
++++ b/src/main/java/view/TaskItemForLeaderView.java	
+@@ -0,0 +1,53 @@
++package view;
++
++import javafx.event.ActionEvent;
++import javafx.event.EventHandler;
++import javafx.fxml.FXMLLoader;
++import javafx.fxml.Initializable;
++import javafx.scene.Node;
++import javafx.scene.Parent;
++import javafx.scene.Scene;
++import javafx.scene.control.Button;
++import javafx.scene.control.Label;
++import javafx.scene.layout.BorderPane;
++import javafx.stage.Stage;
++import model.Task;
++import model.User;
++
++import java.io.IOException;
++import java.net.URL;
++import java.util.Objects;
++import java.util.ResourceBundle;
++
++public class TaskItemForLeaderView implements Initializable {
++    public BorderPane pane;
++    public Label lblTaskPriority;
++    public Button btnSelect;
++    public Label lblTaskTitle;
++    private Task selectTask;
++
++    @Override
++    public void initialize(URL location, ResourceBundle resources) {
++        btnSelect.setOnAction(new EventHandler<ActionEvent>() {
++            @Override
++            public void handle(ActionEvent event) {
++                Task.setSelectTask(selectTask);
++                Parent root = null;
++                try {
++                    root = FXMLLoader.load(getClass().getResource("/fxml/TaskPageForLeader.fxml"));
++                } catch (IOException e) {
++                    e.printStackTrace();
++                }
++
++                ((Stage) pane.getScene().getWindow()).setScene(new Scene(root));
++            }
++        });
++    }
++
++    public void setTask(Task task) {
++        lblTaskTitle.setText(task.getTitle());
++        lblTaskPriority.setText(task.getPriority());
++        selectTask = task;
++    }
++
++}
+Index: src/main/java/controller/Controller.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package controller;\r\n\r\nimport model.Date;\r\nimport model.*;\r\n\r\nimport java.text.ParseException;\r\nimport java.text.SimpleDateFormat;\r\nimport java.time.LocalDateTime;\r\nimport java.time.format.DateTimeFormatter;\r\nimport java.util.*;\r\nimport java.util.regex.Matcher;\r\nimport java.util.regex.Pattern;\r\n\r\npublic class Controller {\r\n    public static final Controller controller = new Controller();\r\n\r\n    public int register(String username, String password1, String password2, String email) {\r\n        if (isUsernameAvailable(username)) {\r\n            return 1;\r\n        } else if (!password1.equals(password2)) {\r\n            return 2;\r\n        } else if (isEmailAvailable(email)) {\r\n            return 3;\r\n        } else if (!getCommandMatcher(\"[A-Za-z0-9.]+(@gmail.com|@yahoo.com)\", email).matches()) {\r\n            return 4;\r\n        }\r\n//        User user = new User(username, password1, email);\r\n        return 0;\r\n    }\r\n\r\n    public int logIn(String username, String password) throws ParseException {\r\n        if (!isUsernameAvailable(username)) {\r\n            return 1;\r\n        } else if (!password.equals(User.getUserByUsername(username).getPassword())) {\r\n            return 2;\r\n        }\r\n        //View.print(\"user logged in successfully!\");\r\n        DateTimeFormatter currentDate = DateTimeFormatter.ofPattern(\"yyyy/MM/dd HH:mm:ss\");\r\n        LocalDateTime now = LocalDateTime.now();\r\n        Log log = new Log(findUser(username), currentDate.format(now));\r\n        String role = User.getUserByUsername(username).getRole();\r\n        if (role.equals(\"Member\")) {\r\n            //View.runMemberMenu(User.getUserByUsername(username));\r\n            return 3;\r\n        } else if (role.equals(\"Leader\")) {\r\n            //View.runLeaderMenu(User.getUserByUsername(username));\r\n            return 4;\r\n        } else if (role.equals(\"System Admin\")) {\r\n            //View.runAdminMenu(User.getUserByUsername(username));\r\n            return 5;\r\n        }\r\n        return 0;\r\n    }\r\n\r\n    public int printMenu(User user) {\r\n        if (user.getRole().equals(\"Member\")) {\r\n            return 1;\r\n        } else if (user.getRole().equals(\"Leader\")) {\r\n            return 2;\r\n        } else if (user.getRole().equals(\"System Admin\")) {\r\n            return 3;\r\n        }\r\n        return 0;\r\n    }\r\n\r\n    public int changePassword(User user, String oldPassword, String newPassword) {\r\n        if (!oldPassword.equals(user.getPassword())) {\r\n            return 1;\r\n        } else if (newPassword.equals(oldPassword)) {\r\n            return 2;\r\n        } else if (!getCommandMatcher(\"(?=.*[A-Z])(?=.*\\\\d)(?!.*[&%$]).{8,}\", newPassword).matches()) {\r\n            return 3;\r\n        }\r\n        user.setPassword(newPassword);\r\n        return 0;\r\n    }\r\n\r\n    public int changeUserName(User user, String newUsername) {\r\n        if (!getCommandMatcher(\".{4,}\", newUsername).matches()) {\r\n            return 1;\r\n        } else if (isUsernameAvailable(newUsername)) {\r\n            return 2;\r\n        } else if (!getCommandMatcher(\"[A-Za-z0-9_]+\", newUsername).matches()) {\r\n            return 3;\r\n        } else if (newUsername.equals(user.getUserName())) {\r\n            return 4;\r\n        }\r\n        user.setUserName(newUsername);\r\n        return 0;\r\n    }\r\n\r\n    public ArrayList<String> showTeams(User user) {\r\n        ArrayList<String> result = new ArrayList<>();\r\n        ArrayList<Integer> teamID = new ArrayList<>();\r\n        for (Team team : user.getUserTeams()) {\r\n            teamID.add(team.getTeamNumber());\r\n        }\r\n        Collections.sort(teamID);\r\n        for (Team team : user.getUserTeams()) {\r\n            for (Integer id : teamID) {\r\n                if (team.getTeamNumber() == id) {\r\n                    result.add(team.getTeamName());\r\n                    break;\r\n                }\r\n            }\r\n        }\r\n//        HashMap<Team, Date> joiningDate = sortJoiningDates(user.getJoiningDate());\r\n//        HashMap<Date, ArrayList<Team>> data = new HashMap<>();\r\n//        for (Map.Entry<Team, Date> unit : joiningDate.entrySet()) {\r\n//            ArrayList<Team> teams;\r\n//            teams = data.get(unit.getValue());\r\n//            if (teams == null) {\r\n//                teams = new ArrayList<>();\r\n//                teams.add(unit.getKey());\r\n//                data.put(unit.getValue(), teams);\r\n//            } else {\r\n//                teams.add(unit.getKey());\r\n//            }\r\n//        }\r\n//        ArrayList<Date> check = new ArrayList<Date>();\r\n//        for (Map.Entry<Team, Date> unit : joiningDate.entrySet()) {\r\n//            if (check.contains(unit.getValue())) continue;\r\n//            check.add(unit.getValue());\r\n//            ArrayList<Team> teams = data.get(unit.getValue());\r\n//            ArrayList<String> names = new ArrayList<>();\r\n//            for (Team team : teams) {\r\n//                names.add(team.getTeamName());\r\n//            }\r\n//            Collections.sort(names);\r\n//            for (String name : names) {\r\n//                result.add(name);\r\n//            }\r\n//        }\r\n        return result;\r\n    }\r\n\r\n    public int showTeam(User user, String teamName) {\r\n        for (Team team : Team.getAllTeams()) {\r\n            if (teamName.equals(team.getTeamName())) {\r\n                return 1;\r\n            }\r\n        }\r\n        return 0;\r\n    }\r\n\r\n    public ArrayList<User> sortUsersByDate(User user) {\r\n\r\n        return null;\r\n    }\r\n\r\n    public int editTaskTitle(User user, Task task, String command) {\r\n        if (!user.getRole().equals(\"Leader\"))\r\n            return 0;\r\n        else {\r\n            task.setTitle(command);\r\n            return 1;\r\n        }\r\n    }\r\n\r\n    public int editTaskDescription(User user, Task task, String command) {\r\n        if (!user.getRole().equals(\"Leader\"))\r\n            return 0;\r\n        else {\r\n            task.setDescription(command);\r\n            return 1;\r\n        }\r\n    }\r\n\r\n    public int editTaskPriority(User user, Task task, String command) {\r\n        if (!user.getRole().equals(\"Leader\"))\r\n            return 0;\r\n        else {\r\n            task.setPriority(command);\r\n            return 1;\r\n        }\r\n    }\r\n\r\n    public int editTaskDeadline(User user, Task task, String command) throws ParseException {\r\n        SimpleDateFormat formatter = new SimpleDateFormat(\"yyyy/MM/dd|HH:mm\");\r\n        Matcher matcher = getCommandMatcher(\"([\\\\d]{4})/([\\\\d]{2})/([\\\\d]{2})[|]([\\\\d]{2}):([\\\\d]{2})\", command);\r\n        matcher.matches();\r\n        if (!user.getRole().equals(\"Leader\"))\r\n            return 0;\r\n        else if (Integer.parseInt(matcher.group(2)) > 12 ||\r\n                Integer.parseInt(matcher.group(2)) < 0 ||\r\n                (Integer.parseInt(matcher.group(2)) > 6 && Integer.parseInt(matcher.group(3)) > 30) ||\r\n                (Integer.parseInt(matcher.group(2)) <= 6 && Integer.parseInt(matcher.group(3)) > 31) ||\r\n                Integer.parseInt(matcher.group(4)) > 24 ||\r\n                Integer.parseInt(matcher.group(5)) > 60\r\n        )\r\n            return 1;\r\n        else if (new Date(command).getDate().before(task.getDeadline().getDate()))\r\n            return 1;\r\n        else {\r\n            task.setDeadline(new Date(command));\r\n            return 2;\r\n        }\r\n    }\r\n\r\n    public int removeAssignedUsers(User user, Task task, User userForEdit) {\r\n        if (!user.getRole().equals(\"Leader\"))\r\n            return 0;\r\n        else if (userForEdit == null)\r\n            return 1;\r\n        else {\r\n            task.getAssignedUser().remove(userForEdit);\r\n            return 2;\r\n        }\r\n    }\r\n\r\n    public int addAssignedUsers(User user, Task task, User userForEdit) {\r\n        if (!user.getRole().equals(\"Leader\"))\r\n            return 0;\r\n        else if (userForEdit == null)\r\n            return 1;\r\n        else {\r\n            task.getAssignedUser().add(userForEdit);\r\n            return 2;\r\n        }\r\n    }\r\n\r\n    public void sendMessage(User user, ChatRoom chatRoom, String command) {\r\n\r\n    }\r\n\r\n    public ArrayList<String> showTasks(Team team) throws ParseException {\r\n        ArrayList<String> arrayList = new ArrayList();\r\n        ArrayList<Task> sorted = new ArrayList<>();\r\n        ArrayList<Task> tasks = team.getAllTasks();\r\n        if (tasks.isEmpty()) {\r\n            arrayList.add(\"no task to show \");\r\n            return arrayList;\r\n        }\r\n        ArrayList<java.util.Date> dates = new ArrayList<>();\r\n        for (Task task : tasks) {\r\n            dates.add(task.getDeadline().getDate());\r\n        }\r\n        Collections.sort(dates);\r\n        for (java.util.Date date : dates) {\r\n            for (Task task : tasks) {\r\n                if (task.getDeadline().getDate().equals(date))\r\n                    if (!sorted.contains(task))\r\n                        sorted.add(task);\r\n            }\r\n        }\r\n        int rank = 1;\r\n        for (Task task : sorted) {\r\n            arrayList.add(\"\" + rank + \". \" + showTask(\"\" + task.getCreationId()));\r\n            rank++;\r\n        }\r\n        return arrayList;\r\n    }\r\n\r\n    public String showTask(String taskId) {\r\n        StringBuilder stringBuilder = new StringBuilder();\r\n        Task task = Task.getTaskByIdWithoutTeam(taskId);\r\n        if (task == null) {\r\n            stringBuilder.append(\"there is no task whit this id\");\r\n            return stringBuilder.toString();\r\n        }\r\n        stringBuilder.append(task.getTitle());\r\n        stringBuilder.append(\" : id \");\r\n        stringBuilder.append(taskId);\r\n        stringBuilder.append(\" ,Creation date: \");\r\n        stringBuilder.append(task.getDateOfCreation().toString());\r\n        stringBuilder.append(\" ,deadline: \");\r\n        stringBuilder.append(task.getDeadline().toString());\r\n        stringBuilder.append(\" ,assigned to : \");\r\n        stringBuilder.append(getAssignedMembers(task));\r\n        stringBuilder.append(\" priority : \");\r\n        stringBuilder.append(task.getPriority());\r\n        return stringBuilder.toString();\r\n    }\r\n\r\n    public int makeBoard(User user, Team team, String boardName) {\r\n        if (!user.getRole().equals(\"Leader\"))\r\n            return 0;\r\n        Board board = Board.getBoardByName(team.getBoards(), boardName);\r\n        if (board != null)\r\n            return 1;\r\n        else {\r\n            board = new Board(boardName, user, team);\r\n            return 2;\r\n        }\r\n    }\r\n\r\n    public int removeBoard(User user, Team team, String boardName) {\r\n        if (!user.getRole().equals(\"Leader\"))\r\n            return 0;\r\n        Board board = Board.getBoardByName(team.getBoards(), boardName);\r\n        if (board == null)\r\n            return 1;\r\n        else {\r\n            team.getBoards().remove(board);\r\n            return 2;\r\n        }\r\n    }\r\n\r\n    public int addCategory(User user, Team team, String boardName, String categoryName) {\r\n        if (!user.getRole().equals(\"Leader\"))\r\n            return 0;\r\n        Board board = Board.getBoardByName(team.getBoards(), boardName);\r\n        if (board == null)\r\n            return 1;\r\n        Category category = Category.getCategoryByName(board.getAllCategories(), categoryName);\r\n        if (category != null)\r\n            return 2;\r\n        else {\r\n            category = new Category(board, categoryName);\r\n            return 3;\r\n        }\r\n    }\r\n\r\n    public int changeColumn(User user, Team team, String boardName, String categoryName, int column) {\r\n        if (!user.getRole().equals(\"Leader\"))\r\n            return 0;\r\n        Board board = Board.getBoardByName(team.getBoards(), boardName);\r\n        if (board == null)\r\n            return 1;\r\n        Category category = Category.getCategoryByName(board.getAllCategories(), categoryName);\r\n        if (category == null)\r\n            return 2;\r\n        if (column < 0 || column > board.getAllCategories().size() - 1)\r\n            return 3;\r\n        else {\r\n            board.setAllCategories(changeArrangement(board.getAllCategories(), category, column));\r\n            return 4;\r\n        }\r\n\r\n    }\r\n\r\n    public ArrayList<Category> changeArrangement(ArrayList<Category> categories, Category category, int column) {\r\n        ArrayList<Category> rearranged = new ArrayList<>();\r\n        categories.remove(category);\r\n        for (int i = 0; i < column; i++) {\r\n            rearranged.add(categories.get(i));\r\n        }\r\n        rearranged.add(category);\r\n        for (int i = column; i < categories.size(); i++) {\r\n            rearranged.add(categories.get(i));\r\n        }\r\n        return rearranged;\r\n    }\r\n\r\n    public int boardDone(User user, Team team, String boardName) {\r\n        if (!user.getRole().equals(\"Leader\"))\r\n            return 0;\r\n        Board board = Board.getBoardByName(team.getBoards(), boardName);\r\n        if (board == null)\r\n            return 1;\r\n        if (board.getAllCategories().isEmpty())\r\n            return 2;\r\n        else {\r\n            board.setCreated(true);\r\n            return 3;\r\n        }\r\n\r\n\r\n    }\r\n\r\n    public int boardAddTask(User user, Team team, String boardName, String taskId) {\r\n        if (!user.getRole().equals(\"Leader\"))\r\n            return 0;\r\n        Board board = Board.getBoardByName(team.getBoards(), boardName);\r\n        if (board == null)\r\n            return 1;\r\n        if (!board.isCreated())\r\n            return 2;\r\n        Task task = Task.getTaskById(team, taskId);\r\n        if (task == null)\r\n            return 3;\r\n        if (board.getBoardTask().contains(task))\r\n            return 4;\r\n        if (Date.getTimeBetween(Date.getNow(), task.getDeadline()) < 0)\r\n            return 5;\r\n        if (task.getAssignedUser().isEmpty())\r\n            return 6;\r\n        else {\r\n            board.getBoardTask().add(task);\r\n            return 7;\r\n        }\r\n    }\r\n\r\n\r\n    public int boardAssignMember(User user, Team team, String username, String boardName, String taskId) {\r\n        if (!user.getRole().equals(\"Leader\"))\r\n            return 0;\r\n        Board board = Board.getBoardByName(team.getBoards(), boardName);\r\n        if (board == null)\r\n            return 1;\r\n        if (!board.isCreated())\r\n            return 2;\r\n        Task task = Task.getTaskById(team, taskId);\r\n        if (task == null)\r\n            return 3;\r\n        if (!board.getBoardTask().contains(task))\r\n            return 3;\r\n        User user1 = User.getUserByUsername(username);\r\n        if (user1 == null)\r\n            return 4;\r\n        if (board.getDone().contains(task))\r\n            return 5;\r\n        else {\r\n            if (!task.getAssignedUser().contains(user1)) {\r\n                task.getAssignedUser().add(user1);\r\n            }\r\n            return 6;\r\n        }\r\n    }\r\n\r\n    public int forceCategory(User user, Team team, String categoryName, String boardName, String taskTitle) {\r\n        if (!user.getRole().equals(\"Leader\"))\r\n            return 0;\r\n        Board board = Board.getBoardByName(team.getBoards(), boardName);\r\n        if (board == null)\r\n            return 1;\r\n        if (!board.isCreated())\r\n            return 2;\r\n        Task task = Task.getTaskByTitle(board.getBoardTask(), taskTitle);\r\n        if (task == null)\r\n            return 3;\r\n        if (!board.getBoardTask().contains(task))\r\n            return 3;\r\n        if (Date.getTimeBetween(Date.getNow(), task.getDeadline()) < 0)\r\n            return 4;\r\n        Category category = Category.getCategoryByName(board.getAllCategories(), categoryName);\r\n        if (category == null)\r\n            return 5;\r\n        else {\r\n            removeFromCategories(task, board);\r\n            category.getCategoryTasks().add(task);\r\n            return 6;\r\n        }\r\n    }\r\n\r\n    private int removeFromCategories(Task task, Board board) {\r\n        int index = -1;\r\n        int it = 0;\r\n        for (Category category : board.getAllCategories()) {\r\n            if (category.getCategoryTasks().contains(task)) {\r\n                index = it;\r\n                category.getCategoryTasks().remove(task);\r\n            }\r\n            it++;\r\n        }\r\n        return index;\r\n    }\r\n\r\n    //public ArrayList<Category> updateColumns(ArrayList<Category> oldColumns, Category category){\r\n    //    return null;\r\n    //}\r\n\r\n    public int goToNextCategory(User user, Team team, String boardName, String taskTitle) {\r\n        Board board = Board.getBoardByName(team.getBoards(), boardName);\r\n        if (board == null)\r\n            return 1;\r\n        if (!board.isCreated())\r\n            return 2;\r\n        Task task = Task.getTaskByTitle(board.getBoardTask(), taskTitle);\r\n        if (task == null)\r\n            return 3;\r\n        if (!board.getBoardTask().contains(task))\r\n            return 3;\r\n        if (user.getRole().equals(\"Member\")) {\r\n            if (!task.getAssignedUser().contains(user))\r\n                return 0;\r\n        }\r\n        if (Date.getTimeBetween(Date.getNow(), task.getDeadline()) < 0)\r\n            return 4;\r\n        int index = removeFromCategories(task, board);\r\n        if (index == -1)\r\n            return 5;\r\n        else {\r\n            if (index == board.getAllCategories().size() - 1) {\r\n                board.getDone().add(task);\r\n                increaseScore(team, task);\r\n                return 6;\r\n            }\r\n            board.getAllCategories().get(index + 1).getCategoryTasks().add(task);\r\n            return 6;\r\n        }\r\n    }\r\n\r\n    private void increaseScore(Team team, Task task) {\r\n        for (User user1 : task.getAssignedUser()) {\r\n            Integer score = team.getScoreboard().getScores().get(user1);\r\n            if (score == null) {\r\n                score = 10;\r\n                user1.setScore(user1.getScore() + 10);\r\n            } else {\r\n                score = score + 10;\r\n                user1.setScore(user1.getScore() + 10);\r\n            }\r\n            team.getScoreboard().getScores().put(user1, score);\r\n        }\r\n    }\r\n\r\n    private void decreaseScore(Team team, Task task) {\r\n        for (User user1 : task.getAssignedUser()) {\r\n            Integer score = team.getScoreboard().getScores().get(user1);\r\n            if (score == null) {\r\n                score = -5;\r\n                user1.setScore(user1.getScore() - 5);\r\n            } else {\r\n                score = score - 5;\r\n                user1.setScore(user1.getScore() - 5);\r\n            }\r\n            team.getScoreboard().getScores().put(user1, score);\r\n        }\r\n    }\r\n\r\n    public void updateFailed(Board board) {\r\n        for (Task task : board.getBoardTask()) {\r\n            if (!board.getFailed().contains(task)) {\r\n                if (Date.getTimeBetween(Date.getNow(), task.getDeadline()) < 0) {\r\n                    removeFromCategories(task, board);\r\n                    board.getFailed().add(task);\r\n                    decreaseScore(board.getTeam(), task);\r\n                }\r\n            }\r\n\r\n        }\r\n    }\r\n\r\n\r\n    public ArrayList<String> showDoneOrFailed(Team team, String doneOrFailed, String boardName) {\r\n        ArrayList<String> result = new ArrayList<>();\r\n        Board board = Board.getBoardByName(team.getBoards(), boardName);\r\n        if (board == null) {\r\n            result.add(\"There is no board with this name\");\r\n        } else {\r\n            if (doneOrFailed.equals(\"done\")) {\r\n                result.add(\"done tasks : \");\r\n                for (Task task : board.getDone()) {\r\n                    result.add(\"task id :\" + task.getCreationId() + \" task title : \" + task.getTitle());\r\n                }\r\n            } else {\r\n                result.add(\"Failed tasks : \");\r\n                for (Task task : board.getFailed()) {\r\n                    result.add(\"task id :\" + task.getCreationId() + \" task title : \" + task.getTitle());\r\n                }\r\n            }\r\n        }\r\n        return result;\r\n    }\r\n\r\n    public int updateDeadline(User user, Team team, String taskTitle, String deadline, String boardName) {\r\n        if (!user.getRole().equals(\"Leader\"))\r\n            return 0;\r\n        Board board = Board.getBoardByName(team.getBoards(), boardName);\r\n        if (board == null)\r\n            return 1;\r\n        if (!board.isCreated())\r\n            return 2;\r\n        Task task = Task.getTaskByTitle(board.getBoardTask(), taskTitle);\r\n        if (task == null)\r\n            return 3;\r\n        if (!board.getBoardTask().contains(task))\r\n            return 3;\r\n        if (!board.getFailed().contains(task))\r\n            return 4;\r\n        Matcher matcher = getCommandMatcher(\"([\\\\d]{4})/([\\\\d]{2})/([\\\\d]{2})[|]([\\\\d]{2}):([\\\\d]{2})\", deadline);\r\n        if (!matcher.matches())\r\n            return 5;\r\n        else {\r\n            task.setDeadline(new Date(deadline));\r\n            board.getFailed().remove(task);\r\n            return 6;\r\n        }\r\n    }\r\n\r\n    public int getBoardCompletionPercentage(Board board) {\r\n        float percentage = (float) (board.getDone().size()) / (float) (board.getBoardTask().size());\r\n        return (int) (percentage * 100);\r\n    }\r\n\r\n    public int getBoardFailedPercentage(Board board) {\r\n        float percentage = (float) (board.getFailed().size()) / (float) (board.getBoardTask().size());\r\n        return (int) (percentage * 100);\r\n    }\r\n\r\n    public Category getCategory(Board board, Task task) {\r\n        for (Category category : board.getAllCategories()) {\r\n            if (category.getCategoryTasks().contains(task))\r\n                return category;\r\n        }\r\n        return null;\r\n    }\r\n\r\n    public String getAssignedMembers(Task task) {\r\n        StringBuilder stringBuilder = new StringBuilder();\r\n        for (User user : task.getAssignedUser()) {\r\n            stringBuilder.append(\",\");\r\n            stringBuilder.append(user.getUserName());\r\n        }\r\n        return stringBuilder.toString();\r\n    }\r\n\r\n    public String getStatus(Board board, Task task) {\r\n        String status = \"in progress\";\r\n        if (board.getDone().contains(task))\r\n            status = \"done\";\r\n        if (board.getFailed().contains(task))\r\n            status = \"failed\";\r\n        return status;\r\n    }\r\n\r\n\r\n    public ArrayList<String> boardShow(Team team, String boardName) {\r\n        ArrayList<String> arrayList = new ArrayList<>();\r\n        Board board = Board.getBoardByName(team.getBoards(), boardName);\r\n        if (board == null) {\r\n            arrayList.add(\"invalid boardName \");\r\n            return arrayList;\r\n        }\r\n        arrayList.add(\"Board name : \" + boardName);\r\n        arrayList.add(\"Board Completion : \" + getBoardCompletionPercentage(board) + \" %\");\r\n        arrayList.add(\"Board Failed : \" + getBoardFailedPercentage(board) + \" %\");\r\n        arrayList.add(\"Board leader : \" + team.getTeamLeader().getUserName());\r\n        arrayList.add(\"Board tasks : \");\r\n        arrayList.add(\"Highest Priority :\");\r\n        for (Task task : board.getBoardTask()) {\r\n            if (task.getPriority().equals(\"Highest\")) {\r\n                addTaskDetails(arrayList, board, task);\r\n            }\r\n        }\r\n        for (Task task : board.getBoardTask()) {\r\n            if (task.getPriority().equals(\"High\")) {\r\n                addTaskDetails(arrayList, board, task);\r\n            }\r\n        }\r\n        for (Task task : board.getBoardTask()) {\r\n            if (task.getPriority().equals(\"Low\")) {\r\n                addTaskDetails(arrayList, board, task);\r\n            }\r\n        }\r\n        for (Task task : board.getBoardTask()) {\r\n            if (task.getPriority().equals(\"Lowest\")) {\r\n                addTaskDetails(arrayList, board, task);\r\n            }\r\n        }\r\n        return arrayList;\r\n    }\r\n\r\n    private void addTaskDetails(ArrayList<String> arrayList, Board board, Task task) {\r\n        arrayList.add(\"Title : \" + task.getTitle());\r\n        String categoryName = \"no category\";\r\n        if (getCategory(board, task) != null)\r\n            categoryName = getCategory(board, task).getName();\r\n        arrayList.add(\"Category : \" + categoryName);\r\n        arrayList.add((\"Description : \" + task.getDescription()));\r\n        arrayList.add(\"Creation Date : \" + task.getDateOfCreation().toString());\r\n        arrayList.add(\"Deadline : \" + task.getDeadline().toString());\r\n        arrayList.add(\"Assigned to : \" + getAssignedMembers(task));\r\n        arrayList.add(\"Status : \" + getStatus(board, task));\r\n        arrayList.add(\"--\");\r\n    }\r\n\r\n    public ArrayList<String> showChatRoom(Team team) {\r\n        ArrayList<String> result = new ArrayList<>();\r\n        for (Message message : team.getChatRoom().getAllMassages()) {\r\n            result.add(message.getSender().getUserName() + \" : \\\"\" + message.getText() + \"\\\"\");\r\n        }\r\n        return result;\r\n    }\r\n\r\n\r\n    public ArrayList<java.util.Date> showDeadLines(User user) throws ParseException {\r\n\r\n        ArrayList<java.util.Date> allTaskDate = new ArrayList<>();\r\n        for (Task task : user.getAllTasksForUser()) {\r\n            allTaskDate.add(task.getDeadline().getDate());\r\n        }\r\n        Collections.sort(allTaskDate);\r\n        HashMap<String, java.util.Date> allTask = new HashMap<>();\r\n        for (Task task : user.getAllTasksForUser()) {\r\n            allTask.put(task.getTeam().getTeamName(), task.getDeadline().getDate());\r\n        }\r\n        return allTaskDate;\r\n\r\n    }\r\n\r\n    public Team showSpecialTeam(User user, String command) {\r\n        Team selectTeam = null;\r\n        for (Team team : Team.getAcceptedTeams()) {\r\n            if (command.equals(String.valueOf(team.getTeamNumber())) || command.equals(team.getTeamName()))\r\n                selectTeam = team;\r\n        }\r\n        return selectTeam;\r\n    }\r\n\r\n    public int creatTeam(User user, String command) {\r\n        Team team = Team.getTeamByName(command, Team.getAllTeams());\r\n        if (team != null)\r\n            return 1;\r\n        else if (!getCommandMatcher(\"((?=.*[A-Za-z])(?=.*\\\\d)[A-Za-z\\\\d]{5,12})\", command).matches())\r\n            return 2;\r\n        else if (getCommandMatcher(\"\\\\d\", command.split(\"\")[0]).matches())\r\n            return 2;\r\n        else {\r\n            Date now = Date.getNow();\r\n            new Team(command, user, now);\r\n            return 3;\r\n        }\r\n\r\n    }\r\n\r\n    public ArrayList<Task> showTasksForLeader(User user, Team team) {\r\n        ArrayList<Task> tasks = new ArrayList<>();\r\n        for (Task task : team.getAllTasks()) {\r\n            tasks.add(task);\r\n        }\r\n        return tasks;\r\n    }\r\n\r\n    public int creatTask(User user, Team team, String title, String dateOfCreation, String deadline) throws ParseException {\r\n        SimpleDateFormat formatter = new SimpleDateFormat(\"yyyy/MM/dd|HH:mm\");\r\n        boolean isTaskAlready = false;\r\n        for (Task task : team.getAllTasks()) {\r\n            if (title.equals(task.getTitle())) {\r\n                isTaskAlready = true;\r\n                break;\r\n            }\r\n        }\r\n        Matcher matcher = getCommandMatcher(\"([\\\\d]{4})/([\\\\d]{2})/([\\\\d]{2})[|]([\\\\d]{2}):([\\\\d]{2})\", dateOfCreation);\r\n        matcher.matches();\r\n        Matcher matcher2 = getCommandMatcher(\"([\\\\d]{4})/([\\\\d]{2})/([\\\\d]{2})[|]([\\\\d]{2}):([\\\\d]{2})\", deadline);\r\n        matcher2.matches();\r\n        if (isTaskAlready) {\r\n            return 1;\r\n        } else if (!matcher.matches()) {\r\n            return 2;\r\n        } else if (Integer.parseInt(matcher.group(2)) > 12 ||\r\n                Integer.parseInt(matcher.group(2)) < 0 ||\r\n                (Integer.parseInt(matcher.group(2)) > 6 && Integer.parseInt(matcher.group(3)) > 30) ||\r\n                (Integer.parseInt(matcher.group(2)) <= 6 && Integer.parseInt(matcher.group(3)) > 31) ||\r\n                Integer.parseInt(matcher.group(4)) > 24 ||\r\n                Integer.parseInt(matcher.group(5)) > 60\r\n        )\r\n            return 2;\r\n        else if (!matcher2.matches()) {\r\n            return 3;\r\n        } else if (Integer.parseInt(matcher2.group(2)) > 12 ||\r\n                Integer.parseInt(matcher2.group(2)) < 0 ||\r\n                (Integer.parseInt(matcher2.group(2)) > 6 && Integer.parseInt(matcher2.group(3)) > 30) ||\r\n                (Integer.parseInt(matcher2.group(2)) <= 6 && Integer.parseInt(matcher2.group(3)) > 31) ||\r\n                Integer.parseInt(matcher2.group(4)) > 24 ||\r\n                Integer.parseInt(matcher2.group(5)) > 60\r\n        )\r\n            return 3;\r\n        else {\r\n            team.getAllTasks().add(new Task(title, new Date(dateOfCreation), new Date(deadline), team));\r\n            return 4;\r\n        }\r\n    }\r\n\r\n    public ArrayList<String> showMembers(User user, Team team) {\r\n        ArrayList<String> names = new ArrayList<>();\r\n        for (User user1 : team.getTeamMembers()) {\r\n            names.add(user1.getUserName());\r\n        }\r\n        for (User user2 : team.getSuspendedMembers()) {\r\n            names.add(user2.getUserName() + \"    (Suspended)\");\r\n        }\r\n        Collections.sort(names);\r\n        return names;\r\n    }\r\n\r\n    public int addMember(User user, Team team, String command) {\r\n        if (!isUsernameAvailable(command))\r\n            return 1;\r\n        else {\r\n            team.getTeamMembers().add(findUser(command));\r\n            findUser(command).getUserTeams().add(team);\r\n            findUser(command).getJoiningDate().put(team, team.getCreationDate());\r\n            team.getScoreboard().getScores().put(findUser(command), 0);\r\n            return 2;\r\n        }\r\n    }\r\n\r\n    public int deleteMember(User user, Team team, String command) {\r\n        if (!isUsernameAvailable(command))\r\n            return 1;\r\n        else {\r\n            team.getTeamMembers().remove(findUser(command));\r\n            findUser(command).getUserTeams().remove(team);\r\n            findUser(command).getJoiningDate().remove(team);\r\n            team.getScoreboard().getScores().remove(findUser(command));\r\n            return 2;\r\n        }\r\n    }\r\n\r\n    public int suspendMember(User user, Team team, String command) {\r\n        if (!isUsernameAvailable(command))\r\n            return 1;\r\n        else {\r\n            team.getSuspendedMembers().add(findUser(command));\r\n            team.getTeamMembers().remove(findUser(command));\r\n            return 2;\r\n        }\r\n    }\r\n\r\n    public int promoteMember(User user, Team team, String command) {\r\n        if (!isUsernameAvailable(command))\r\n            return 1;\r\n        else {\r\n            team.setTeamLeader(findUser(command));\r\n            findUser(command).setRole(\"Leader\");\r\n            user.setRole(\"Member\");\r\n            team.getTeamMembers().remove(findUser(command));\r\n            findUser(command).getUserTeams().remove(team);\r\n            findUser(command).getJoiningDate().remove(team);\r\n            team.getScoreboard().getScores().remove(findUser(command));\r\n            return 2;\r\n        }\r\n    }\r\n\r\n    public int assignMember(User user, Team team, String command1, String command2) {\r\n        if (!isUsernameAvailable(command2))\r\n            return 1;\r\n        else if (findTask(team, command1) == null)\r\n            return 2;\r\n        else {\r\n            Task task = findTask(team, command1);\r\n            task.getAssignedUser().add(findUser(command2));\r\n            findUser(command2).getAllTasksForUser().add(task);\r\n            return 3;\r\n        }\r\n    }\r\n\r\n    public ArrayList<String> showScoreBoard(User user, Team team) {\r\n        for (Board board : team.getBoards()) {\r\n            updateFailed(board);\r\n        }\r\n        HashMap<User, Integer> scores = sortBoard\r\n                (team.getScoreboard().getScores());\r\n        ArrayList<String> result = new ArrayList<>();\r\n        HashMap<Integer, ArrayList<User>> data = new HashMap<>();\r\n        for (Map.Entry<User, Integer> unit : scores.entrySet()) {\r\n            ArrayList<User> users;\r\n            users = data.get(unit.getValue());\r\n            if (users == null) {\r\n                users = new ArrayList<>();\r\n                users.add(unit.getKey());\r\n                data.put(unit.getValue(), users);\r\n            } else {\r\n                users.add(unit.getKey());\r\n            }\r\n        }\r\n\r\n        ArrayList<Integer> check = new ArrayList<Integer>();\r\n        for (Map.Entry<User, Integer> unit : scores.entrySet()) {\r\n            if (check.contains(unit.getValue())) continue;\r\n            check.add(unit.getValue());\r\n            ArrayList<User> users = data.get(unit.getValue());\r\n            ArrayList<String> names = new ArrayList<>();\r\n            for (User user1 : users) {\r\n                names.add(user1.getUserName());\r\n            }\r\n            Collections.sort(names);\r\n            for (String name : names) {\r\n                User user1 = User.getUserByUsername(name);\r\n                int score = scores.get(user1);\r\n                result.add(name + \" : \" + score);\r\n            }\r\n        }\r\n        return result;\r\n\r\n    }\r\n\r\n    public ArrayList<String> showRoadMap(User user, Team team) {\r\n        ArrayList<String> result = new ArrayList<>();\r\n        if (team.getRoadMap().getCreationDates().isEmpty()) {\r\n            result.add(\"no task yet\");\r\n            return result;\r\n        }\r\n        HashMap<Task, Date> creationDates = sortRoadMap(team.getRoadMap().getCreationDates());\r\n        HashMap<Date, ArrayList<Task>> data = new HashMap<>();\r\n\r\n        for (Map.Entry<Task, Date> unit : creationDates.entrySet()) {\r\n            ArrayList<Task> tasks;\r\n            tasks = data.get(unit.getValue());\r\n            if (tasks == null) {\r\n                tasks = new ArrayList<>();\r\n                tasks.add(unit.getKey());\r\n                data.put(unit.getValue(), tasks);\r\n            } else {\r\n                tasks.add(unit.getKey());\r\n            }\r\n        }\r\n\r\n        ArrayList<Date> check = new ArrayList<Date>();\r\n        for (Map.Entry<Task, Date> unit : creationDates.entrySet()) {\r\n            if (check.contains(unit.getValue())) continue;\r\n            check.add(unit.getValue());\r\n            ArrayList<Task> tasks = data.get(unit.getValue());\r\n            ArrayList<String> titles = new ArrayList<>();\r\n            for (Task task : tasks) {\r\n                titles.add(task.getTitle() + \" : \" + team.getRoadMap().getTasksStatus().get(task) + \" % done\");\r\n            }\r\n            Collections.sort(titles);\r\n            for (String title : titles) {\r\n                result.add(title);\r\n            }\r\n        }\r\n        return result;\r\n    }\r\n\r\n    public ArrayList<User> showScoreBoardForLeader(User user, Team team) {\r\n        ArrayList<Integer> score = new ArrayList<>();\r\n        ArrayList<User> sort = new ArrayList<>();\r\n        for (User user1 : team.getTeamMembers()) {\r\n            score.add(user1.getScore());\r\n        }\r\n        Collections.sort(score);\r\n        int number = 1;\r\n        for (Integer score1 : score) {\r\n            if (number > 1) {\r\n                number--;\r\n                continue;\r\n\r\n            }\r\n            for (User user1 : team.getTeamMembers()) {\r\n                if (user1.getScore() == score1) {\r\n                    sort.add(user1);\r\n                    number++;\r\n                }\r\n            }\r\n        }\r\n        return sort;\r\n    }\r\n\r\n    public int sendNotificationForUser(User sender, String receiver, String command) {\r\n        if (!isUsernameAvailable(receiver))\r\n            return 1;\r\n        else {\r\n            User receiverUser = findUser(receiver);\r\n            receiverUser.getNotifications().add(new Notification(command, sender, 0));\r\n            return 2;\r\n        }\r\n    }\r\n\r\n    //Will only be sent to accepted teams\r\n    public int sendNotificationForTeam(User sender, String team, String command) {\r\n        Team receiverTeam = Team.getTeamByName(team, Team.getAcceptedTeams());\r\n        if (receiverTeam == null)\r\n            return 1;\r\n        else {\r\n            Notification notification = new Notification(command, sender, 1);\r\n            for (User user : Controller.controller.findTeam(team).getTeamMembers()) {\r\n                user.getNotifications().add(notification);\r\n            }\r\n            return 2;\r\n        }\r\n    }\r\n\r\n    public int showProfile(String username) {\r\n        if (!isUsernameAvailable(username)) {\r\n            return 1;\r\n        }\r\n        return 0;\r\n    }\r\n\r\n    public int banUser(String username) {\r\n        if (!isUsernameAvailable(username)) {\r\n            return 1;\r\n        }\r\n        User findUser = User.getUserByUsername(username);\r\n        for (Team team : findUser.getUserTeams()) {\r\n            team.getScoreboard().getScores().remove(findUser);\r\n            team.getTeamMembers().remove(findUser);\r\n        }\r\n        User.getUsers().remove(User.getUserByUsername(username));\r\n        return 0;\r\n    }\r\n\r\n    public int changeRole(String username, String role) {\r\n        if (!isUsernameAvailable(username)) {\r\n            return 1;\r\n        }\r\n        findUser(username).setRole(role);\r\n        return 0;\r\n    }\r\n\r\n    public int sendNotificationForUser(String username) {\r\n        if (!isUsernameAvailable(username)) {\r\n            return 1;\r\n        }\r\n        return 0;\r\n    }\r\n\r\n    public int sendNotificationForTeam(String teamName) {\r\n        if (!isTeamAvailable(teamName)) {\r\n            return 1;\r\n        }\r\n        return 0;\r\n    }\r\n\r\n    public int showPendingTeams() {\r\n        if (Team.getPendingTeams().size() == 0) {\r\n            return 1;\r\n        }\r\n        return 0;\r\n    }\r\n\r\n    public int acceptTeam(String teamName) {\r\n        int counter = 0;\r\n        String[] teamsNames = teamName.split(\" \");\r\n        for (String string : teamsNames) {\r\n            for (Team team : Team.getPendingTeams()) {\r\n                if (string.equals(team.getTeamName())) {\r\n                    counter++;\r\n                }\r\n            }\r\n        }\r\n        if (counter == teamsNames.length) {\r\n            for (String string : teamsNames) {\r\n                Team.getPendingTeams().remove(findTeam(string));\r\n                Team.getAcceptedTeams().add(findTeam(string));\r\n            }\r\n            return 0;\r\n        }\r\n        return 1;\r\n    }\r\n\r\n    public int rejectTeam(String teamName) {\r\n        int counter = 0;\r\n        String[] teamsNames = teamName.split(\" \");\r\n        for (String string : teamsNames) {\r\n            for (Team team : Team.getPendingTeams()) {\r\n                if (string.equals(team.getTeamName())) {\r\n                    counter++;\r\n                }\r\n            }\r\n        }\r\n        if (counter == teamsNames.length) {\r\n            for (String string : teamsNames) {\r\n                findTeam(string).getTeamMembers().get(0).getUserTeams().remove(findTeam(string));\r\n                findTeam(string).getTeamMembers().get(0).getJoiningDate().remove(findTeam(string));\r\n                Team.getPendingTeams().remove(findTeam(string));\r\n            }\r\n            return 0;\r\n        }\r\n        return 1;\r\n    }\r\n\r\n    public HashMap<User, Integer> sortBoard(HashMap<User, Integer> hashMap) {\r\n        List<Map.Entry<User, Integer>> valueList =\r\n                new LinkedList<Map.Entry<User, Integer>>(hashMap.entrySet());\r\n        Comparator comparator = new Comparator<Map.Entry<User, Integer>>() {\r\n            public int compare(Map.Entry<User, Integer> operand1, Map.Entry<User, Integer> operand2) {\r\n                return (operand2.getValue()).compareTo(operand1.getValue());\r\n            }\r\n        };\r\n        Collections.sort(valueList, comparator);\r\n\r\n        HashMap<User, Integer> sorted = new LinkedHashMap<User, Integer>();\r\n        for (Map.Entry<User, Integer> unit : valueList) {\r\n            sorted.put(unit.getKey(), unit.getValue());\r\n        }\r\n        return sorted;\r\n\r\n    }\r\n\r\n    public HashMap<Task, Date> sortRoadMap(HashMap<Task, Date> hashMap) {\r\n        // a random date for comparing to other dates\r\n        Date comparingDate = new Date(\"1300/01/01|00:00\");\r\n        List<Map.Entry<Task, Date>> valueList =\r\n                new LinkedList<Map.Entry<Task, Date>>(hashMap.entrySet());\r\n        Comparator comparator = new Comparator<Map.Entry<Task, Date>>() {\r\n            public int compare(Map.Entry<Task, Date> operand1, Map.Entry<Task, Date> operand2) {\r\n                return (Date.getDaysBetween(operand2.getValue(), comparingDate)).compareTo\r\n                        (Date.getDaysBetween(operand1.getValue(), comparingDate));\r\n            }\r\n        };\r\n        Collections.sort(valueList, comparator);\r\n\r\n        HashMap<Task, Date> sorted = new LinkedHashMap<Task, Date>();\r\n        for (Map.Entry<Task, Date> unit : valueList) {\r\n            sorted.put(unit.getKey(), unit.getValue());\r\n        }\r\n        return sorted;\r\n    }\r\n\r\n    public HashMap<Team, Date> sortJoiningDates(HashMap<Team, Date> hashMap) {\r\n        // a random date for comparing to other dates\r\n        Date comparingDate = new Date(\"1300/01/01|00:00\");\r\n        List<Map.Entry<Team, Date>> valueList =\r\n                new LinkedList<Map.Entry<Team, Date>>(hashMap.entrySet());\r\n        Comparator comparator = new Comparator<Map.Entry<Team, Date>>() {\r\n            public int compare(Map.Entry<Team, Date> operand1, Map.Entry<Team, Date> operand2) {\r\n                try {\r\n                    return (operand1.getValue().getDate()).compareTo\r\n                            (operand2.getValue().getDate());\r\n                } catch (ParseException e) {\r\n                    e.printStackTrace();\r\n                }\r\n                return 0;\r\n            }\r\n        };\r\n        Collections.sort(valueList, comparator);\r\n\r\n        HashMap<Team, Date> sorted = new LinkedHashMap<Team, Date>();\r\n        for (Map.Entry<Team, Date> unit : valueList) {\r\n            sorted.put(unit.getKey(), unit.getValue());\r\n        }\r\n        return sorted;\r\n    }\r\n\r\n    public Matcher getCommandMatcher(String pattern, String input) {\r\n        Pattern pattern1 = Pattern.compile(pattern);\r\n        Matcher matcher = pattern1.matcher(input);\r\n        matcher.matches();\r\n        return matcher;\r\n\r\n    }\r\n\r\n    public User findAssignedUsers(Team team, String command) {\r\n        for (User user : team.getTeamMembers()) {\r\n            if (user.getUserName().equals(command))\r\n                return user;\r\n        }\r\n        return null;\r\n    }\r\n\r\n    public Team findTeam(String teamName) {\r\n        for (Team team : Team.getAllTeams()) {\r\n            if (team.getTeamName().equals(teamName)) {\r\n                return team;\r\n            }\r\n        }\r\n        return null;\r\n    }\r\n\r\n    private boolean isUsernameAvailable(String command) {\r\n        for (User user : User.getUsers()) {\r\n            if (user.getUserName().equals(command))\r\n                return true;\r\n        }\r\n        return false;\r\n    }\r\n\r\n    private boolean isEmailAvailable(String command) {\r\n        for (User user : User.getUsers()) {\r\n            if (user.getEmail().equals(command))\r\n                return true;\r\n        }\r\n        return false;\r\n    }\r\n\r\n    private boolean isTeamAvailable(String command) {\r\n        for (Team team : Team.getAllTeams()) {\r\n            if (team.getTeamName().equals(command)) {\r\n                return true;\r\n            }\r\n        }\r\n        return false;\r\n    }\r\n\r\n    private User findUser(String command) {\r\n        for (User user : User.getUsers()) {\r\n            if (user.getUserName().equals(command))\r\n                return user;\r\n        }\r\n        return null;\r\n    }\r\n\r\n\r\n    private Task findTask(Team team, String command) {\r\n        for (Task task : team.getAllTasks()) {\r\n            if (Integer.parseInt(command) == task.getCreationId())\r\n                return task;\r\n        }\r\n        return null;\r\n    }\r\n\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/controller/Controller.java b/src/main/java/controller/Controller.java
+--- a/src/main/java/controller/Controller.java	
++++ b/src/main/java/controller/Controller.java	
+@@ -713,7 +713,7 @@
+         return tasks;
+     }
+ 
+-    public int creatTask(User user, Team team, String title, String dateOfCreation, String deadline) throws ParseException {
++    public int creatTask(User user, Team team, String title, String dateOfCreation, String deadline, String description, String priority) throws ParseException {
+         SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd|HH:mm");
+         boolean isTaskAlready = false;
+         for (Task task : team.getAllTasks()) {
+@@ -749,7 +749,7 @@
+         )
+             return 3;
+         else {
+-            team.getAllTasks().add(new Task(title, new Date(dateOfCreation), new Date(deadline), team));
++            team.getAllTasks().add(new Task(title, new Date(dateOfCreation), new Date(deadline), team, description, priority));
+             return 4;
+         }
+     }
+Index: src/main/java/view/CreateTaskPageForLeaderView.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/view/CreateTaskPageForLeaderView.java b/src/main/java/view/CreateTaskPageForLeaderView.java
+new file mode 100644
+--- /dev/null	
++++ b/src/main/java/view/CreateTaskPageForLeaderView.java	
+@@ -0,0 +1,92 @@
++package view;
++
++import controller.Controller;
++import controller.JsonController;
++import javafx.event.ActionEvent;
++import javafx.fxml.FXMLLoader;
++import javafx.fxml.Initializable;
++import javafx.scene.Parent;
++import javafx.scene.Scene;
++import javafx.scene.control.*;
++import javafx.scene.image.ImageView;
++import javafx.scene.input.MouseEvent;
++import javafx.scene.layout.AnchorPane;
++import javafx.stage.Stage;
++import model.Task;
++import model.Team;
++import model.User;
++
++import java.awt.event.ItemEvent;
++import java.awt.event.ItemListener;
++import java.io.IOException;
++import java.net.URL;
++import java.text.ParseException;
++import java.util.ResourceBundle;
++
++public class CreateTaskPageForLeaderView implements Initializable {
++    public Button btnTaskList;
++    public TextField deadlineFiled;
++    public TextField descriptionField;
++    public TextField taskTitleField;
++    public Button btnCreate;
++    public Label lblError;
++    public AnchorPane pane;
++    public TextField startTimeField;
++    public ChoiceBox priorityChoice;
++    public ChoiceBox members;
++    public ListView membersList;
++    public Button addMember;
++    public ImageView exit;
++    private int result;
++
++    @Override
++    public void initialize(URL location, ResourceBundle resources) {
++        priorityChoice.getItems().addAll("Lowest", "Low", "High", "Highest");
++        priorityChoice.setValue("Lowest");
++        for (User member : Team.getTeamByName("Yakuza1", Team.getAllTeams()).getTeamMembers()) {
++            members.getItems().add(member.getUserName());
++        }
++        members.setValue(Team.getTeamByName("Yakuza1", Team.getAllTeams()).getTeamMembers().get(0).getUserName());
++    }
++
++    public void goToTaskList(ActionEvent actionEvent) throws IOException {
++        Task.setSelectTask(null);
++        Parent root = FXMLLoader.load(getClass().getResource("/fxml/TaskListForLeader.fxml"));
++        ((Stage) pane.getScene().getWindow()).setScene(new Scene(root));
++    }
++
++    public void Create(ActionEvent actionEvent) throws ParseException {
++        if (taskTitleField.getText() == null || priorityChoice.getValue().toString() == null || deadlineFiled.getText() == null)
++            lblError.setText("Fill in all the fields");
++        else {
++            result = Controller.controller.creatTask(LoginView.LoginUser, Team.getTeamByName("Yakuza1", Team.getAllTeams()), taskTitleField.getText(), startTimeField.getText(), deadlineFiled.getText(), descriptionField.getText(), priorityChoice.getValue().toString());
++            if (result == 1) {
++                lblError.setText("There is another task with this title!");
++            } else if (result == 2) {
++                lblError.setText("Invalid start date!");
++            } else if (result == 3) {
++                lblError.setText("Invalid deadline!");
++            } else if (result == 4) {
++                lblError.setText("Task created successfully!");
++            }
++
++        }
++
++    }
++
++
++    public void addMember(ActionEvent actionEvent) {
++        if (membersList.getItems().contains(members.getValue().toString()))
++            lblError.setText("Old added to list!");
++        else {
++            membersList.getItems().add(members.getValue().toString());
++            result = Controller.controller.assignMember(LoginView.LoginUser, Team.getTeamByName("Yakuza1", Team.getAllTeams()), String.valueOf(Task.getAllTasks().get(Task.getAllTasks().size() - 1).getCreationId()), members.getValue().toString());
++            lblError.setText("User successfully added!");
++        }
++    }
++
++    public void exit(MouseEvent mouseEvent) {
++        JsonController.getInstance().updateJson();
++        System.exit(0);
++    }
++}
+Index: src/main/resources/fxml/CreateTaskPageForLeader.fxml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/resources/fxml/CreateTaskPageForLeader.fxml b/src/main/resources/fxml/CreateTaskPageForLeader.fxml
+new file mode 100644
+--- /dev/null	
++++ b/src/main/resources/fxml/CreateTaskPageForLeader.fxml	
+@@ -0,0 +1,84 @@
++<?xml version="1.0" encoding="UTF-8"?>
++
++<?import javafx.geometry.Insets?>
++<?import javafx.scene.control.Button?>
++<?import javafx.scene.control.ChoiceBox?>
++<?import javafx.scene.control.Label?>
++<?import javafx.scene.control.ListView?>
++<?import javafx.scene.control.TextField?>
++<?import javafx.scene.image.Image?>
++<?import javafx.scene.image.ImageView?>
++<?import javafx.scene.layout.AnchorPane?>
++<?import javafx.scene.layout.VBox?>
++<?import javafx.scene.text.Font?>
++
++<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
++            prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
++            fx:controller="view.CreateTaskPageForLeaderView">
++    <children>
++        <AnchorPane prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #949292;"
++                    AnchorPane.bottomAnchor="360.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
++                    AnchorPane.topAnchor="0.0">
++            <children>
++                <Label layoutX="24.0" layoutY="11.0" text="Create Task"/>
++                <ImageView fx:id="exit" fitHeight="28.0" fitWidth="31.0" layoutX="572.0" layoutY="5.0"
++                           onDragDetected="#exit" pickOnBounds="true" preserveRatio="true"
++                           AnchorPane.rightAnchor="10.0">
++                    <image>
++                        <Image url="@../img/close_window_96px.png"/>
++                    </image>
++                </ImageView>
++            </children>
++        </AnchorPane>
++        <AnchorPane layoutY="40.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="360.0" prefWidth="100.0"
++                    AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="40.0">
++            <children>
++                <VBox alignment="TOP_CENTER" layoutY="-1.0" prefHeight="361.0" prefWidth="100.0" spacing="9.0"
++                      style="-fx-background-color: #C8C5C4;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
++                    <children>
++                        <Button fx:id="btnTaskList" mnemonicParsing="false" onAction="#goToTaskList" prefHeight="50.0"
++                                prefWidth="80.0" text="Task List">
++                            <VBox.margin>
++                                <Insets top="7.0"/>
++                            </VBox.margin>
++                            <font>
++                                <Font size="10.0"/>
++                            </font>
++                        </Button>
++                    </children>
++                </VBox>
++            </children>
++        </AnchorPane>
++        <AnchorPane layoutX="98.0" layoutY="40.0" prefHeight="362.0" prefWidth="502.0"
++                    style="-fx-background-color: #E7E2E1;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="110.0"
++                    AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
++            <children>
++                <Label alignment="CENTER" layoutX="18.0" layoutY="196.0" prefHeight="35.0" prefWidth="100.0"
++                       text="deadline"/>
++                <TextField fx:id="deadlineFiled" alignment="CENTER" layoutX="121.0" layoutY="196.0" prefHeight="35.0"
++                           prefWidth="166.0" promptText="deadline"/>
++                <TextField fx:id="descriptionField" alignment="CENTER" layoutX="12.0" layoutY="88.0" prefHeight="35.0"
++                           prefWidth="455.0" promptText="description"/>
++                <TextField fx:id="taskTitleField" alignment="CENTER" layoutX="156.0" layoutY="14.0" prefHeight="35.0"
++                           prefWidth="166.0" promptText="Task Title">
++                    <font>
++                        <Font size="24.0"/>
++                    </font>
++                </TextField>
++                <Button fx:id="btnCreate" layoutX="139.0" layoutY="250.0" mnemonicParsing="false" onAction="#Create"
++                        prefHeight="35.0" prefWidth="72.0" text="create"/>
++                <Label fx:id="lblError" layoutX="139.0" layoutY="294.0" prefHeight="18.0" prefWidth="202.0"
++                       textFill="RED"/>
++                <Label alignment="CENTER" layoutX="18.0" layoutY="160.0" prefHeight="35.0" prefWidth="100.0"
++                       text="startTime"/>
++                <TextField fx:id="startTimeField" alignment="CENTER" layoutX="121.0" layoutY="160.0" prefHeight="35.0"
++                           prefWidth="166.0" promptText="startTime"/>
++                <ChoiceBox fx:id="priorityChoice" layoutX="30.0" layoutY="26.0" prefHeight="26.0" prefWidth="80.0"/>
++                <ChoiceBox fx:id="members" layoutX="314.0" layoutY="141.0" prefHeight="26.0" prefWidth="156.0"/>
++                <ListView fx:id="membersList" layoutX="314.0" layoutY="173.0" prefHeight="126.0" prefWidth="156.0"/>
++                <Button fx:id="addMember" layoutX="342.0" layoutY="303.0" mnemonicParsing="false" onAction="#addMember"
++                        prefHeight="26.0" prefWidth="108.0" text="add member"/>
++            </children>
++        </AnchorPane>
++    </children>
++</AnchorPane>
+Index: src/main/java/view/TaskListView.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/view/TaskListView.java b/src/main/java/view/TaskListView.java
+new file mode 100644
+--- /dev/null	
++++ b/src/main/java/view/TaskListView.java	
+@@ -0,0 +1,41 @@
++package view;
++
++import javafx.event.ActionEvent;
++import javafx.fxml.FXML;
++import javafx.fxml.FXMLLoader;
++import javafx.fxml.Initializable;
++import javafx.scene.Node;
++import javafx.scene.layout.VBox;
++import model.Task;
++import model.Team;
++
++import java.net.URL;
++import java.util.ArrayList;
++import java.util.Objects;
++import java.util.ResourceBundle;
++
++public class TaskListView implements Initializable {
++    @FXML
++    public VBox vTaskItem;
++
++
++    @Override
++    public void initialize(URL location, ResourceBundle resources) {
++        Team team = Team.getTeamByName("Yakuza1", Team.getAllTeams());
++        ArrayList<Task> tasks = team.getAllTasks();
++        Node[] nodes = new Node[tasks.size()];
++        for (int i = 0; i < nodes.length; i++) {
++            try {
++                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/TaskItem.fxml"));
++                TaskItemView controller = new TaskItemView();
++                loader.setController(controller);
++                nodes[i] = loader.load();
++                vTaskItem.getChildren().add(nodes[i]);
++                controller.setTask(tasks.get(i));
++            } catch (Exception e) {
++                e.printStackTrace();
++            }
++        }
++    }
++
++}
+Index: src/main/resources/fxml/TaskList.fxml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/resources/fxml/TaskList.fxml b/src/main/resources/fxml/TaskList.fxml
+new file mode 100644
+--- /dev/null	
++++ b/src/main/resources/fxml/TaskList.fxml	
+@@ -0,0 +1,53 @@
++<?xml version="1.0" encoding="UTF-8"?>
++
++<?import javafx.geometry.Insets?>
++<?import javafx.scene.control.Button?>
++<?import javafx.scene.control.Label?>
++<?import javafx.scene.control.ScrollPane?>
++<?import javafx.scene.layout.AnchorPane?>
++<?import javafx.scene.layout.VBox?>
++<?import javafx.scene.text.Font?>
++
++<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
++            prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
++            fx:controller="view.TaskListView">
++    <children>
++        <AnchorPane prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #949292;"
++                    AnchorPane.bottomAnchor="360.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
++                    AnchorPane.topAnchor="0.0">
++            <children>
++                <Label layoutX="25.0" layoutY="11.0" text="Task List"/>
++            </children>
++        </AnchorPane>
++        <AnchorPane layoutY="40.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="360.0" prefWidth="100.0"
++                    AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="40.0">
++            <children>
++                <VBox alignment="TOP_CENTER" layoutY="-1.0" prefHeight="361.0" prefWidth="100.0" spacing="9.0"
++                      style="-fx-background-color: #C8C5C4;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
++                    <children>
++                        <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="80.0" text="Task List">
++                            <VBox.margin>
++                                <Insets top="7.0"/>
++                            </VBox.margin>
++                            <font>
++                                <Font size="10.0"/>
++                            </font>
++                        </Button>
++                    </children>
++                </VBox>
++            </children>
++        </AnchorPane>
++        <AnchorPane layoutX="98.0" layoutY="40.0" prefHeight="362.0" prefWidth="502.0"
++                    style="-fx-background-color: #E7E2E1;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="110.0"
++                    AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
++            <children>
++                <ScrollPane prefHeight="340.0" prefWidth="480.0" AnchorPane.bottomAnchor="0.0"
++                            AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
++                    <content>
++                        <VBox fx:id="vTaskItem" prefHeight="338.0" prefWidth="478.0"/>
++                    </content>
++                </ScrollPane>
++            </children>
++        </AnchorPane>
++    </children>
++</AnchorPane>
