@@ -22,7 +22,9 @@ public class MemberMenuView {
     public void goToTeamMenu(ActionEvent actionEvent) {
     }
 
-    public void goToTaskPage(ActionEvent actionEvent) {
+    public void goToTaskPage(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/TaskList.fxml"));
+        ((Stage) taskPageInMemberMenu.getScene().getWindow()).setScene(new Scene(root));
     }
 
     public void goToCalenderMenu(ActionEvent actionEvent) {

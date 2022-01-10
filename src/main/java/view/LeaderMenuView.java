@@ -23,7 +23,9 @@ public class LeaderMenuView {
     public void goToTeamMenu(ActionEvent actionEvent) {
     }
 
-    public void goToTaskPage(ActionEvent actionEvent) {
+    public void goToTaskPage(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/TaskListForLeader.fxml"));
+        ((Stage) taskPageInLeaderMenu.getScene().getWindow()).setScene(new Scene(root));
     }
 
     public void goToCalenderMenu(ActionEvent actionEvent) {
@@ -34,6 +36,8 @@ public class LeaderMenuView {
         ((Stage) logOut.getScene().getWindow()).setScene(new Scene(root));
     }
 
-    public void goToSpecialCommandsForLeader(ActionEvent actionEvent) {
+    public void goToSpecialCommandsForLeader(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/SpecialCommandsForLeader.fxml"));
+        ((Stage) specialCommands.getScene().getWindow()).setScene(new Scene(root));
     }
 }
