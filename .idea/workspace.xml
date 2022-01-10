@@ -5,14 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1a23b712-9d27-49b8-9308-d8a7f14f07b1" name="Changes" comment="Statistic">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/PendingTeams.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/SendNotification.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/view/LeaderMenuView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/view/MemberMenuView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/LeaderMenu.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/MemberMenu.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/AdminMenuView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/AdminMenuView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/view/LoginView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/LoginView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controller/Controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/Controller.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/view/AdminMenuView.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/view/AdminMenuView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fxml/SendNotification.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fxml/SendNotification.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/view/LoginView.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/view/LoginView.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -23,8 +22,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="FxmlFile" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -65,6 +64,19 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -149,7 +161,28 @@
       <option name="project" value="LOCAL" />
       <updated>1641760232564</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Completing">
+      <created>1641823574345</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1641823574345</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Completing #2">
+      <created>1641823618020</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1641823618020</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Completing #2">
+      <created>1641823632511</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1641823632511</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -177,6 +210,8 @@
     <MESSAGE value="Beautification" />
     <MESSAGE value="Admin Menu" />
     <MESSAGE value="Statistic" />
-    <option name="LAST_COMMIT_MESSAGE" value="Statistic" />
+    <MESSAGE value="Completing" />
+    <MESSAGE value="Completing #2" />
+    <option name="LAST_COMMIT_MESSAGE" value="Completing #2" />
   </component>
 </project>
