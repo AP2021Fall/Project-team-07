@@ -6,11 +6,12 @@ import java.util.ArrayList;
 
 public class Task {
     private static ArrayList<Task> allTasks = new ArrayList<>();
+    private static Task selectTask;
     private static int idCreator = 1;
     private int creationId;
     private String title;
     private String description = "";
-    private String priority = "Lowest";
+    private String priority ;
     // model.date
     private Date dateOfCreation;
     private Date deadline;
@@ -19,10 +20,12 @@ public class Task {
     private ArrayList<Message> comments;
 
     public Task(String title, Date dateOfCreation,
-                Date deadline, Team team) {
+                Date deadline, Team team, String description, String priority) {
         this.title = title;
         this.dateOfCreation = dateOfCreation;
         this.deadline = deadline;
+        this.priority=priority;
+        this.description = description;
         this.team = team;
         this.creationId = idCreator;
         idCreator++;
@@ -64,6 +67,14 @@ public class Task {
 
         return allTasks;
 
+    }
+
+    public static Task getSelectTask() {
+        return selectTask;
+    }
+
+    public static void setSelectTask(Task selectTask) {
+        Task.selectTask = selectTask;
     }
 
     public static void setAllTasks(ArrayList<Task> allTasks) {

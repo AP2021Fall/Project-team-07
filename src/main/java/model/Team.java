@@ -9,6 +9,7 @@ public class Team {
     private static ArrayList<Team> pendingTeams = new ArrayList<>();
     private static ArrayList<Team> allTeams = new ArrayList<>();
     private static int teamNumberCreator = 1;
+    private static Team selectTeam;
     private int teamNumber;
     private String teamName;
     private ArrayList<User> teamMembers;
@@ -68,6 +69,14 @@ public class Team {
 
     public static int getTeamNumberCreator() {
         return teamNumberCreator;
+    }
+
+    public static Team getSelectTeam() {
+        return selectTeam;
+    }
+
+    public static void setSelectTeam(Team selectTeam) {
+        Team.selectTeam = selectTeam;
     }
 
     public static void setTeamNumberCreator(int teamNumberCreator) {

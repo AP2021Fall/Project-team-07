@@ -713,7 +713,7 @@ public class Controller {
         return tasks;
     }
 
-    public int creatTask(User user, Team team, String title, String dateOfCreation, String deadline) throws ParseException {
+    public int creatTask(User user, Team team, String title, String dateOfCreation, String deadline, String description, String priority) throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd|HH:mm");
         boolean isTaskAlready = false;
         for (Task task : team.getAllTasks()) {
@@ -749,7 +749,7 @@ public class Controller {
         )
             return 3;
         else {
-            team.getAllTasks().add(new Task(title, new Date(dateOfCreation), new Date(deadline), team));
+            team.getAllTasks().add(new Task(title, new Date(dateOfCreation), new Date(deadline), team, description, priority));
             return 4;
         }
     }
