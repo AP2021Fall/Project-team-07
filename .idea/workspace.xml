@@ -4,16 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1a23b712-9d27-49b8-9308-d8a7f14f07b1" name="Changes" comment="Statistic">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/PendingTeams.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/SendNotification.fxml" afterDir="false" />
+    <list default="true" id="1a23b712-9d27-49b8-9308-d8a7f14f07b1" name="Changes" comment="BoardMenu#0">
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_1_10_2022_4_51_AM_[Changes]/AdminMenuView.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_1_10_2022_4_51_AM_[Changes]/LoginView.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/controller/LoggedController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/view/BoardMenuFirstPageView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/CSS/ScoreBoard.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/BoardMenuFirstPageForMember.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/fxml/LeaderMenuFirstPageForMember.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/AdminMenuView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/AdminMenuView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/LoginView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/LoginView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/controller/Controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/Controller.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/view/AdminMenuView.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/view/AdminMenuView.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/view/LoginView.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/view/LoginView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fxml/SendNotification.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fxml/SendNotification.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,6 +47,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources/CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -54,7 +56,26 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="settings.editor.selected.configurable" value="reference.settings.project.maven.repository.indices" />
   </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\mohandes rahmati\Desktop\data\un\AP\P\phase2\Project-team-07\src\main\resources\CSS" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="controller" />
+    </key>
+  </component>
   <component name="RunManager">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="LoginView" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="ALTERNATIVE_JRE_PATH" value="$PROJECT_DIR$" />
       <option name="MAIN_CLASS_NAME" value="view.LoginView" />
@@ -65,17 +86,6 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -188,6 +198,8 @@
     <MESSAGE value="Beautification" />
     <MESSAGE value="Admin Menu" />
     <MESSAGE value="Statistic" />
-    <option name="LAST_COMMIT_MESSAGE" value="Statistic" />
+    <MESSAGE value="BoardMenu#1" />
+    <MESSAGE value="BoardMenu#0" />
+    <option name="LAST_COMMIT_MESSAGE" value="BoardMenu#0" />
   </component>
 </project>

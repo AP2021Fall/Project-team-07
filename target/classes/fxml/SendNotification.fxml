@@ -14,7 +14,7 @@
             <Font name="System Bold" size="23.0" />
          </font>
       </Label>
-      <TextField fx:id="textOfNotification" alignment="CENTER" layoutX="32.0" layoutY="76.0" prefHeight="168.0" prefWidth="546.0" promptText="Write your message" style="-fx-border-color: #cc0000;">
+      <TextField fx:id="textOfNotification" alignment="TOP_LEFT" layoutX="32.0" layoutY="76.0" prefHeight="168.0" prefWidth="546.0" promptText="Write your message" style="-fx-border-color: #cc0000;">
          <font>
             <Font size="13.0" />
          </font>
