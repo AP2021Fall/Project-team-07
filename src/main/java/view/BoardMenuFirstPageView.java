@@ -40,7 +40,7 @@ public class BoardMenuFirstPageView {
         boardName.setCellValueFactory(new PropertyValueFactory<>("boardName"));
         tableView.getColumns().addAll(boardName);
         tableView.setItems(list);
-        tableView.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/CSS/Scoreboard.css")).toExternalForm());
+        tableView.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/CSS/Table.css")).toExternalForm());
         pane.getChildren().add(tableView);
     }
 

@@ -4,15 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1a23b712-9d27-49b8-9308-d8a7f14f07b1" name="Changes" comment="Statistic">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_1_10_2022_5_34_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_1_10_2022_5_34_PM__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_1_10_2022_6_15_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_1_10_2022_6_15_PM__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_1_10_2022_6_15_PM__Changes_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_1_10_2022_6_15_PM__Changes_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_1_10_2022_6_47_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_1_10_2022_6_47_PM__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_1_8_2022_11_44_AM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_1_8_2022_11_44_AM__Changes_.xml" afterDir="false" />
+    <list default="true" id="1a23b712-9d27-49b8-9308-d8a7f14f07b1" name="Changes" comment="BoardMenu#3">
+      <change afterPath="$PROJECT_DIR$/src/main/java/view/BoardMenuSecondPageForLeader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/view/SampleRun.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/view/BoardMenuFirstPageView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/BoardMenuFirstPageView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/BoardMenuFirstPage.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/BoardMenuFirstPage.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/CSS/ScoreBoard.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/CSS/Table.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/BoardMenuMakeBoardPage.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/BoardMenuSecondPageForLeader.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -182,7 +180,14 @@
       <option name="project" value="LOCAL" />
       <updated>1641823632511</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="BoardMenu#3">
+      <created>1641832821347</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1641832821347</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -212,6 +217,7 @@
     <MESSAGE value="Statistic" />
     <MESSAGE value="Completing" />
     <MESSAGE value="Completing #2" />
-    <option name="LAST_COMMIT_MESSAGE" value="Completing #2" />
+    <MESSAGE value="BoardMenu#3" />
+    <option name="LAST_COMMIT_MESSAGE" value="BoardMenu#3" />
   </component>
 </project>
