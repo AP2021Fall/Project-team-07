@@ -2,6 +2,7 @@ package view;
 
 import controller.Controller;
 import controller.JsonController;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -37,6 +38,7 @@ public class TaskPageForLeaderView implements Initializable {
     public ListView membersList;
     public Button btnCreateTask;
     public ImageView exit;
+    public Button DeleteMember;
     private int result;
 
     public void goToTaskList(ActionEvent actionEvent) throws IOException {
@@ -86,5 +88,14 @@ public class TaskPageForLeaderView implements Initializable {
     public void exit(MouseEvent mouseEvent) {
         JsonController.getInstance().updateJson();
         System.exit(0);
+    }
+
+    public void deleteMember(ActionEvent actionEvent) {
+        String selectedItem = membersList.getSelectionModel().getSelectedItem().toString();
+        result = Controller.controller.removeAssignedUsers(User.getUserByUsername("Amir"), selectTask, User.getUserByUsername(selectedItem));
+        membersList = null;
+        for (User user : selectTask.getAssignedUser()) {
+            membersList.getItems().add(user.getUserName());
+        }
     }
 }

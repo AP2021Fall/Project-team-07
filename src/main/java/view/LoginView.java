@@ -26,12 +26,13 @@ public class LoginView extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/Login.fxml"));
+        JsonController.getInstance().readFromJson();
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/TaskListForLeader.fxml"));
         primaryStage.setTitle("phase2");
         primaryStage.setResizable(false);
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
-        JsonController.getInstance().readFromJson();
+
     }
 
     public static void main(String[] args) {
