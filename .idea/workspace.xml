@@ -4,17 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1a23b712-9d27-49b8-9308-d8a7f14f07b1" name="Changes" comment="BoardMenu#0">
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_1_10_2022_4_51_AM_[Changes]/AdminMenuView.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_1_10_2022_4_51_AM_[Changes]/LoginView.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/controller/LoggedController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/view/BoardMenuFirstPageView.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/CSS/ScoreBoard.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/BoardMenuFirstPageForMember.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/fxml/LeaderMenuFirstPageForMember.fxml" afterDir="false" />
+    <list default="true" id="1a23b712-9d27-49b8-9308-d8a7f14f07b1" name="Changes" comment="BoardMenu#1">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/BoardMenuMakeBoardPage.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controller/Controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/Controller.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/fxml/SendNotification.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fxml/SendNotification.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/LoggedController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/LoggedController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/BoardMenuFirstPageView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/BoardMenuFirstPageView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/BoardMenuFirstPageForMember.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/BoardMenuFirstPage.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,13 +19,21 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="FxmlFile" />
+        <option value="Class" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="ProjectId" id="23IFJBY37uE9uMYparqHp7yNa3r" />
   <component name="ProjectLevelVcsManager">
@@ -113,6 +116,7 @@
       <workItem from="1641586388773" duration="1633000" />
       <workItem from="1641591159631" duration="18000" />
       <workItem from="1641738564243" duration="17136000" />
+      <workItem from="1641782764482" duration="6197000" />
     </task>
     <task id="LOCAL-00001" summary="start phase2">
       <created>1641416456429</created>
@@ -170,7 +174,14 @@
       <option name="project" value="LOCAL" />
       <updated>1641760232564</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="BoardMenu#1">
+      <created>1641782776398</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1641782776398</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -198,8 +209,8 @@
     <MESSAGE value="Beautification" />
     <MESSAGE value="Admin Menu" />
     <MESSAGE value="Statistic" />
-    <MESSAGE value="BoardMenu#1" />
     <MESSAGE value="BoardMenu#0" />
-    <option name="LAST_COMMIT_MESSAGE" value="BoardMenu#0" />
+    <MESSAGE value="BoardMenu#1" />
+    <option name="LAST_COMMIT_MESSAGE" value="BoardMenu#1" />
   </component>
 </project>
