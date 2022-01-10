@@ -49,7 +49,8 @@ public class BoardMenuSecondPageForLeader {
             stage.setScene(scene);
             stage.show();
         }
-
     }
-    
+
+
+
 }
