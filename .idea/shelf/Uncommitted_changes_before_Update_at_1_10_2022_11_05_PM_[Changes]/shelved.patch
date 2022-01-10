@@ -1,0 +1,1303 @@
+Index: src/main/java/view/TaskListForLeaderView.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package view;\r\n\r\nimport controller.JsonController;\r\nimport javafx.event.ActionEvent;\r\nimport javafx.fxml.FXML;\r\nimport javafx.fxml.FXMLLoader;\r\nimport javafx.fxml.Initializable;\r\nimport javafx.scene.Node;\r\nimport javafx.scene.Parent;\r\nimport javafx.scene.Scene;\r\nimport javafx.scene.control.Button;\r\nimport javafx.scene.image.ImageView;\r\nimport javafx.scene.input.MouseEvent;\r\nimport javafx.scene.layout.AnchorPane;\r\nimport javafx.scene.layout.VBox;\r\nimport javafx.stage.Stage;\r\nimport model.Task;\r\nimport model.Team;\r\n\r\nimport java.io.IOException;\r\nimport java.net.URL;\r\nimport java.util.ArrayList;\r\nimport java.util.ResourceBundle;\r\n\r\npublic class TaskListForLeaderView implements Initializable {\r\n    @FXML\r\n    public VBox vTaskItem;\r\n    public AnchorPane pane;\r\n    public Button btnCreateTask;\r\n    public ImageView exit;\r\n\r\n\r\n    @Override\r\n    public void initialize(URL location, ResourceBundle resources) {\r\n        Team team = Team.getTeamByName(\"Yakuza1\", Team.getAllTeams());\r\n        ArrayList<Task> tasks = team.getAllTasks();\r\n        Node[] nodes = new Node[tasks.size()];\r\n        for (int i = 0; i < nodes.length; i++) {\r\n            try {\r\n                FXMLLoader loader = new FXMLLoader(getClass().getResource(\"/fxml/TaskItem.fxml\"));\r\n                TaskItemForLeaderView controller = new TaskItemForLeaderView();\r\n                loader.setController(controller);\r\n                nodes[i] = loader.load();\r\n                vTaskItem.getChildren().add(nodes[i]);\r\n                controller.setTask(tasks.get(i));\r\n            } catch (Exception e) {\r\n                e.printStackTrace();\r\n            }\r\n        }\r\n    }\r\n\r\n    public void goToCreateTaskPage(ActionEvent actionEvent) throws IOException {\r\n        Parent root = FXMLLoader.load(getClass().getResource(\"/fxml/CreateTaskPageForLeader.fxml\"));\r\n        ((Stage) pane.getScene().getWindow()).setScene(new Scene(root));\r\n    }\r\n\r\n    public void exit(MouseEvent mouseEvent) {\r\n        JsonController.getInstance().updateJson();\r\n        System.exit(0);\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/view/TaskListForLeaderView.java b/src/main/java/view/TaskListForLeaderView.java
+--- a/src/main/java/view/TaskListForLeaderView.java	(revision b95bb119cedb42f89bd879d1bea567ccf75f115c)
++++ b/src/main/java/view/TaskListForLeaderView.java	(date 1641842089240)
+@@ -54,8 +54,7 @@
+         ((Stage) pane.getScene().getWindow()).setScene(new Scene(root));
+     }
+ 
++
+     public void exit(MouseEvent mouseEvent) {
+-        JsonController.getInstance().updateJson();
+-        System.exit(0);
+     }
+ }
+Index: src/main/java/view/LoginView.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package view;\r\n\r\nimport controller.Controller;\r\nimport controller.JsonController;\r\nimport javafx.application.Application;\r\nimport javafx.event.ActionEvent;\r\nimport javafx.fxml.FXMLLoader;\r\nimport javafx.scene.Parent;\r\nimport javafx.scene.Scene;\r\nimport javafx.scene.control.*;\r\nimport javafx.stage.Stage;\r\nimport model.User;\r\n\r\nimport java.io.IOException;\r\nimport java.text.ParseException;\r\n\r\npublic class LoginView extends Application {\r\n\r\n    public static User LoginUser;\r\n    public TextField username;\r\n    public PasswordField password;\r\n    public Button login;\r\n    public Label errorLabel;\r\n    public TextField welcomeText;\r\n    public Button register;\r\n\r\n    @Override\r\n    public void start(Stage primaryStage) throws Exception {\r\n        Parent root = FXMLLoader.load(getClass().getResource(\"/fxml/AdminMenu.fxml\"));\r\n        primaryStage.setTitle(\"phase2\");\r\n        primaryStage.setResizable(false);\r\n        primaryStage.setScene(new Scene(root));\r\n        primaryStage.show();\r\n        JsonController.getInstance().readFromJson();\r\n    }\r\n\r\n    public static void main(String[] args) {\r\n        launch(args);\r\n    }\r\n\r\n    public void login(ActionEvent actionEvent) throws ParseException, IOException {\r\n        String username1 = username.getText();\r\n        String password1 = password.getText();\r\n        int response = Controller.controller.logIn(username1, password1);\r\n        if (username1.isEmpty() || password1.isEmpty()){\r\n            Alert alert = new Alert(Alert.AlertType.INFORMATION);\r\n            alert.setTitle(\"Error\");\r\n            alert.setContentText(\"You should fill the fields!\");\r\n            alert.showAndWait();\r\n        }\r\n        else if (response == 1){\r\n            errorLabel.setText(\"There is not any user with username: \" + username1 + \"!\");\r\n            username.clear();\r\n            password.clear();\r\n        }\r\n        else if (response == 2){\r\n            errorLabel.setText(\"Username and password didn’t match!\");\r\n            username.clear();\r\n            password.clear();\r\n        }\r\n        LoginUser = User.getUserByUsername(username1);\r\n        if (response == 3){\r\n            // go to memberMenu page\r\n        }\r\n        else if (response == 4){\r\n            // go to leaderMenu page\r\n        }\r\n        else if (response == 5){\r\n            Parent root = FXMLLoader.load(getClass().getResource(\"/fxml/AdminMenu.fxml\"));\r\n            ((Stage) errorLabel.getScene().getWindow()).setScene(new Scene(root));\r\n        }\r\n    }\r\n\r\n    public void register(ActionEvent actionEvent) throws IOException {\r\n        Parent root = FXMLLoader.load(getClass().getResource(\"/fxml/Register.fxml\"));\r\n        ((Stage) errorLabel.getScene().getWindow()).setScene(new Scene(root));\r\n    }\r\n}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/view/LoginView.java b/src/main/java/view/LoginView.java
+--- a/src/main/java/view/LoginView.java	(revision b95bb119cedb42f89bd879d1bea567ccf75f115c)
++++ b/src/main/java/view/LoginView.java	(date 1641843303383)
+@@ -2,6 +2,7 @@
+ 
+ import controller.Controller;
+ import controller.JsonController;
++import controller.LoggedController;
+ import javafx.application.Application;
+ import javafx.event.ActionEvent;
+ import javafx.fxml.FXMLLoader;
+@@ -16,7 +17,7 @@
+ 
+ public class LoginView extends Application {
+ 
+-    public static User LoginUser;
++    public static User LoginUser = User.getUserByUsername("Amir");
+     public TextField username;
+     public PasswordField password;
+     public Button login;
+@@ -26,12 +27,13 @@
+ 
+     @Override
+     public void start(Stage primaryStage) throws Exception {
+-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/AdminMenu.fxml"));
++        JsonController.getInstance().readFromJson();
++        Parent root = FXMLLoader.load(getClass().getResource("/fxml/Login.fxml"));
+         primaryStage.setTitle("phase2");
+         primaryStage.setResizable(false);
+         primaryStage.setScene(new Scene(root));
+         primaryStage.show();
+-        JsonController.getInstance().readFromJson();
++
+     }
+ 
+     public static void main(String[] args) {
+@@ -42,30 +44,26 @@
+         String username1 = username.getText();
+         String password1 = password.getText();
+         int response = Controller.controller.logIn(username1, password1);
+-        if (username1.isEmpty() || password1.isEmpty()){
++        if (username1.isEmpty() || password1.isEmpty()) {
+             Alert alert = new Alert(Alert.AlertType.INFORMATION);
+             alert.setTitle("Error");
+             alert.setContentText("You should fill the fields!");
+             alert.showAndWait();
+-        }
+-        else if (response == 1){
++        } else if (response == 1) {
+             errorLabel.setText("There is not any user with username: " + username1 + "!");
+             username.clear();
+             password.clear();
+-        }
+-        else if (response == 2){
++        } else if (response == 2) {
+             errorLabel.setText("Username and password didn’t match!");
+             username.clear();
+             password.clear();
+         }
+-        LoginUser = User.getUserByUsername(username1);
+-        if (response == 3){
++        LoggedController.getInstance().setLoggedInUser(User.getUserByUsername(username1));
++        if (response == 3) {
+             // go to memberMenu page
+-        }
+-        else if (response == 4){
++        } else if (response == 4) {
+             // go to leaderMenu page
+-        }
+-        else if (response == 5){
++        } else if (response == 5) {
+             Parent root = FXMLLoader.load(getClass().getResource("/fxml/AdminMenu.fxml"));
+             ((Stage) errorLabel.getScene().getWindow()).setScene(new Scene(root));
+         }
+Index: src/main/java/controller/LoggedController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package controller;\r\n\r\nimport model.Board;\r\nimport model.Team;\r\nimport model.User;\r\n\r\npublic class LoggedController {\r\n    private static LoggedController instance = null;\r\n    private User loggedInUser;\r\n    private Team loggedTeam;\r\n    private Board selectedBoard;\r\n\r\n    private LoggedController() {\r\n\r\n    }\r\n\r\n    public static LoggedController getInstance() {\r\n        if (instance == null)\r\n            instance = new LoggedController();\r\n        return instance;\r\n    }\r\n\r\n    public void setLoggedInUser(User loggedInUser) {\r\n        this.loggedInUser = loggedInUser;\r\n    }\r\n\r\n    public User getLoggedInUser() {\r\n        return loggedInUser;\r\n    }\r\n\r\n    public Team getLoggedTeam() {\r\n        return loggedTeam;\r\n    }\r\n\r\n    public void setLoggedTeam(Team loggedTeam) {\r\n        this.loggedTeam = loggedTeam;\r\n    }\r\n\r\n    public Board getSelectedBoard() {\r\n        return selectedBoard;\r\n    }\r\n\r\n    public void setSelectedBoard(Board selectedBoard) {\r\n        this.selectedBoard = selectedBoard;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/controller/LoggedController.java b/src/main/java/controller/LoggedController.java
+--- a/src/main/java/controller/LoggedController.java	(revision b95bb119cedb42f89bd879d1bea567ccf75f115c)
++++ b/src/main/java/controller/LoggedController.java	(date 1641842384838)
+@@ -1,6 +1,7 @@
+ package controller;
+ 
+ import model.Board;
++import model.Task;
+ import model.Team;
+ import model.User;
+ 
+@@ -9,6 +10,7 @@
+     private User loggedInUser;
+     private Team loggedTeam;
+     private Board selectedBoard;
++    private Task task;
+ 
+     private LoggedController() {
+ 
+@@ -43,4 +45,12 @@
+     public void setSelectedBoard(Board selectedBoard) {
+         this.selectedBoard = selectedBoard;
+     }
++
++    public Task getTask() {
++        return task;
++    }
++
++    public void setTask(Task task) {
++        this.task = task;
++    }
+ }
+Index: target/classes/fxml/TaskPageForLeader.fxml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n\r\n<?import javafx.geometry.Insets?>\r\n<?import javafx.scene.control.Button?>\r\n<?import javafx.scene.control.Label?>\r\n<?import javafx.scene.control.ListView?>\r\n<?import javafx.scene.control.TextField?>\r\n<?import javafx.scene.image.Image?>\r\n<?import javafx.scene.image.ImageView?>\r\n<?import javafx.scene.layout.AnchorPane?>\r\n<?import javafx.scene.layout.VBox?>\r\n<?import javafx.scene.text.Font?>\r\n\r\n<AnchorPane fx:id=\"pane\" maxHeight=\"-Infinity\" maxWidth=\"-Infinity\" minHeight=\"-Infinity\" minWidth=\"-Infinity\"\r\n            prefHeight=\"400.0\" prefWidth=\"600.0\" xmlns=\"http://javafx.com/javafx/17\" xmlns:fx=\"http://javafx.com/fxml/1\"\r\n            fx:controller=\"view.TaskPageForLeaderView\">\r\n    <children>\r\n        <AnchorPane prefHeight=\"40.0\" prefWidth=\"200.0\" style=\"-fx-background-color: #949292;\"\r\n                    AnchorPane.bottomAnchor=\"360.0\" AnchorPane.leftAnchor=\"0.0\" AnchorPane.rightAnchor=\"0.0\"\r\n                    AnchorPane.topAnchor=\"0.0\">\r\n            <children>\r\n                <Label layoutX=\"24.0\" layoutY=\"11.0\" text=\"Task Page\"/>\r\n                <ImageView fx:id=\"exit\" fitHeight=\"28.0\" fitWidth=\"31.0\" layoutX=\"570.0\" layoutY=\"6.0\"\r\n                           onDragDetected=\"#exit\" pickOnBounds=\"true\" preserveRatio=\"true\"\r\n                           AnchorPane.rightAnchor=\"10.0\">\r\n                    <image>\r\n                        <Image url=\"@../img/close_window_96px.png\"/>\r\n                    </image>\r\n                </ImageView>\r\n            </children>\r\n        </AnchorPane>\r\n        <AnchorPane layoutY=\"40.0\" nodeOrientation=\"RIGHT_TO_LEFT\" prefHeight=\"360.0\" prefWidth=\"100.0\"\r\n                    AnchorPane.leftAnchor=\"0.0\" AnchorPane.topAnchor=\"40.0\">\r\n            <children>\r\n                <VBox alignment=\"TOP_CENTER\" layoutY=\"-1.0\" prefHeight=\"361.0\" prefWidth=\"100.0\" spacing=\"9.0\"\r\n                      style=\"-fx-background-color: #C8C5C4;\" AnchorPane.bottomAnchor=\"0.0\" AnchorPane.topAnchor=\"0.0\">\r\n                    <children>\r\n                        <Button fx:id=\"btnTaskList\" mnemonicParsing=\"false\" onAction=\"#goToTaskList\" prefHeight=\"50.0\"\r\n                                prefWidth=\"80.0\" text=\"Task List\">\r\n                            <VBox.margin>\r\n                                <Insets top=\"7.0\"/>\r\n                            </VBox.margin>\r\n                            <font>\r\n                                <Font size=\"10.0\"/>\r\n                            </font>\r\n                        </Button>\r\n                        <Button fx:id=\"btnCreateTask\" mnemonicParsing=\"false\" onAction=\"#goToCreateTask\"\r\n                                prefHeight=\"50.0\" prefWidth=\"80.0\" text=\"Create Task\">\r\n                            <font>\r\n                                <Font size=\"10.0\"/>\r\n                            </font>\r\n                        </Button>\r\n                    </children>\r\n                </VBox>\r\n            </children>\r\n        </AnchorPane>\r\n        <AnchorPane layoutX=\"98.0\" layoutY=\"40.0\" prefHeight=\"362.0\" prefWidth=\"502.0\"\r\n                    style=\"-fx-background-color: #E7E2E1;\" AnchorPane.bottomAnchor=\"10.0\" AnchorPane.leftAnchor=\"110.0\"\r\n                    AnchorPane.rightAnchor=\"10.0\" AnchorPane.topAnchor=\"50.0\">\r\n            <children>\r\n                <Label alignment=\"CENTER\" layoutX=\"21.0\" layoutY=\"149.0\" prefHeight=\"35.0\" prefWidth=\"100.0\"\r\n                       text=\"dateOfCreation\"/>\r\n                <Label alignment=\"CENTER\" layoutX=\"21.0\" layoutY=\"185.0\" prefHeight=\"35.0\" prefWidth=\"100.0\"\r\n                       text=\"deadline\"/>\r\n                <TextField fx:id=\"deadlineFiled\" alignment=\"CENTER\" layoutX=\"121.0\" layoutY=\"185.0\" prefHeight=\"35.0\"\r\n                           prefWidth=\"166.0\" promptText=\"deadline\"/>\r\n                <TextField fx:id=\"descriptionField\" alignment=\"CENTER\" layoutX=\"12.0\" layoutY=\"88.0\" prefHeight=\"35.0\"\r\n                           prefWidth=\"455.0\" promptText=\"description\"/>\r\n                <TextField fx:id=\"PriorityField\" alignment=\"CENTER\" layoutX=\"30.0\" layoutY=\"22.0\" prefHeight=\"29.0\"\r\n                           prefWidth=\"62.0\" promptText=\"Priority\">\r\n                    <font>\r\n                        <Font size=\"11.0\"/>\r\n                    </font>\r\n                </TextField>\r\n                <TextField fx:id=\"taskTitleField\" alignment=\"CENTER\" layoutX=\"156.0\" layoutY=\"14.0\" prefHeight=\"35.0\"\r\n                           prefWidth=\"166.0\" promptText=\"Task Title\">\r\n                    <font>\r\n                        <Font size=\"24.0\"/>\r\n                    </font>\r\n                </TextField>\r\n                <Button fx:id=\"btnEdit\" layoutX=\"110.0\" layoutY=\"236.0\" mnemonicParsing=\"false\" onAction=\"#Edit\"\r\n                        prefHeight=\"35.0\" prefWidth=\"72.0\" text=\"edit\"/>\r\n                <Label fx:id=\"lblError\" layoutX=\"225.0\" layoutY=\"294.0\" textFill=\"RED\"/>\r\n                <Label fx:id=\"lblDateOfCreation\" alignment=\"CENTER\" layoutX=\"121.0\" layoutY=\"149.0\" prefHeight=\"35.0\"\r\n                       prefWidth=\"166.0\" text=\"dateOfCreation\" textAlignment=\"CENTER\"/>\r\n                <ListView fx:id=\"membersList\" layoutX=\"310.0\" layoutY=\"149.0\" prefHeight=\"148.0\" prefWidth=\"156.0\"/>\r\n            </children>\r\n        </AnchorPane>\r\n    </children>\r\n</AnchorPane>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/target/classes/fxml/TaskPageForLeader.fxml b/target/classes/fxml/TaskPageForLeader.fxml
+--- a/target/classes/fxml/TaskPageForLeader.fxml	(revision b95bb119cedb42f89bd879d1bea567ccf75f115c)
++++ b/target/classes/fxml/TaskPageForLeader.fxml	(date 1641842089250)
+@@ -21,7 +21,7 @@
+             <children>
+                 <Label layoutX="24.0" layoutY="11.0" text="Task Page"/>
+                 <ImageView fx:id="exit" fitHeight="28.0" fitWidth="31.0" layoutX="570.0" layoutY="6.0"
+-                           onDragDetected="#exit" pickOnBounds="true" preserveRatio="true"
++                           onMouseClicked="#exit" pickOnBounds="true" preserveRatio="true"
+                            AnchorPane.rightAnchor="10.0">
+                     <image>
+                         <Image url="@../img/close_window_96px.png"/>
+@@ -84,6 +84,8 @@
+                 <Label fx:id="lblDateOfCreation" alignment="CENTER" layoutX="121.0" layoutY="149.0" prefHeight="35.0"
+                        prefWidth="166.0" text="dateOfCreation" textAlignment="CENTER"/>
+                 <ListView fx:id="membersList" layoutX="310.0" layoutY="149.0" prefHeight="148.0" prefWidth="156.0"/>
++                <Button fx:id="DeleteMember" layoutX="326.0" layoutY="304.0" mnemonicParsing="false"
++                        onAction="#deleteMember" prefHeight="26.0" prefWidth="126.0" text="delete member"/>
+             </children>
+         </AnchorPane>
+     </children>
+Index: src/main/resources/fxml/TaskPageForLeader.fxml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n\r\n<?import javafx.geometry.Insets?>\r\n<?import javafx.scene.control.Button?>\r\n<?import javafx.scene.control.Label?>\r\n<?import javafx.scene.control.ListView?>\r\n<?import javafx.scene.control.TextField?>\r\n<?import javafx.scene.image.Image?>\r\n<?import javafx.scene.image.ImageView?>\r\n<?import javafx.scene.layout.AnchorPane?>\r\n<?import javafx.scene.layout.VBox?>\r\n<?import javafx.scene.text.Font?>\r\n\r\n<AnchorPane fx:id=\"pane\" maxHeight=\"-Infinity\" maxWidth=\"-Infinity\" minHeight=\"-Infinity\" minWidth=\"-Infinity\"\r\n            prefHeight=\"400.0\" prefWidth=\"600.0\" xmlns=\"http://javafx.com/javafx/17\" xmlns:fx=\"http://javafx.com/fxml/1\"\r\n            fx:controller=\"view.TaskPageForLeaderView\">\r\n    <children>\r\n        <AnchorPane prefHeight=\"40.0\" prefWidth=\"200.0\" style=\"-fx-background-color: #949292;\"\r\n                    AnchorPane.bottomAnchor=\"360.0\" AnchorPane.leftAnchor=\"0.0\" AnchorPane.rightAnchor=\"0.0\"\r\n                    AnchorPane.topAnchor=\"0.0\">\r\n            <children>\r\n                <Label layoutX=\"24.0\" layoutY=\"11.0\" text=\"Task Page\"/>\r\n                <ImageView fx:id=\"exit\" fitHeight=\"28.0\" fitWidth=\"31.0\" layoutX=\"570.0\" layoutY=\"6.0\"\r\n                           onDragDetected=\"#exit\" pickOnBounds=\"true\" preserveRatio=\"true\"\r\n                           AnchorPane.rightAnchor=\"10.0\">\r\n                    <image>\r\n                        <Image url=\"@../img/close_window_96px.png\"/>\r\n                    </image>\r\n                </ImageView>\r\n            </children>\r\n        </AnchorPane>\r\n        <AnchorPane layoutY=\"40.0\" nodeOrientation=\"RIGHT_TO_LEFT\" prefHeight=\"360.0\" prefWidth=\"100.0\"\r\n                    AnchorPane.leftAnchor=\"0.0\" AnchorPane.topAnchor=\"40.0\">\r\n            <children>\r\n                <VBox alignment=\"TOP_CENTER\" layoutY=\"-1.0\" prefHeight=\"361.0\" prefWidth=\"100.0\" spacing=\"9.0\"\r\n                      style=\"-fx-background-color: #C8C5C4;\" AnchorPane.bottomAnchor=\"0.0\" AnchorPane.topAnchor=\"0.0\">\r\n                    <children>\r\n                        <Button fx:id=\"btnTaskList\" mnemonicParsing=\"false\" onAction=\"#goToTaskList\" prefHeight=\"50.0\"\r\n                                prefWidth=\"80.0\" text=\"Task List\">\r\n                            <VBox.margin>\r\n                                <Insets top=\"7.0\"/>\r\n                            </VBox.margin>\r\n                            <font>\r\n                                <Font size=\"10.0\"/>\r\n                            </font>\r\n                        </Button>\r\n                        <Button fx:id=\"btnCreateTask\" mnemonicParsing=\"false\" onAction=\"#goToCreateTask\"\r\n                                prefHeight=\"50.0\" prefWidth=\"80.0\" text=\"Create Task\">\r\n                            <font>\r\n                                <Font size=\"10.0\"/>\r\n                            </font>\r\n                        </Button>\r\n                    </children>\r\n                </VBox>\r\n            </children>\r\n        </AnchorPane>\r\n        <AnchorPane layoutX=\"98.0\" layoutY=\"40.0\" prefHeight=\"362.0\" prefWidth=\"502.0\"\r\n                    style=\"-fx-background-color: #E7E2E1;\" AnchorPane.bottomAnchor=\"10.0\" AnchorPane.leftAnchor=\"110.0\"\r\n                    AnchorPane.rightAnchor=\"10.0\" AnchorPane.topAnchor=\"50.0\">\r\n            <children>\r\n                <Label alignment=\"CENTER\" layoutX=\"21.0\" layoutY=\"149.0\" prefHeight=\"35.0\" prefWidth=\"100.0\"\r\n                       text=\"dateOfCreation\"/>\r\n                <Label alignment=\"CENTER\" layoutX=\"21.0\" layoutY=\"185.0\" prefHeight=\"35.0\" prefWidth=\"100.0\"\r\n                       text=\"deadline\"/>\r\n                <TextField fx:id=\"deadlineFiled\" alignment=\"CENTER\" layoutX=\"121.0\" layoutY=\"185.0\" prefHeight=\"35.0\"\r\n                           prefWidth=\"166.0\" promptText=\"deadline\"/>\r\n                <TextField fx:id=\"descriptionField\" alignment=\"CENTER\" layoutX=\"12.0\" layoutY=\"88.0\" prefHeight=\"35.0\"\r\n                           prefWidth=\"455.0\" promptText=\"description\"/>\r\n                <TextField fx:id=\"PriorityField\" alignment=\"CENTER\" layoutX=\"30.0\" layoutY=\"22.0\" prefHeight=\"29.0\"\r\n                           prefWidth=\"62.0\" promptText=\"Priority\">\r\n                    <font>\r\n                        <Font size=\"11.0\"/>\r\n                    </font>\r\n                </TextField>\r\n                <TextField fx:id=\"taskTitleField\" alignment=\"CENTER\" layoutX=\"156.0\" layoutY=\"14.0\" prefHeight=\"35.0\"\r\n                           prefWidth=\"166.0\" promptText=\"Task Title\">\r\n                    <font>\r\n                        <Font size=\"24.0\"/>\r\n                    </font>\r\n                </TextField>\r\n                <Button fx:id=\"btnEdit\" layoutX=\"110.0\" layoutY=\"236.0\" mnemonicParsing=\"false\" onAction=\"#Edit\"\r\n                        prefHeight=\"35.0\" prefWidth=\"72.0\" text=\"edit\"/>\r\n                <Label fx:id=\"lblError\" layoutX=\"225.0\" layoutY=\"294.0\" textFill=\"RED\"/>\r\n                <Label fx:id=\"lblDateOfCreation\" alignment=\"CENTER\" layoutX=\"121.0\" layoutY=\"149.0\" prefHeight=\"35.0\"\r\n                       prefWidth=\"166.0\" text=\"dateOfCreation\" textAlignment=\"CENTER\"/>\r\n                <ListView fx:id=\"membersList\" layoutX=\"310.0\" layoutY=\"149.0\" prefHeight=\"148.0\" prefWidth=\"156.0\"/>\r\n            </children>\r\n        </AnchorPane>\r\n    </children>\r\n</AnchorPane>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/resources/fxml/TaskPageForLeader.fxml b/src/main/resources/fxml/TaskPageForLeader.fxml
+--- a/src/main/resources/fxml/TaskPageForLeader.fxml	(revision b95bb119cedb42f89bd879d1bea567ccf75f115c)
++++ b/src/main/resources/fxml/TaskPageForLeader.fxml	(date 1641842089250)
+@@ -21,7 +21,7 @@
+             <children>
+                 <Label layoutX="24.0" layoutY="11.0" text="Task Page"/>
+                 <ImageView fx:id="exit" fitHeight="28.0" fitWidth="31.0" layoutX="570.0" layoutY="6.0"
+-                           onDragDetected="#exit" pickOnBounds="true" preserveRatio="true"
++                           onMouseClicked="#exit" pickOnBounds="true" preserveRatio="true"
+                            AnchorPane.rightAnchor="10.0">
+                     <image>
+                         <Image url="@../img/close_window_96px.png"/>
+@@ -84,6 +84,8 @@
+                 <Label fx:id="lblDateOfCreation" alignment="CENTER" layoutX="121.0" layoutY="149.0" prefHeight="35.0"
+                        prefWidth="166.0" text="dateOfCreation" textAlignment="CENTER"/>
+                 <ListView fx:id="membersList" layoutX="310.0" layoutY="149.0" prefHeight="148.0" prefWidth="156.0"/>
++                <Button fx:id="DeleteMember" layoutX="326.0" layoutY="304.0" mnemonicParsing="false"
++                        onAction="#deleteMember" prefHeight="26.0" prefWidth="126.0" text="delete member"/>
+             </children>
+         </AnchorPane>
+     </children>
+Index: target/classes/fxml/TaskListForLeader.fxml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n\r\n<?import javafx.geometry.Insets?>\r\n<?import javafx.scene.control.Button?>\r\n<?import javafx.scene.control.Label?>\r\n<?import javafx.scene.control.ScrollPane?>\r\n<?import javafx.scene.image.Image?>\r\n<?import javafx.scene.image.ImageView?>\r\n<?import javafx.scene.layout.AnchorPane?>\r\n<?import javafx.scene.layout.VBox?>\r\n<?import javafx.scene.text.Font?>\r\n\r\n<AnchorPane fx:id=\"pane\" maxHeight=\"-Infinity\" maxWidth=\"-Infinity\" minHeight=\"-Infinity\" minWidth=\"-Infinity\" prefHeight=\"400.0\"\r\n            prefWidth=\"600.0\" xmlns=\"http://javafx.com/javafx/17\" xmlns:fx=\"http://javafx.com/fxml/1\"\r\n            fx:controller=\"view.TaskListForLeaderView\">\r\n    <children>\r\n        <AnchorPane prefHeight=\"40.0\" prefWidth=\"200.0\" style=\"-fx-background-color: #949292;\"\r\n                    AnchorPane.bottomAnchor=\"360.0\" AnchorPane.leftAnchor=\"0.0\" AnchorPane.rightAnchor=\"0.0\"\r\n                    AnchorPane.topAnchor=\"0.0\">\r\n            <children>\r\n                <Label layoutX=\"25.0\" layoutY=\"11.0\" text=\"Task List\"/>\r\n                <ImageView fx:id=\"exit\" fitHeight=\"28.0\" fitWidth=\"31.0\" layoutX=\"573.0\" layoutY=\"4.0\"\r\n                           onDragDetected=\"#exit\" pickOnBounds=\"true\" preserveRatio=\"true\"\r\n                           AnchorPane.rightAnchor=\"10.0\">\r\n                    <image>\r\n                        <Image url=\"@../img/close_window_96px.png\"/>\r\n                    </image>\r\n                </ImageView>\r\n            </children>\r\n        </AnchorPane>\r\n        <AnchorPane layoutY=\"40.0\" nodeOrientation=\"RIGHT_TO_LEFT\" prefHeight=\"360.0\" prefWidth=\"100.0\"\r\n                    AnchorPane.leftAnchor=\"0.0\" AnchorPane.topAnchor=\"40.0\">\r\n            <children>\r\n                <VBox alignment=\"TOP_CENTER\" layoutY=\"-1.0\" prefHeight=\"361.0\" prefWidth=\"100.0\" spacing=\"9.0\"\r\n                      style=\"-fx-background-color: #C8C5C4;\" AnchorPane.bottomAnchor=\"0.0\" AnchorPane.topAnchor=\"0.0\">\r\n                    <children>\r\n                        <Button mnemonicParsing=\"false\" prefHeight=\"50.0\" prefWidth=\"80.0\" text=\"Task List\">\r\n                            <VBox.margin>\r\n                                <Insets top=\"7.0\"/>\r\n                            </VBox.margin>\r\n                            <font>\r\n                                <Font size=\"10.0\"/>\r\n                            </font>\r\n                        </Button>\r\n                        <Button mnemonicParsing=\"false\" prefHeight=\"50.0\" prefWidth=\"80.0\" text=\"Task Page\">\r\n                            <font>\r\n                                <Font size=\"10.0\"/>\r\n                            </font>\r\n                        </Button>\r\n                        <Button fx:id=\"btnCreateTask\" mnemonicParsing=\"false\" onAction=\"#goToCreateTaskPage\"\r\n                                prefHeight=\"50.0\" prefWidth=\"80.0\" text=\"Create Task\">\r\n                            <font>\r\n                                <Font size=\"10.0\"/>\r\n                            </font>\r\n                        </Button>\r\n                    </children>\r\n                </VBox>\r\n            </children>\r\n        </AnchorPane>\r\n        <AnchorPane layoutX=\"98.0\" layoutY=\"40.0\" prefHeight=\"362.0\" prefWidth=\"502.0\"\r\n                    style=\"-fx-background-color: #E7E2E1;\" AnchorPane.bottomAnchor=\"10.0\" AnchorPane.leftAnchor=\"110.0\"\r\n                    AnchorPane.rightAnchor=\"10.0\" AnchorPane.topAnchor=\"50.0\">\r\n            <children>\r\n                <ScrollPane prefHeight=\"340.0\" prefWidth=\"480.0\" AnchorPane.bottomAnchor=\"0.0\"\r\n                            AnchorPane.leftAnchor=\"0.0\" AnchorPane.rightAnchor=\"0.0\" AnchorPane.topAnchor=\"0.0\">\r\n                    <content>\r\n                        <VBox fx:id=\"vTaskItem\" prefHeight=\"338.0\" prefWidth=\"478.0\"/>\r\n                    </content>\r\n                </ScrollPane>\r\n            </children>\r\n        </AnchorPane>\r\n    </children>\r\n</AnchorPane>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/target/classes/fxml/TaskListForLeader.fxml b/target/classes/fxml/TaskListForLeader.fxml
+--- a/target/classes/fxml/TaskListForLeader.fxml	(revision b95bb119cedb42f89bd879d1bea567ccf75f115c)
++++ b/target/classes/fxml/TaskListForLeader.fxml	(date 1641841958153)
+@@ -10,7 +10,8 @@
+ <?import javafx.scene.layout.VBox?>
+ <?import javafx.scene.text.Font?>
+ 
+-<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
++<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
++            prefHeight="400.0"
+             prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+             fx:controller="view.TaskListForLeaderView">
+     <children>
+Index: src/main/java/view/TaskPageForLeaderView.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package view;\r\n\r\nimport controller.Controller;\r\nimport controller.JsonController;\r\nimport javafx.event.ActionEvent;\r\nimport javafx.fxml.FXMLLoader;\r\nimport javafx.fxml.Initializable;\r\nimport javafx.scene.Parent;\r\nimport javafx.scene.Scene;\r\nimport javafx.scene.control.Button;\r\nimport javafx.scene.control.Label;\r\nimport javafx.scene.control.ListView;\r\nimport javafx.scene.control.TextField;\r\nimport javafx.scene.image.ImageView;\r\nimport javafx.scene.input.MouseEvent;\r\nimport javafx.scene.layout.AnchorPane;\r\nimport javafx.stage.Stage;\r\nimport model.Task;\r\nimport model.User;\r\n\r\nimport java.io.IOException;\r\nimport java.net.URL;\r\nimport java.text.ParseException;\r\nimport java.util.ResourceBundle;\r\n\r\npublic class TaskPageForLeaderView implements Initializable {\r\n    private final Task selectTask = Task.getSelectTask();\r\n    public AnchorPane pane;\r\n    public TextField deadlineFiled;\r\n    public TextField descriptionField;\r\n    public TextField PriorityField;\r\n    public TextField taskTitleField;\r\n    public Button btnTaskList;\r\n    public Button btnEdit;\r\n    public Label lblError;\r\n    public Label lblDateOfCreation;\r\n    public ListView membersList;\r\n    public Button btnCreateTask;\r\n    public ImageView exit;\r\n    private int result;\r\n\r\n    public void goToTaskList(ActionEvent actionEvent) throws IOException {\r\n        Task.setSelectTask(null);\r\n        Parent root = FXMLLoader.load(getClass().getResource(\"/fxml/TaskListForLeader.fxml\"));\r\n        ((Stage) pane.getScene().getWindow()).setScene(new Scene(root));\r\n    }\r\n\r\n    @Override\r\n    public void initialize(URL location, ResourceBundle resources) {\r\n        taskTitleField.setText(selectTask.getTitle());\r\n        deadlineFiled.setText(selectTask.getDeadline().toString());\r\n        PriorityField.setText(selectTask.getPriority());\r\n        lblDateOfCreation.setText(selectTask.getDateOfCreation().toString());\r\n        if (selectTask.getDescription().equals(\"\"))\r\n            descriptionField.setText(\"description is null!\");\r\n        else\r\n            descriptionField.setText(selectTask.getDescription());\r\n        for (User user : selectTask.getAssignedUser()) {\r\n            membersList.getItems().add(user.getUserName());\r\n        }\r\n\r\n    }\r\n\r\n    public void Edit(ActionEvent actionEvent) throws ParseException {\r\n        if (!taskTitleField.getText().equals(selectTask.getTitle())) {\r\n            Controller.controller.editTaskTitle(LoginView.LoginUser, selectTask, taskTitleField.getText());\r\n        }\r\n        if (!PriorityField.getText().equals(selectTask.getPriority()))\r\n            Controller.controller.editTaskPriority(LoginView.LoginUser, selectTask, taskTitleField.getText());\r\n        if (!descriptionField.getText().equals(selectTask.getDescription()))\r\n            Controller.controller.editTaskDescription(LoginView.LoginUser, selectTask, taskTitleField.getText());\r\n        if (!deadlineFiled.getText().equals(selectTask.getDeadline()))\r\n            result = Controller.controller.editTaskDeadline(LoginView.LoginUser, selectTask, taskTitleField.getText());\r\n        if (result == 1) {\r\n            lblError.setText(\"New deadline is invalid!\");\r\n        } else\r\n            lblError.setText(\"Task updated successfully!\");\r\n    }\r\n\r\n    public void goToCreateTask(ActionEvent actionEvent) throws IOException {\r\n        Task.setSelectTask(null);\r\n        Parent root = FXMLLoader.load(getClass().getResource(\"/fxml/CreateTaskPageForLeader.fxml\"));\r\n        ((Stage) pane.getScene().getWindow()).setScene(new Scene(root));\r\n    }\r\n\r\n    public void exit(MouseEvent mouseEvent) {\r\n        JsonController.getInstance().updateJson();\r\n        System.exit(0);\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/view/TaskPageForLeaderView.java b/src/main/java/view/TaskPageForLeaderView.java
+--- a/src/main/java/view/TaskPageForLeaderView.java	(revision b95bb119cedb42f89bd879d1bea567ccf75f115c)
++++ b/src/main/java/view/TaskPageForLeaderView.java	(date 1641839444366)
+@@ -2,6 +2,7 @@
+ 
+ import controller.Controller;
+ import controller.JsonController;
++import javafx.beans.value.ObservableValue;
+ import javafx.event.ActionEvent;
+ import javafx.fxml.FXMLLoader;
+ import javafx.fxml.Initializable;
+@@ -37,6 +38,7 @@
+     public ListView membersList;
+     public Button btnCreateTask;
+     public ImageView exit;
++    public Button DeleteMember;
+     private int result;
+ 
+     public void goToTaskList(ActionEvent actionEvent) throws IOException {
+@@ -87,4 +89,13 @@
+         JsonController.getInstance().updateJson();
+         System.exit(0);
+     }
++
++    public void deleteMember(ActionEvent actionEvent) {
++        String selectedItem = membersList.getSelectionModel().getSelectedItem().toString();
++        result = Controller.controller.removeAssignedUsers(User.getUserByUsername("Amir"), selectTask, User.getUserByUsername(selectedItem));
++        membersList = null;
++        for (User user : selectTask.getAssignedUser()) {
++            membersList.getItems().add(user.getUserName());
++        }
++    }
+ }
+Index: src/main/resources/fxml/TaskListForLeader.fxml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n\r\n<?import javafx.geometry.Insets?>\r\n<?import javafx.scene.control.Button?>\r\n<?import javafx.scene.control.Label?>\r\n<?import javafx.scene.control.ScrollPane?>\r\n<?import javafx.scene.image.Image?>\r\n<?import javafx.scene.image.ImageView?>\r\n<?import javafx.scene.layout.AnchorPane?>\r\n<?import javafx.scene.layout.VBox?>\r\n<?import javafx.scene.text.Font?>\r\n\r\n<AnchorPane fx:id=\"pane\" maxHeight=\"-Infinity\" maxWidth=\"-Infinity\" minHeight=\"-Infinity\" minWidth=\"-Infinity\" prefHeight=\"400.0\"\r\n            prefWidth=\"600.0\" xmlns=\"http://javafx.com/javafx/17\" xmlns:fx=\"http://javafx.com/fxml/1\"\r\n            fx:controller=\"view.TaskListForLeaderView\">\r\n    <children>\r\n        <AnchorPane prefHeight=\"40.0\" prefWidth=\"200.0\" style=\"-fx-background-color: #949292;\"\r\n                    AnchorPane.bottomAnchor=\"360.0\" AnchorPane.leftAnchor=\"0.0\" AnchorPane.rightAnchor=\"0.0\"\r\n                    AnchorPane.topAnchor=\"0.0\">\r\n            <children>\r\n                <Label layoutX=\"25.0\" layoutY=\"11.0\" text=\"Task List\"/>\r\n                <ImageView fx:id=\"exit\" fitHeight=\"28.0\" fitWidth=\"31.0\" layoutX=\"573.0\" layoutY=\"4.0\"\r\n                           onDragDetected=\"#exit\" pickOnBounds=\"true\" preserveRatio=\"true\"\r\n                           AnchorPane.rightAnchor=\"10.0\">\r\n                    <image>\r\n                        <Image url=\"@../img/close_window_96px.png\"/>\r\n                    </image>\r\n                </ImageView>\r\n            </children>\r\n        </AnchorPane>\r\n        <AnchorPane layoutY=\"40.0\" nodeOrientation=\"RIGHT_TO_LEFT\" prefHeight=\"360.0\" prefWidth=\"100.0\"\r\n                    AnchorPane.leftAnchor=\"0.0\" AnchorPane.topAnchor=\"40.0\">\r\n            <children>\r\n                <VBox alignment=\"TOP_CENTER\" layoutY=\"-1.0\" prefHeight=\"361.0\" prefWidth=\"100.0\" spacing=\"9.0\"\r\n                      style=\"-fx-background-color: #C8C5C4;\" AnchorPane.bottomAnchor=\"0.0\" AnchorPane.topAnchor=\"0.0\">\r\n                    <children>\r\n                        <Button mnemonicParsing=\"false\" prefHeight=\"50.0\" prefWidth=\"80.0\" text=\"Task List\">\r\n                            <VBox.margin>\r\n                                <Insets top=\"7.0\"/>\r\n                            </VBox.margin>\r\n                            <font>\r\n                                <Font size=\"10.0\"/>\r\n                            </font>\r\n                        </Button>\r\n                        <Button mnemonicParsing=\"false\" prefHeight=\"50.0\" prefWidth=\"80.0\" text=\"Task Page\">\r\n                            <font>\r\n                                <Font size=\"10.0\"/>\r\n                            </font>\r\n                        </Button>\r\n                        <Button fx:id=\"btnCreateTask\" mnemonicParsing=\"false\" onAction=\"#goToCreateTaskPage\"\r\n                                prefHeight=\"50.0\" prefWidth=\"80.0\" text=\"Create Task\">\r\n                            <font>\r\n                                <Font size=\"10.0\"/>\r\n                            </font>\r\n                        </Button>\r\n                    </children>\r\n                </VBox>\r\n            </children>\r\n        </AnchorPane>\r\n        <AnchorPane layoutX=\"98.0\" layoutY=\"40.0\" prefHeight=\"362.0\" prefWidth=\"502.0\"\r\n                    style=\"-fx-background-color: #E7E2E1;\" AnchorPane.bottomAnchor=\"10.0\" AnchorPane.leftAnchor=\"110.0\"\r\n                    AnchorPane.rightAnchor=\"10.0\" AnchorPane.topAnchor=\"50.0\">\r\n            <children>\r\n                <ScrollPane prefHeight=\"340.0\" prefWidth=\"480.0\" AnchorPane.bottomAnchor=\"0.0\"\r\n                            AnchorPane.leftAnchor=\"0.0\" AnchorPane.rightAnchor=\"0.0\" AnchorPane.topAnchor=\"0.0\">\r\n                    <content>\r\n                        <VBox fx:id=\"vTaskItem\" prefHeight=\"338.0\" prefWidth=\"478.0\"/>\r\n                    </content>\r\n                </ScrollPane>\r\n            </children>\r\n        </AnchorPane>\r\n    </children>\r\n</AnchorPane>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/resources/fxml/TaskListForLeader.fxml b/src/main/resources/fxml/TaskListForLeader.fxml
+--- a/src/main/resources/fxml/TaskListForLeader.fxml	(revision b95bb119cedb42f89bd879d1bea567ccf75f115c)
++++ b/src/main/resources/fxml/TaskListForLeader.fxml	(date 1641841958153)
+@@ -10,7 +10,8 @@
+ <?import javafx.scene.layout.VBox?>
+ <?import javafx.scene.text.Font?>
+ 
+-<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
++<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
++            prefHeight="400.0"
+             prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+             fx:controller="view.TaskListForLeaderView">
+     <children>
+Index: src/main/resources/json/Database.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>{\r\n  \"@type\": \"controller.Database\",\r\n  \"@val\": {\r\n    \"users\": [\r\n      {\r\n        \"creationId\": 1,\r\n        \"userName\": \"mirzaeimahdi409\",\r\n        \"password\": \"138014\",\r\n        \"email\": \"mirzaeimahdi409@gmail.com\",\r\n        \"role\": \"System Admin\",\r\n        \"score\": 0,\r\n        \"allLogs\": [\r\n          {\r\n            \"user\": \"@root.users.0\",\r\n            \"date\": \"2021/12/28 01:30:42\"\r\n          },\r\n          {\r\n            \"user\": \"@root.users.0\",\r\n            \"date\": \"2021/12/28 01:32:38\"\r\n          },\r\n          {\r\n            \"user\": \"@root.users.0\",\r\n            \"date\": \"2021/12/28 22:37:52\"\r\n          }\r\n        ],\r\n        \"allTasksForUser\": [],\r\n        \"notifications\": [\r\n          {\r\n            \"text\": \"Hello everyone\",\r\n            \"sender\": \"@root.users.0\",\r\n            \"type\": 0\r\n          }\r\n        ],\r\n        \"userTeams\": [],\r\n        \"joiningDate\": {}\r\n      },\r\n      {\r\n        \"creationId\": 2,\r\n        \"userName\": \"AmirReza\",\r\n        \"password\": \"138014\",\r\n        \"email\": \"AmirReza@gmail.com\",\r\n        \"role\": \"Member\",\r\n        \"score\": 0,\r\n        \"allLogs\": [\r\n          {\r\n            \"user\": \"@root.users.1\",\r\n            \"date\": \"2021/12/28 01:31:27\"\r\n          },\r\n          {\r\n            \"user\": \"@root.users.1\",\r\n            \"date\": \"2021/12/28 22:40:34\"\r\n          },\r\n          {\r\n            \"user\": \"@root.users.1\",\r\n            \"date\": \"2021/12/28 23:17:11\"\r\n          },\r\n          {\r\n            \"user\": \"@root.users.1\",\r\n            \"date\": \"2021/12/28 23:55:14\"\r\n          }\r\n        ],\r\n        \"allTasksForUser\": [],\r\n        \"notifications\": [\r\n          \"@root.users.0.notifications.0\"\r\n        ],\r\n        \"userTeams\": [\r\n          {\r\n            \"teamNumber\": 2,\r\n            \"teamName\": \"Yakuza2\",\r\n            \"teamMembers\": [],\r\n            \"suspendedMembers\": [],\r\n            \"boards\": [],\r\n            \"teamLeader\": \"@root.users.1\",\r\n            \"scoreboard\": {\r\n              \"team\": \"@root.users.1.userTeams.0\",\r\n              \"scores\": {}\r\n            },\r\n            \"roadMap\": {\r\n              \"team\": \"@root.users.1.userTeams.0\",\r\n              \"tasksStatus\": {},\r\n              \"creationDates\": {}\r\n            },\r\n            \"allTasks\": [],\r\n            \"notifications\": [],\r\n            \"creationDate\": {\r\n              \"localDate\": {\r\n                \"date\": {\r\n                  \"year\": 2021,\r\n                  \"month\": 12,\r\n                  \"day\": 28\r\n                },\r\n                \"time\": {\r\n                  \"hour\": 1,\r\n                  \"minute\": 31,\r\n                  \"second\": 0,\r\n                  \"nano\": 0\r\n                }\r\n              },\r\n              \"date\": \"2021/12/28|01:31\"\r\n            }\r\n          },\r\n          {\r\n            \"teamNumber\": 3,\r\n            \"teamName\": \"Yakuza3\",\r\n            \"teamMembers\": [],\r\n            \"suspendedMembers\": [],\r\n            \"boards\": [],\r\n            \"teamLeader\": \"@root.users.1\",\r\n            \"scoreboard\": {\r\n              \"team\": \"@root.users.1.userTeams.1\",\r\n              \"scores\": {}\r\n            },\r\n            \"roadMap\": {\r\n              \"team\": \"@root.users.1.userTeams.1\",\r\n              \"tasksStatus\": {},\r\n              \"creationDates\": {}\r\n            },\r\n            \"allTasks\": [],\r\n            \"notifications\": [],\r\n            \"creationDate\": {\r\n              \"localDate\": {\r\n                \"date\": {\r\n                  \"year\": 2021,\r\n                  \"month\": 12,\r\n                  \"day\": 28\r\n                },\r\n                \"time\": {\r\n                  \"hour\": 1,\r\n                  \"minute\": 31,\r\n                  \"second\": 0,\r\n                  \"nano\": 0\r\n                }\r\n              },\r\n              \"date\": \"2021/12/28|01:31\"\r\n            }\r\n          },\r\n          {\r\n            \"teamNumber\": 4,\r\n            \"teamName\": \"Yakuza4\",\r\n            \"teamMembers\": [],\r\n            \"suspendedMembers\": [],\r\n            \"boards\": [],\r\n            \"teamLeader\": \"@root.users.1\",\r\n            \"scoreboard\": {\r\n              \"team\": \"@root.users.1.userTeams.2\",\r\n              \"scores\": {}\r\n            },\r\n            \"roadMap\": {\r\n              \"team\": \"@root.users.1.userTeams.2\",\r\n              \"tasksStatus\": {},\r\n              \"creationDates\": {}\r\n            },\r\n            \"allTasks\": [],\r\n            \"notifications\": [],\r\n            \"creationDate\": {\r\n              \"localDate\": {\r\n                \"date\": {\r\n                  \"year\": 2021,\r\n                  \"month\": 12,\r\n                  \"day\": 28\r\n                },\r\n                \"time\": {\r\n                  \"hour\": 1,\r\n                  \"minute\": 32,\r\n                  \"second\": 0,\r\n                  \"nano\": 0\r\n                }\r\n              },\r\n              \"date\": \"2021/12/28|01:32\"\r\n            }\r\n          },\r\n          {\r\n            \"teamNumber\": 5,\r\n            \"teamName\": \"Yakuza5\",\r\n            \"teamMembers\": [],\r\n            \"suspendedMembers\": [],\r\n            \"boards\": [],\r\n            \"teamLeader\": \"@root.users.1\",\r\n            \"scoreboard\": {\r\n              \"team\": \"@root.users.1.userTeams.3\",\r\n              \"scores\": {}\r\n            },\r\n            \"roadMap\": {\r\n              \"team\": \"@root.users.1.userTeams.3\",\r\n              \"tasksStatus\": {},\r\n              \"creationDates\": {}\r\n            },\r\n            \"allTasks\": [],\r\n            \"notifications\": [],\r\n            \"creationDate\": {\r\n              \"localDate\": {\r\n                \"date\": {\r\n                  \"year\": 2021,\r\n                  \"month\": 12,\r\n                  \"day\": 28\r\n                },\r\n                \"time\": {\r\n                  \"hour\": 1,\r\n                  \"minute\": 32,\r\n                  \"second\": 0,\r\n                  \"nano\": 0\r\n                }\r\n              },\r\n              \"date\": \"2021/12/28|01:32\"\r\n            }\r\n          },\r\n          {\r\n            \"teamNumber\": 6,\r\n            \"teamName\": \"Yakuza6\",\r\n            \"teamMembers\": [],\r\n            \"suspendedMembers\": [],\r\n            \"boards\": [],\r\n            \"teamLeader\": \"@root.users.1\",\r\n            \"scoreboard\": {\r\n              \"team\": \"@root.users.1.userTeams.4\",\r\n              \"scores\": {}\r\n            },\r\n            \"roadMap\": {\r\n              \"team\": \"@root.users.1.userTeams.4\",\r\n              \"tasksStatus\": {},\r\n              \"creationDates\": {}\r\n            },\r\n            \"allTasks\": [],\r\n            \"notifications\": [],\r\n            \"creationDate\": {\r\n              \"localDate\": {\r\n                \"date\": {\r\n                  \"year\": 2021,\r\n                  \"month\": 12,\r\n                  \"day\": 28\r\n                },\r\n                \"time\": {\r\n                  \"hour\": 1,\r\n                  \"minute\": 32,\r\n                  \"second\": 0,\r\n                  \"nano\": 0\r\n                }\r\n              },\r\n              \"date\": \"2021/12/28|01:32\"\r\n            }\r\n          },\r\n          {\r\n            \"teamNumber\": 1,\r\n            \"teamName\": \"Yakuza1\",\r\n            \"teamMembers\": [\r\n              {\r\n                \"creationId\": 4,\r\n                \"userName\": \"mehrad\",\r\n                \"password\": \"2020\",\r\n                \"email\": \"Mehrad@gmail.com\",\r\n                \"role\": \"Member\",\r\n                \"score\": 0,\r\n                \"allLogs\": [],\r\n                \"allTasksForUser\": [],\r\n                \"notifications\": [\r\n                  \"@root.users.0.notifications.0\"\r\n                ],\r\n                \"userTeams\": [\r\n                  \"@root.users.1.userTeams.5\"\r\n                ],\r\n                \"joiningDate\": {\r\n                  \"@root.users.1.userTeams.5\": {\r\n                    \"localDate\": {\r\n                      \"date\": {\r\n                        \"year\": 2021,\r\n                        \"month\": 12,\r\n                        \"day\": 28\r\n                      },\r\n                      \"time\": {\r\n                        \"hour\": 1,\r\n                        \"minute\": 31,\r\n                        \"second\": 0,\r\n                        \"nano\": 0\r\n                      }\r\n                    },\r\n                    \"date\": \"2021/12/28|01:31\"\r\n                  }\r\n                }\r\n              },\r\n              \"@root.users.1\"\r\n            ],\r\n            \"suspendedMembers\": [],\r\n            \"boards\": [],\r\n            \"teamLeader\": {\r\n              \"creationId\": 3,\r\n              \"userName\": \"Amir\",\r\n              \"password\": \"2020\",\r\n              \"email\": \"Amir@gmail.com\",\r\n              \"role\": \"Leader\",\r\n              \"score\": 0,\r\n              \"allLogs\": [\r\n                {\r\n                  \"user\": \"@root.users.1.userTeams.5.teamLeader\",\r\n                  \"date\": \"2021/12/28 23:56:28\"\r\n                },\r\n                {\r\n                  \"user\": \"@root.users.1.userTeams.5.teamLeader\",\r\n                  \"date\": \"2022/01/03 11:14:49\"\r\n                },\r\n                {\r\n                  \"user\": \"@root.users.1.userTeams.5.teamLeader\",\r\n                  \"date\": \"2022/01/09 12:35:04\"\r\n                }\r\n              ],\r\n              \"allTasksForUser\": [],\r\n              \"notifications\": [\r\n                \"@root.users.0.notifications.0\",\r\n                {\r\n                  \"text\": \"Hi Amir\",\r\n                  \"sender\": \"@root.users.0\",\r\n                  \"type\": 0\r\n                }\r\n              ],\r\n              \"userTeams\": [],\r\n              \"joiningDate\": {}\r\n            },\r\n            \"scoreboard\": {\r\n              \"team\": \"@root.users.1.userTeams.5\",\r\n              \"scores\": {\r\n                \"@root.users.1\": 0,\r\n                \"@root.users.1.userTeams.5.teamMembers.0\": 0\r\n              }\r\n            },\r\n            \"roadMap\": {\r\n              \"team\": \"@root.users.1.userTeams.5\",\r\n              \"tasksStatus\": {},\r\n              \"creationDates\": [\r\n                [\r\n                  {\r\n                    \"creationId\": 2,\r\n                    \"title\": \"Task2\",\r\n                    \"description\": \"\",\r\n                    \"priority\": \"Lowest\",\r\n                    \"dateOfCreation\": {\r\n                      \"localDate\": {\r\n                        \"date\": {\r\n                          \"year\": 1400,\r\n                          \"month\": 10,\r\n                          \"day\": 5\r\n                        },\r\n                        \"time\": {\r\n                          \"hour\": 17,\r\n                          \"minute\": 40,\r\n                          \"second\": 0,\r\n                          \"nano\": 0\r\n                        }\r\n                      },\r\n                      \"date\": \"1400/10/05|17:40\"\r\n                    },\r\n                    \"deadline\": {\r\n                      \"localDate\": {\r\n                        \"date\": {\r\n                          \"year\": 1400,\r\n                          \"month\": 10,\r\n                          \"day\": 30\r\n                        },\r\n                        \"time\": {\r\n                          \"hour\": 17,\r\n                          \"minute\": 40,\r\n                          \"second\": 0,\r\n                          \"nano\": 0\r\n                        }\r\n                      },\r\n                      \"date\": \"1400/10/30|17:40\"\r\n                    },\r\n                    \"assignedUser\": [],\r\n                    \"team\": \"@root.users.1.userTeams.5\",\r\n                    \"comments\": []\r\n                  },\r\n                  \"@root.users.1.userTeams.5.roadMap.creationDates.0-key.dateOfCreation\"\r\n                ],\r\n                [\r\n                  {\r\n                    \"creationId\": 1,\r\n                    \"title\": \"Task1\",\r\n                    \"description\": \"\",\r\n                    \"priority\": \"Lowest\",\r\n                    \"dateOfCreation\": {\r\n                      \"localDate\": {\r\n                        \"date\": {\r\n                          \"year\": 1400,\r\n                          \"month\": 10,\r\n                          \"day\": 5\r\n                        },\r\n                        \"time\": {\r\n                          \"hour\": 17,\r\n                          \"minute\": 40,\r\n                          \"second\": 0,\r\n                          \"nano\": 0\r\n                        }\r\n                      },\r\n                      \"date\": \"1400/10/05|17:40\"\r\n                    },\r\n                    \"deadline\": {\r\n                      \"localDate\": {\r\n                        \"date\": {\r\n                          \"year\": 1400,\r\n                          \"month\": 10,\r\n                          \"day\": 30\r\n                        },\r\n                        \"time\": {\r\n                          \"hour\": 17,\r\n                          \"minute\": 40,\r\n                          \"second\": 0,\r\n                          \"nano\": 0\r\n                        }\r\n                      },\r\n                      \"date\": \"1400/10/30|17:40\"\r\n                    },\r\n                    \"assignedUser\": [],\r\n                    \"team\": \"@root.users.1.userTeams.5\",\r\n                    \"comments\": []\r\n                  },\r\n                  \"@root.users.1.userTeams.5.roadMap.creationDates.1-key.dateOfCreation\"\r\n                ]\r\n              ]\r\n            },\r\n            \"allTasks\": [\r\n              \"@root.users.1.userTeams.5.roadMap.creationDates.1-key\",\r\n              \"@root.users.1.userTeams.5.roadMap.creationDates.0-key\"\r\n            ],\r\n            \"notifications\": [],\r\n            \"creationDate\": \"@root.users.1.userTeams.5.teamMembers.0.joiningDate.0-val\"\r\n          },\r\n          \"@.5\"\r\n        ],\r\n        \"joiningDate\": {\r\n          \"@root.users.1.userTeams.5\": \"@root.users.1.userTeams.5.teamMembers.0.joiningDate.0-val\",\r\n          \"@root.users.1.userTeams.2\": \"@root.users.1.userTeams.2.creationDate\",\r\n          \"@root.users.1.userTeams.1\": \"@root.users.1.userTeams.1.creationDate\",\r\n          \"@root.users.1.userTeams.0\": \"@root.users.1.userTeams.0.creationDate\",\r\n          \"@root.users.1.userTeams.4\": \"@root.users.1.userTeams.4.creationDate\",\r\n          \"@root.users.1.userTeams.3\": \"@root.users.1.userTeams.3.creationDate\"\r\n        }\r\n      },\r\n      \"@root.users.1.userTeams.5.teamLeader\",\r\n      \"@root.users.1.userTeams.5.teamMembers.0\",\r\n      {\r\n        \"creationId\": 6,\r\n        \"userName\": \"Zeinab\",\r\n        \"password\": \"2020\",\r\n        \"email\": \"Zeinab@gmail.com\",\r\n        \"role\": \"Member\",\r\n        \"score\": 0,\r\n        \"allLogs\": [],\r\n        \"allTasksForUser\": [],\r\n        \"notifications\": [],\r\n        \"userTeams\": [],\r\n        \"joiningDate\": {}\r\n      }\r\n    ],\r\n    \"teams\": [\r\n      \"@root.users.1.userTeams.5\",\r\n      \"@root.users.1.userTeams.0\",\r\n      \"@root.users.1.userTeams.1\",\r\n      \"@root.users.1.userTeams.2\",\r\n      \"@root.users.1.userTeams.3\",\r\n      \"@root.users.1.userTeams.4\"\r\n    ],\r\n    \"pending\": [],\r\n    \"accepted\": [\r\n      \"@root.users.1.userTeams.5\",\r\n      \"@root.users.1.userTeams.0\",\r\n      \"@root.users.1.userTeams.1\",\r\n      \"@root.users.1.userTeams.2\",\r\n      \"@root.users.1.userTeams.3\"\r\n    ],\r\n    \"tasks\": [\r\n      \"@root.users.1.userTeams.5.roadMap.creationDates.1-key\",\r\n      \"@root.users.1.userTeams.5.roadMap.creationDates.0-key\"\r\n    ],\r\n    \"boards\": [],\r\n    \"uI\": 7,\r\n    \"tI\": 7,\r\n    \"taI\": 3,\r\n    \"bI\": 1\r\n  }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/resources/json/Database.json b/src/main/resources/json/Database.json
+--- a/src/main/resources/json/Database.json	(revision b95bb119cedb42f89bd879d1bea567ccf75f115c)
++++ b/src/main/resources/json/Database.json	(date 1641842096654)
+@@ -1,478 +1,1 @@
+-{
+-  "@type": "controller.Database",
+-  "@val": {
+-    "users": [
+-      {
+-        "creationId": 1,
+-        "userName": "mirzaeimahdi409",
+-        "password": "138014",
+-        "email": "mirzaeimahdi409@gmail.com",
+-        "role": "System Admin",
+-        "score": 0,
+-        "allLogs": [
+-          {
+-            "user": "@root.users.0",
+-            "date": "2021/12/28 01:30:42"
+-          },
+-          {
+-            "user": "@root.users.0",
+-            "date": "2021/12/28 01:32:38"
+-          },
+-          {
+-            "user": "@root.users.0",
+-            "date": "2021/12/28 22:37:52"
+-          }
+-        ],
+-        "allTasksForUser": [],
+-        "notifications": [
+-          {
+-            "text": "Hello everyone",
+-            "sender": "@root.users.0",
+-            "type": 0
+-          }
+-        ],
+-        "userTeams": [],
+-        "joiningDate": {}
+-      },
+-      {
+-        "creationId": 2,
+-        "userName": "AmirReza",
+-        "password": "138014",
+-        "email": "AmirReza@gmail.com",
+-        "role": "Member",
+-        "score": 0,
+-        "allLogs": [
+-          {
+-            "user": "@root.users.1",
+-            "date": "2021/12/28 01:31:27"
+-          },
+-          {
+-            "user": "@root.users.1",
+-            "date": "2021/12/28 22:40:34"
+-          },
+-          {
+-            "user": "@root.users.1",
+-            "date": "2021/12/28 23:17:11"
+-          },
+-          {
+-            "user": "@root.users.1",
+-            "date": "2021/12/28 23:55:14"
+-          }
+-        ],
+-        "allTasksForUser": [],
+-        "notifications": [
+-          "@root.users.0.notifications.0"
+-        ],
+-        "userTeams": [
+-          {
+-            "teamNumber": 2,
+-            "teamName": "Yakuza2",
+-            "teamMembers": [],
+-            "suspendedMembers": [],
+-            "boards": [],
+-            "teamLeader": "@root.users.1",
+-            "scoreboard": {
+-              "team": "@root.users.1.userTeams.0",
+-              "scores": {}
+-            },
+-            "roadMap": {
+-              "team": "@root.users.1.userTeams.0",
+-              "tasksStatus": {},
+-              "creationDates": {}
+-            },
+-            "allTasks": [],
+-            "notifications": [],
+-            "creationDate": {
+-              "localDate": {
+-                "date": {
+-                  "year": 2021,
+-                  "month": 12,
+-                  "day": 28
+-                },
+-                "time": {
+-                  "hour": 1,
+-                  "minute": 31,
+-                  "second": 0,
+-                  "nano": 0
+-                }
+-              },
+-              "date": "2021/12/28|01:31"
+-            }
+-          },
+-          {
+-            "teamNumber": 3,
+-            "teamName": "Yakuza3",
+-            "teamMembers": [],
+-            "suspendedMembers": [],
+-            "boards": [],
+-            "teamLeader": "@root.users.1",
+-            "scoreboard": {
+-              "team": "@root.users.1.userTeams.1",
+-              "scores": {}
+-            },
+-            "roadMap": {
+-              "team": "@root.users.1.userTeams.1",
+-              "tasksStatus": {},
+-              "creationDates": {}
+-            },
+-            "allTasks": [],
+-            "notifications": [],
+-            "creationDate": {
+-              "localDate": {
+-                "date": {
+-                  "year": 2021,
+-                  "month": 12,
+-                  "day": 28
+-                },
+-                "time": {
+-                  "hour": 1,
+-                  "minute": 31,
+-                  "second": 0,
+-                  "nano": 0
+-                }
+-              },
+-              "date": "2021/12/28|01:31"
+-            }
+-          },
+-          {
+-            "teamNumber": 4,
+-            "teamName": "Yakuza4",
+-            "teamMembers": [],
+-            "suspendedMembers": [],
+-            "boards": [],
+-            "teamLeader": "@root.users.1",
+-            "scoreboard": {
+-              "team": "@root.users.1.userTeams.2",
+-              "scores": {}
+-            },
+-            "roadMap": {
+-              "team": "@root.users.1.userTeams.2",
+-              "tasksStatus": {},
+-              "creationDates": {}
+-            },
+-            "allTasks": [],
+-            "notifications": [],
+-            "creationDate": {
+-              "localDate": {
+-                "date": {
+-                  "year": 2021,
+-                  "month": 12,
+-                  "day": 28
+-                },
+-                "time": {
+-                  "hour": 1,
+-                  "minute": 32,
+-                  "second": 0,
+-                  "nano": 0
+-                }
+-              },
+-              "date": "2021/12/28|01:32"
+-            }
+-          },
+-          {
+-            "teamNumber": 5,
+-            "teamName": "Yakuza5",
+-            "teamMembers": [],
+-            "suspendedMembers": [],
+-            "boards": [],
+-            "teamLeader": "@root.users.1",
+-            "scoreboard": {
+-              "team": "@root.users.1.userTeams.3",
+-              "scores": {}
+-            },
+-            "roadMap": {
+-              "team": "@root.users.1.userTeams.3",
+-              "tasksStatus": {},
+-              "creationDates": {}
+-            },
+-            "allTasks": [],
+-            "notifications": [],
+-            "creationDate": {
+-              "localDate": {
+-                "date": {
+-                  "year": 2021,
+-                  "month": 12,
+-                  "day": 28
+-                },
+-                "time": {
+-                  "hour": 1,
+-                  "minute": 32,
+-                  "second": 0,
+-                  "nano": 0
+-                }
+-              },
+-              "date": "2021/12/28|01:32"
+-            }
+-          },
+-          {
+-            "teamNumber": 6,
+-            "teamName": "Yakuza6",
+-            "teamMembers": [],
+-            "suspendedMembers": [],
+-            "boards": [],
+-            "teamLeader": "@root.users.1",
+-            "scoreboard": {
+-              "team": "@root.users.1.userTeams.4",
+-              "scores": {}
+-            },
+-            "roadMap": {
+-              "team": "@root.users.1.userTeams.4",
+-              "tasksStatus": {},
+-              "creationDates": {}
+-            },
+-            "allTasks": [],
+-            "notifications": [],
+-            "creationDate": {
+-              "localDate": {
+-                "date": {
+-                  "year": 2021,
+-                  "month": 12,
+-                  "day": 28
+-                },
+-                "time": {
+-                  "hour": 1,
+-                  "minute": 32,
+-                  "second": 0,
+-                  "nano": 0
+-                }
+-              },
+-              "date": "2021/12/28|01:32"
+-            }
+-          },
+-          {
+-            "teamNumber": 1,
+-            "teamName": "Yakuza1",
+-            "teamMembers": [
+-              {
+-                "creationId": 4,
+-                "userName": "mehrad",
+-                "password": "2020",
+-                "email": "Mehrad@gmail.com",
+-                "role": "Member",
+-                "score": 0,
+-                "allLogs": [],
+-                "allTasksForUser": [],
+-                "notifications": [
+-                  "@root.users.0.notifications.0"
+-                ],
+-                "userTeams": [
+-                  "@root.users.1.userTeams.5"
+-                ],
+-                "joiningDate": {
+-                  "@root.users.1.userTeams.5": {
+-                    "localDate": {
+-                      "date": {
+-                        "year": 2021,
+-                        "month": 12,
+-                        "day": 28
+-                      },
+-                      "time": {
+-                        "hour": 1,
+-                        "minute": 31,
+-                        "second": 0,
+-                        "nano": 0
+-                      }
+-                    },
+-                    "date": "2021/12/28|01:31"
+-                  }
+-                }
+-              },
+-              "@root.users.1"
+-            ],
+-            "suspendedMembers": [],
+-            "boards": [],
+-            "teamLeader": {
+-              "creationId": 3,
+-              "userName": "Amir",
+-              "password": "2020",
+-              "email": "Amir@gmail.com",
+-              "role": "Leader",
+-              "score": 0,
+-              "allLogs": [
+-                {
+-                  "user": "@root.users.1.userTeams.5.teamLeader",
+-                  "date": "2021/12/28 23:56:28"
+-                },
+-                {
+-                  "user": "@root.users.1.userTeams.5.teamLeader",
+-                  "date": "2022/01/03 11:14:49"
+-                },
+-                {
+-                  "user": "@root.users.1.userTeams.5.teamLeader",
+-                  "date": "2022/01/09 12:35:04"
+-                }
+-              ],
+-              "allTasksForUser": [],
+-              "notifications": [
+-                "@root.users.0.notifications.0",
+-                {
+-                  "text": "Hi Amir",
+-                  "sender": "@root.users.0",
+-                  "type": 0
+-                }
+-              ],
+-              "userTeams": [],
+-              "joiningDate": {}
+-            },
+-            "scoreboard": {
+-              "team": "@root.users.1.userTeams.5",
+-              "scores": {
+-                "@root.users.1": 0,
+-                "@root.users.1.userTeams.5.teamMembers.0": 0
+-              }
+-            },
+-            "roadMap": {
+-              "team": "@root.users.1.userTeams.5",
+-              "tasksStatus": {},
+-              "creationDates": [
+-                [
+-                  {
+-                    "creationId": 2,
+-                    "title": "Task2",
+-                    "description": "",
+-                    "priority": "Lowest",
+-                    "dateOfCreation": {
+-                      "localDate": {
+-                        "date": {
+-                          "year": 1400,
+-                          "month": 10,
+-                          "day": 5
+-                        },
+-                        "time": {
+-                          "hour": 17,
+-                          "minute": 40,
+-                          "second": 0,
+-                          "nano": 0
+-                        }
+-                      },
+-                      "date": "1400/10/05|17:40"
+-                    },
+-                    "deadline": {
+-                      "localDate": {
+-                        "date": {
+-                          "year": 1400,
+-                          "month": 10,
+-                          "day": 30
+-                        },
+-                        "time": {
+-                          "hour": 17,
+-                          "minute": 40,
+-                          "second": 0,
+-                          "nano": 0
+-                        }
+-                      },
+-                      "date": "1400/10/30|17:40"
+-                    },
+-                    "assignedUser": [],
+-                    "team": "@root.users.1.userTeams.5",
+-                    "comments": []
+-                  },
+-                  "@root.users.1.userTeams.5.roadMap.creationDates.0-key.dateOfCreation"
+-                ],
+-                [
+-                  {
+-                    "creationId": 1,
+-                    "title": "Task1",
+-                    "description": "",
+-                    "priority": "Lowest",
+-                    "dateOfCreation": {
+-                      "localDate": {
+-                        "date": {
+-                          "year": 1400,
+-                          "month": 10,
+-                          "day": 5
+-                        },
+-                        "time": {
+-                          "hour": 17,
+-                          "minute": 40,
+-                          "second": 0,
+-                          "nano": 0
+-                        }
+-                      },
+-                      "date": "1400/10/05|17:40"
+-                    },
+-                    "deadline": {
+-                      "localDate": {
+-                        "date": {
+-                          "year": 1400,
+-                          "month": 10,
+-                          "day": 30
+-                        },
+-                        "time": {
+-                          "hour": 17,
+-                          "minute": 40,
+-                          "second": 0,
+-                          "nano": 0
+-                        }
+-                      },
+-                      "date": "1400/10/30|17:40"
+-                    },
+-                    "assignedUser": [],
+-                    "team": "@root.users.1.userTeams.5",
+-                    "comments": []
+-                  },
+-                  "@root.users.1.userTeams.5.roadMap.creationDates.1-key.dateOfCreation"
+-                ]
+-              ]
+-            },
+-            "allTasks": [
+-              "@root.users.1.userTeams.5.roadMap.creationDates.1-key",
+-              "@root.users.1.userTeams.5.roadMap.creationDates.0-key"
+-            ],
+-            "notifications": [],
+-            "creationDate": "@root.users.1.userTeams.5.teamMembers.0.joiningDate.0-val"
+-          },
+-          "@.5"
+-        ],
+-        "joiningDate": {
+-          "@root.users.1.userTeams.5": "@root.users.1.userTeams.5.teamMembers.0.joiningDate.0-val",
+-          "@root.users.1.userTeams.2": "@root.users.1.userTeams.2.creationDate",
+-          "@root.users.1.userTeams.1": "@root.users.1.userTeams.1.creationDate",
+-          "@root.users.1.userTeams.0": "@root.users.1.userTeams.0.creationDate",
+-          "@root.users.1.userTeams.4": "@root.users.1.userTeams.4.creationDate",
+-          "@root.users.1.userTeams.3": "@root.users.1.userTeams.3.creationDate"
+-        }
+-      },
+-      "@root.users.1.userTeams.5.teamLeader",
+-      "@root.users.1.userTeams.5.teamMembers.0",
+-      {
+-        "creationId": 6,
+-        "userName": "Zeinab",
+-        "password": "2020",
+-        "email": "Zeinab@gmail.com",
+-        "role": "Member",
+-        "score": 0,
+-        "allLogs": [],
+-        "allTasksForUser": [],
+-        "notifications": [],
+-        "userTeams": [],
+-        "joiningDate": {}
+-      }
+-    ],
+-    "teams": [
+-      "@root.users.1.userTeams.5",
+-      "@root.users.1.userTeams.0",
+-      "@root.users.1.userTeams.1",
+-      "@root.users.1.userTeams.2",
+-      "@root.users.1.userTeams.3",
+-      "@root.users.1.userTeams.4"
+-    ],
+-    "pending": [],
+-    "accepted": [
+-      "@root.users.1.userTeams.5",
+-      "@root.users.1.userTeams.0",
+-      "@root.users.1.userTeams.1",
+-      "@root.users.1.userTeams.2",
+-      "@root.users.1.userTeams.3"
+-    ],
+-    "tasks": [
+-      "@root.users.1.userTeams.5.roadMap.creationDates.1-key",
+-      "@root.users.1.userTeams.5.roadMap.creationDates.0-key"
+-    ],
+-    "boards": [],
+-    "uI": 7,
+-    "tI": 7,
+-    "taI": 3,
+-    "bI": 1
+-  }
+-}
+\ No newline at end of file
++{"@type":"controller.Database","@val":{"users":[{"creationId":1,"userName":"mirzaeimahdi409","password":"138014","email":"mirzaeimahdi409@gmail.com","role":"System Admin","score":0,"allLogs":[{"user":"@root.users.0","date":"2021/12/28 01:30:42"},{"user":"@root.users.0","date":"2021/12/28 01:32:38"},{"user":"@root.users.0","date":"2021/12/28 22:37:52"}],"allTasksForUser":[],"notifications":[{"text":"Hello everyone","sender":"@root.users.0","type":0}],"userTeams":[],"joiningDate":{}},{"creationId":2,"userName":"AmirReza","password":"138014","email":"AmirReza@gmail.com","role":"Member","score":0,"allLogs":[{"user":"@root.users.1","date":"2021/12/28 01:31:27"},{"user":"@root.users.1","date":"2021/12/28 22:40:34"},{"user":"@root.users.1","date":"2021/12/28 23:17:11"},{"user":"@root.users.1","date":"2021/12/28 23:55:14"}],"allTasksForUser":[],"notifications":["@root.users.0.notifications.0"],"userTeams":[{"teamNumber":2,"teamName":"Yakuza2","teamMembers":[],"suspendedMembers":[],"boards":[],"teamLeader":"@root.users.1","scoreboard":{"team":"@root.users.1.userTeams.0","scores":{}},"roadMap":{"team":"@root.users.1.userTeams.0","tasksStatus":{},"creationDates":{}},"allTasks":[],"notifications":[],"creationDate":{"localDate":{"date":{"year":2021,"month":12,"day":28},"time":{"hour":1,"minute":31,"second":0,"nano":0}},"date":"2021/12/28|01:31"}},{"teamNumber":3,"teamName":"Yakuza3","teamMembers":[],"suspendedMembers":[],"boards":[],"teamLeader":"@root.users.1","scoreboard":{"team":"@root.users.1.userTeams.1","scores":{}},"roadMap":{"team":"@root.users.1.userTeams.1","tasksStatus":{},"creationDates":{}},"allTasks":[],"notifications":[],"creationDate":{"localDate":{"date":{"year":2021,"month":12,"day":28},"time":{"hour":1,"minute":31,"second":0,"nano":0}},"date":"2021/12/28|01:31"}},{"teamNumber":4,"teamName":"Yakuza4","teamMembers":[],"suspendedMembers":[],"boards":[],"teamLeader":"@root.users.1","scoreboard":{"team":"@root.users.1.userTeams.2","scores":{}},"roadMap":{"team":"@root.users.1.userTeams.2","tasksStatus":{},"creationDates":{}},"allTasks":[],"notifications":[],"creationDate":{"localDate":{"date":{"year":2021,"month":12,"day":28},"time":{"hour":1,"minute":32,"second":0,"nano":0}},"date":"2021/12/28|01:32"}},{"teamNumber":5,"teamName":"Yakuza5","teamMembers":[],"suspendedMembers":[],"boards":[],"teamLeader":"@root.users.1","scoreboard":{"team":"@root.users.1.userTeams.3","scores":{}},"roadMap":{"team":"@root.users.1.userTeams.3","tasksStatus":{},"creationDates":{}},"allTasks":[],"notifications":[],"creationDate":{"localDate":{"date":{"year":2021,"month":12,"day":28},"time":{"hour":1,"minute":32,"second":0,"nano":0}},"date":"2021/12/28|01:32"}},{"teamNumber":6,"teamName":"Yakuza6","teamMembers":[],"suspendedMembers":[],"boards":[],"teamLeader":"@root.users.1","scoreboard":{"team":"@root.users.1.userTeams.4","scores":{}},"roadMap":{"team":"@root.users.1.userTeams.4","tasksStatus":{},"creationDates":{}},"allTasks":[],"notifications":[],"creationDate":{"localDate":{"date":{"year":2021,"month":12,"day":28},"time":{"hour":1,"minute":32,"second":0,"nano":0}},"date":"2021/12/28|01:32"}},{"teamNumber":1,"teamName":"Yakuza1","teamMembers":[{"creationId":4,"userName":"mehrad","password":"2020","email":"Mehrad@gmail.com","role":"Member","score":0,"allLogs":[],"allTasksForUser":[],"notifications":["@root.users.0.notifications.0"],"userTeams":["@root.users.1.userTeams.5"],"joiningDate":{"@root.users.1.userTeams.5":{"localDate":{"date":{"year":2021,"month":12,"day":28},"time":{"hour":1,"minute":31,"second":0,"nano":0}},"date":"2021/12/28|01:31"}}},"@root.users.1"],"suspendedMembers":[],"boards":[],"teamLeader":{"creationId":3,"userName":"Amir","password":"2020","email":"Amir@gmail.com","role":"Leader","score":0,"allLogs":[{"user":"@root.users.1.userTeams.5.teamLeader","date":"2021/12/28 23:56:28"},{"user":"@root.users.1.userTeams.5.teamLeader","date":"2022/01/03 11:14:49"},{"user":"@root.users.1.userTeams.5.teamLeader","date":"2022/01/09 12:35:04"}],"allTasksForUser":[],"notifications":["@root.users.0.notifications.0",{"text":"Hi Amir","sender":"@root.users.0","type":0}],"userTeams":[],"joiningDate":{}},"scoreboard":{"team":"@root.users.1.userTeams.5","scores":{"@root.users.1":0,"@root.users.1.userTeams.5.teamMembers.0":0}},"roadMap":{"team":"@root.users.1.userTeams.5","tasksStatus":{},"creationDates":[[{"creationId":1,"title":"Task1","description":"","priority":"Lowest","dateOfCreation":{"localDate":{"date":{"year":1400,"month":10,"day":5},"time":{"hour":17,"minute":40,"second":0,"nano":0}},"date":"1400/10/05|17:40"},"deadline":{"localDate":{"date":{"year":1400,"month":10,"day":30},"time":{"hour":17,"minute":40,"second":0,"nano":0}},"date":"1400/10/30|17:40"},"assignedUser":[],"team":"@root.users.1.userTeams.5","comments":[]},"@root.users.1.userTeams.5.roadMap.creationDates.0-key.dateOfCreation"],[{"creationId":2,"title":"Task2","description":"","priority":"Lowest","dateOfCreation":{"localDate":{"date":{"year":1400,"month":10,"day":5},"time":{"hour":17,"minute":40,"second":0,"nano":0}},"date":"1400/10/05|17:40"},"deadline":{"localDate":{"date":{"year":1400,"month":10,"day":30},"time":{"hour":17,"minute":40,"second":0,"nano":0}},"date":"1400/10/30|17:40"},"assignedUser":[],"team":"@root.users.1.userTeams.5","comments":[]},"@root.users.1.userTeams.5.roadMap.creationDates.1-key.dateOfCreation"]]},"allTasks":["@root.users.1.userTeams.5.roadMap.creationDates.0-key","@root.users.1.userTeams.5.roadMap.creationDates.1-key"],"notifications":[],"creationDate":"@root.users.1.userTeams.5.teamMembers.0.joiningDate.0-val"},"@.5"],"joiningDate":{"@root.users.1.userTeams.0":"@root.users.1.userTeams.0.creationDate","@root.users.1.userTeams.2":"@root.users.1.userTeams.2.creationDate","@root.users.1.userTeams.3":"@root.users.1.userTeams.3.creationDate","@root.users.1.userTeams.4":"@root.users.1.userTeams.4.creationDate","@root.users.1.userTeams.5":"@root.users.1.userTeams.5.teamMembers.0.joiningDate.0-val","@root.users.1.userTeams.1":"@root.users.1.userTeams.1.creationDate"}},"@root.users.1.userTeams.5.teamLeader","@root.users.1.userTeams.5.teamMembers.0",{"creationId":6,"userName":"Zeinab","password":"2020","email":"Zeinab@gmail.com","role":"Member","score":0,"allLogs":[],"allTasksForUser":[],"notifications":[],"userTeams":[],"joiningDate":{}}],"teams":["@root.users.1.userTeams.5","@root.users.1.userTeams.0","@root.users.1.userTeams.1","@root.users.1.userTeams.2","@root.users.1.userTeams.3","@root.users.1.userTeams.4"],"pending":[],"accepted":["@root.users.1.userTeams.5","@root.users.1.userTeams.0","@root.users.1.userTeams.1","@root.users.1.userTeams.2","@root.users.1.userTeams.3"],"tasks":["@root.users.1.userTeams.5.roadMap.creationDates.0-key","@root.users.1.userTeams.5.roadMap.creationDates.1-key"],"boards":[],"uI":7,"tI":7,"taI":3,"bI":1}}
+\ No newline at end of file
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"1a23b712-9d27-49b8-9308-d8a7f14f07b1\" name=\"Changes\" comment=\"Statistic\">\r\n      <change afterPath=\"$PROJECT_DIR$/src/main/resources/fxml/PendingTeams.fxml\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/main/resources/fxml/SendNotification.fxml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/controller/Controller.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/controller/Controller.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/view/AdminMenuView.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/view/AdminMenuView.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/view/LoginView.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/view/LoginView.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/target/classes/controller/Controller.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/target/classes/controller/Controller.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/target/classes/view/AdminMenuView.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/target/classes/view/AdminMenuView.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/target/classes/view/LoginView.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/target/classes/view/LoginView.class\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Class\" />\r\n        <option value=\"FxmlFile\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"23IFJBY37uE9uMYparqHp7yNa3r\" />\r\n  <component name=\"ProjectLevelVcsManager\">\r\n    <ConfirmationsSetting value=\"2\" id=\"Add\" />\r\n  </component>\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">\r\n    <property name=\"ASKED_ADD_EXTERNAL_FILES\" value=\"true\" />\r\n    <property name=\"RunOnceActivity.OpenProjectViewOnStart\" value=\"true\" />\r\n    <property name=\"RunOnceActivity.ShowReadmeOnStart\" value=\"true\" />\r\n    <property name=\"SHARE_PROJECT_CONFIGURATION_FILES\" value=\"true\" />\r\n    <property name=\"WebServerToolWindowFactoryState\" value=\"false\" />\r\n    <property name=\"aspect.path.notification.shown\" value=\"true\" />\r\n    <property name=\"node.js.detected.package.eslint\" value=\"true\" />\r\n    <property name=\"node.js.detected.package.tslint\" value=\"true\" />\r\n    <property name=\"node.js.path.for.package.eslint\" value=\"project\" />\r\n    <property name=\"node.js.path.for.package.tslint\" value=\"project\" />\r\n    <property name=\"node.js.selected.package.eslint\" value=\"(autodetect)\" />\r\n    <property name=\"node.js.selected.package.tslint\" value=\"(autodetect)\" />\r\n    <property name=\"settings.editor.selected.configurable\" value=\"reference.settings.project.maven.repository.indices\" />\r\n  </component>\r\n  <component name=\"RunManager\">\r\n    <configuration name=\"LoginView\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"ALTERNATIVE_JRE_PATH\" value=\"$PROJECT_DIR$\" />\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"view.LoginView\" />\r\n      <module name=\"Project-team-07\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"view.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"Application.LoginView\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"1a23b712-9d27-49b8-9308-d8a7f14f07b1\" name=\"Changes\" comment=\"\" />\r\n      <created>1641413620967</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1641413620967</updated>\r\n      <workItem from=\"1641413622317\" duration=\"2179000\" />\r\n      <workItem from=\"1641415826953\" duration=\"1275000\" />\r\n      <workItem from=\"1641563778004\" duration=\"1096000\" />\r\n      <workItem from=\"1641564897696\" duration=\"7899000\" />\r\n      <workItem from=\"1641574783509\" duration=\"285000\" />\r\n      <workItem from=\"1641577611394\" duration=\"2551000\" />\r\n      <workItem from=\"1641586388773\" duration=\"1633000\" />\r\n      <workItem from=\"1641591159631\" duration=\"18000\" />\r\n      <workItem from=\"1641738564243\" duration=\"17136000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"start phase2\">\r\n      <created>1641416456429</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1641416456429</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"set Name\">\r\n      <created>1641416527674</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1641416527674</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"Login and Register page\">\r\n      <created>1641574347632</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1641574347632</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\"Login and Register page #2\">\r\n      <created>1641575058812</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1641575058812</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00005\" summary=\"Login and Register page #3\">\r\n      <created>1641577689790</created>\r\n      <option name=\"number\" value=\"00005\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1641577689790</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00006\" summary=\"Beautification\">\r\n      <created>1641580153018</created>\r\n      <option name=\"number\" value=\"00006\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00006\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1641580153018</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00007\" summary=\"Admin Menu\">\r\n      <created>1641756023110</created>\r\n      <option name=\"number\" value=\"00007\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00007\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1641756023110</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00008\" summary=\"Statistic\">\r\n      <created>1641760232564</created>\r\n      <option name=\"number\" value=\"00008\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00008\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1641760232564</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"9\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n    <option name=\"oldMeFiltersMigrated\" value=\"true\" />\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <option name=\"ADD_EXTERNAL_FILES_SILENTLY\" value=\"true\" />\r\n    <MESSAGE value=\"start phase2\" />\r\n    <MESSAGE value=\"set Name\" />\r\n    <MESSAGE value=\"Login and Register page\" />\r\n    <MESSAGE value=\"Login and Register page #2\" />\r\n    <MESSAGE value=\"Login and Register page #3\" />\r\n    <MESSAGE value=\"Beautification\" />\r\n    <MESSAGE value=\"Admin Menu\" />\r\n    <MESSAGE value=\"Statistic\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Statistic\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision b95bb119cedb42f89bd879d1bea567ccf75f115c)
++++ b/.idea/workspace.xml	(date 1641842550642)
+@@ -5,14 +5,17 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="1a23b712-9d27-49b8-9308-d8a7f14f07b1" name="Changes" comment="Statistic">
+-      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/PendingTeams.fxml" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/SendNotification.fxml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/Controller.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/view/AdminMenuView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/AdminMenuView.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/controller/LoggedController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/LoggedController.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/main/java/view/LoginView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/LoginView.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/target/classes/controller/Controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/Controller.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/target/classes/view/AdminMenuView.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/view/AdminMenuView.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/view/TaskListForLeaderView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/TaskListForLeaderView.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/view/TaskPageForLeaderView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/TaskPageForLeaderView.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/TaskListForLeader.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/TaskListForLeader.fxml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/TaskPageForLeader.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/TaskPageForLeader.fxml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/resources/json/Database.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/json/Database.json" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/fxml/TaskListForLeader.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fxml/TaskListForLeader.fxml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/fxml/TaskPageForLeader.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fxml/TaskPageForLeader.fxml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/json/Database.json" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/json/Database.json" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/target/classes/view/LoginView.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/view/LoginView.class" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+@@ -58,7 +61,7 @@
+     <configuration name="LoginView" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+       <option name="ALTERNATIVE_JRE_PATH" value="$PROJECT_DIR$" />
+       <option name="MAIN_CLASS_NAME" value="view.LoginView" />
+-      <module name="Project-team-07" />
++      <module name="phase2" />
+       <extension name="coverage">
+         <pattern>
+           <option name="PATTERN" value="view.*" />
+Index: target/classes/json/Database.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>{\r\n  \"@type\": \"controller.Database\",\r\n  \"@val\": {\r\n    \"users\": [\r\n      {\r\n        \"creationId\": 1,\r\n        \"userName\": \"mirzaeimahdi409\",\r\n        \"password\": \"138014\",\r\n        \"email\": \"mirzaeimahdi409@gmail.com\",\r\n        \"role\": \"System Admin\",\r\n        \"score\": 0,\r\n        \"allLogs\": [\r\n          {\r\n            \"user\": \"@root.users.0\",\r\n            \"date\": \"2021/12/28 01:30:42\"\r\n          },\r\n          {\r\n            \"user\": \"@root.users.0\",\r\n            \"date\": \"2021/12/28 01:32:38\"\r\n          },\r\n          {\r\n            \"user\": \"@root.users.0\",\r\n            \"date\": \"2021/12/28 22:37:52\"\r\n          }\r\n        ],\r\n        \"allTasksForUser\": [],\r\n        \"notifications\": [\r\n          {\r\n            \"text\": \"Hello everyone\",\r\n            \"sender\": \"@root.users.0\",\r\n            \"type\": 0\r\n          }\r\n        ],\r\n        \"userTeams\": [],\r\n        \"joiningDate\": {}\r\n      },\r\n      {\r\n        \"creationId\": 2,\r\n        \"userName\": \"AmirReza\",\r\n        \"password\": \"138014\",\r\n        \"email\": \"AmirReza@gmail.com\",\r\n        \"role\": \"Member\",\r\n        \"score\": 0,\r\n        \"allLogs\": [\r\n          {\r\n            \"user\": \"@root.users.1\",\r\n            \"date\": \"2021/12/28 01:31:27\"\r\n          },\r\n          {\r\n            \"user\": \"@root.users.1\",\r\n            \"date\": \"2021/12/28 22:40:34\"\r\n          },\r\n          {\r\n            \"user\": \"@root.users.1\",\r\n            \"date\": \"2021/12/28 23:17:11\"\r\n          },\r\n          {\r\n            \"user\": \"@root.users.1\",\r\n            \"date\": \"2021/12/28 23:55:14\"\r\n          }\r\n        ],\r\n        \"allTasksForUser\": [],\r\n        \"notifications\": [\r\n          \"@root.users.0.notifications.0\"\r\n        ],\r\n        \"userTeams\": [\r\n          {\r\n            \"teamNumber\": 2,\r\n            \"teamName\": \"Yakuza2\",\r\n            \"teamMembers\": [],\r\n            \"suspendedMembers\": [],\r\n            \"boards\": [],\r\n            \"teamLeader\": \"@root.users.1\",\r\n            \"scoreboard\": {\r\n              \"team\": \"@root.users.1.userTeams.0\",\r\n              \"scores\": {}\r\n            },\r\n            \"roadMap\": {\r\n              \"team\": \"@root.users.1.userTeams.0\",\r\n              \"tasksStatus\": {},\r\n              \"creationDates\": {}\r\n            },\r\n            \"allTasks\": [],\r\n            \"notifications\": [],\r\n            \"creationDate\": {\r\n              \"localDate\": {\r\n                \"date\": {\r\n                  \"year\": 2021,\r\n                  \"month\": 12,\r\n                  \"day\": 28\r\n                },\r\n                \"time\": {\r\n                  \"hour\": 1,\r\n                  \"minute\": 31,\r\n                  \"second\": 0,\r\n                  \"nano\": 0\r\n                }\r\n              },\r\n              \"date\": \"2021/12/28|01:31\"\r\n            }\r\n          },\r\n          {\r\n            \"teamNumber\": 3,\r\n            \"teamName\": \"Yakuza3\",\r\n            \"teamMembers\": [],\r\n            \"suspendedMembers\": [],\r\n            \"boards\": [],\r\n            \"teamLeader\": \"@root.users.1\",\r\n            \"scoreboard\": {\r\n              \"team\": \"@root.users.1.userTeams.1\",\r\n              \"scores\": {}\r\n            },\r\n            \"roadMap\": {\r\n              \"team\": \"@root.users.1.userTeams.1\",\r\n              \"tasksStatus\": {},\r\n              \"creationDates\": {}\r\n            },\r\n            \"allTasks\": [],\r\n            \"notifications\": [],\r\n            \"creationDate\": {\r\n              \"localDate\": {\r\n                \"date\": {\r\n                  \"year\": 2021,\r\n                  \"month\": 12,\r\n                  \"day\": 28\r\n                },\r\n                \"time\": {\r\n                  \"hour\": 1,\r\n                  \"minute\": 31,\r\n                  \"second\": 0,\r\n                  \"nano\": 0\r\n                }\r\n              },\r\n              \"date\": \"2021/12/28|01:31\"\r\n            }\r\n          },\r\n          {\r\n            \"teamNumber\": 4,\r\n            \"teamName\": \"Yakuza4\",\r\n            \"teamMembers\": [],\r\n            \"suspendedMembers\": [],\r\n            \"boards\": [],\r\n            \"teamLeader\": \"@root.users.1\",\r\n            \"scoreboard\": {\r\n              \"team\": \"@root.users.1.userTeams.2\",\r\n              \"scores\": {}\r\n            },\r\n            \"roadMap\": {\r\n              \"team\": \"@root.users.1.userTeams.2\",\r\n              \"tasksStatus\": {},\r\n              \"creationDates\": {}\r\n            },\r\n            \"allTasks\": [],\r\n            \"notifications\": [],\r\n            \"creationDate\": {\r\n              \"localDate\": {\r\n                \"date\": {\r\n                  \"year\": 2021,\r\n                  \"month\": 12,\r\n                  \"day\": 28\r\n                },\r\n                \"time\": {\r\n                  \"hour\": 1,\r\n                  \"minute\": 32,\r\n                  \"second\": 0,\r\n                  \"nano\": 0\r\n                }\r\n              },\r\n              \"date\": \"2021/12/28|01:32\"\r\n            }\r\n          },\r\n          {\r\n            \"teamNumber\": 5,\r\n            \"teamName\": \"Yakuza5\",\r\n            \"teamMembers\": [],\r\n            \"suspendedMembers\": [],\r\n            \"boards\": [],\r\n            \"teamLeader\": \"@root.users.1\",\r\n            \"scoreboard\": {\r\n              \"team\": \"@root.users.1.userTeams.3\",\r\n              \"scores\": {}\r\n            },\r\n            \"roadMap\": {\r\n              \"team\": \"@root.users.1.userTeams.3\",\r\n              \"tasksStatus\": {},\r\n              \"creationDates\": {}\r\n            },\r\n            \"allTasks\": [],\r\n            \"notifications\": [],\r\n            \"creationDate\": {\r\n              \"localDate\": {\r\n                \"date\": {\r\n                  \"year\": 2021,\r\n                  \"month\": 12,\r\n                  \"day\": 28\r\n                },\r\n                \"time\": {\r\n                  \"hour\": 1,\r\n                  \"minute\": 32,\r\n                  \"second\": 0,\r\n                  \"nano\": 0\r\n                }\r\n              },\r\n              \"date\": \"2021/12/28|01:32\"\r\n            }\r\n          },\r\n          {\r\n            \"teamNumber\": 6,\r\n            \"teamName\": \"Yakuza6\",\r\n            \"teamMembers\": [],\r\n            \"suspendedMembers\": [],\r\n            \"boards\": [],\r\n            \"teamLeader\": \"@root.users.1\",\r\n            \"scoreboard\": {\r\n              \"team\": \"@root.users.1.userTeams.4\",\r\n              \"scores\": {}\r\n            },\r\n            \"roadMap\": {\r\n              \"team\": \"@root.users.1.userTeams.4\",\r\n              \"tasksStatus\": {},\r\n              \"creationDates\": {}\r\n            },\r\n            \"allTasks\": [],\r\n            \"notifications\": [],\r\n            \"creationDate\": {\r\n              \"localDate\": {\r\n                \"date\": {\r\n                  \"year\": 2021,\r\n                  \"month\": 12,\r\n                  \"day\": 28\r\n                },\r\n                \"time\": {\r\n                  \"hour\": 1,\r\n                  \"minute\": 32,\r\n                  \"second\": 0,\r\n                  \"nano\": 0\r\n                }\r\n              },\r\n              \"date\": \"2021/12/28|01:32\"\r\n            }\r\n          },\r\n          {\r\n            \"teamNumber\": 1,\r\n            \"teamName\": \"Yakuza1\",\r\n            \"teamMembers\": [\r\n              {\r\n                \"creationId\": 4,\r\n                \"userName\": \"mehrad\",\r\n                \"password\": \"2020\",\r\n                \"email\": \"Mehrad@gmail.com\",\r\n                \"role\": \"Member\",\r\n                \"score\": 0,\r\n                \"allLogs\": [],\r\n                \"allTasksForUser\": [],\r\n                \"notifications\": [\r\n                  \"@root.users.0.notifications.0\"\r\n                ],\r\n                \"userTeams\": [\r\n                  \"@root.users.1.userTeams.5\"\r\n                ],\r\n                \"joiningDate\": {\r\n                  \"@root.users.1.userTeams.5\": {\r\n                    \"localDate\": {\r\n                      \"date\": {\r\n                        \"year\": 2021,\r\n                        \"month\": 12,\r\n                        \"day\": 28\r\n                      },\r\n                      \"time\": {\r\n                        \"hour\": 1,\r\n                        \"minute\": 31,\r\n                        \"second\": 0,\r\n                        \"nano\": 0\r\n                      }\r\n                    },\r\n                    \"date\": \"2021/12/28|01:31\"\r\n                  }\r\n                }\r\n              },\r\n              \"@root.users.1\"\r\n            ],\r\n            \"suspendedMembers\": [],\r\n            \"boards\": [],\r\n            \"teamLeader\": {\r\n              \"creationId\": 3,\r\n              \"userName\": \"Amir\",\r\n              \"password\": \"2020\",\r\n              \"email\": \"Amir@gmail.com\",\r\n              \"role\": \"Leader\",\r\n              \"score\": 0,\r\n              \"allLogs\": [\r\n                {\r\n                  \"user\": \"@root.users.1.userTeams.5.teamLeader\",\r\n                  \"date\": \"2021/12/28 23:56:28\"\r\n                },\r\n                {\r\n                  \"user\": \"@root.users.1.userTeams.5.teamLeader\",\r\n                  \"date\": \"2022/01/03 11:14:49\"\r\n                },\r\n                {\r\n                  \"user\": \"@root.users.1.userTeams.5.teamLeader\",\r\n                  \"date\": \"2022/01/09 12:35:04\"\r\n                }\r\n              ],\r\n              \"allTasksForUser\": [],\r\n              \"notifications\": [\r\n                \"@root.users.0.notifications.0\",\r\n                {\r\n                  \"text\": \"Hi Amir\",\r\n                  \"sender\": \"@root.users.0\",\r\n                  \"type\": 0\r\n                }\r\n              ],\r\n              \"userTeams\": [],\r\n              \"joiningDate\": {}\r\n            },\r\n            \"scoreboard\": {\r\n              \"team\": \"@root.users.1.userTeams.5\",\r\n              \"scores\": {\r\n                \"@root.users.1\": 0,\r\n                \"@root.users.1.userTeams.5.teamMembers.0\": 0\r\n              }\r\n            },\r\n            \"roadMap\": {\r\n              \"team\": \"@root.users.1.userTeams.5\",\r\n              \"tasksStatus\": {},\r\n              \"creationDates\": [\r\n                [\r\n                  {\r\n                    \"creationId\": 2,\r\n                    \"title\": \"Task2\",\r\n                    \"description\": \"\",\r\n                    \"priority\": \"Lowest\",\r\n                    \"dateOfCreation\": {\r\n                      \"localDate\": {\r\n                        \"date\": {\r\n                          \"year\": 1400,\r\n                          \"month\": 10,\r\n                          \"day\": 5\r\n                        },\r\n                        \"time\": {\r\n                          \"hour\": 17,\r\n                          \"minute\": 40,\r\n                          \"second\": 0,\r\n                          \"nano\": 0\r\n                        }\r\n                      },\r\n                      \"date\": \"1400/10/05|17:40\"\r\n                    },\r\n                    \"deadline\": {\r\n                      \"localDate\": {\r\n                        \"date\": {\r\n                          \"year\": 1400,\r\n                          \"month\": 10,\r\n                          \"day\": 30\r\n                        },\r\n                        \"time\": {\r\n                          \"hour\": 17,\r\n                          \"minute\": 40,\r\n                          \"second\": 0,\r\n                          \"nano\": 0\r\n                        }\r\n                      },\r\n                      \"date\": \"1400/10/30|17:40\"\r\n                    },\r\n                    \"assignedUser\": [],\r\n                    \"team\": \"@root.users.1.userTeams.5\",\r\n                    \"comments\": []\r\n                  },\r\n                  \"@root.users.1.userTeams.5.roadMap.creationDates.0-key.dateOfCreation\"\r\n                ],\r\n                [\r\n                  {\r\n                    \"creationId\": 1,\r\n                    \"title\": \"Task1\",\r\n                    \"description\": \"\",\r\n                    \"priority\": \"Lowest\",\r\n                    \"dateOfCreation\": {\r\n                      \"localDate\": {\r\n                        \"date\": {\r\n                          \"year\": 1400,\r\n                          \"month\": 10,\r\n                          \"day\": 5\r\n                        },\r\n                        \"time\": {\r\n                          \"hour\": 17,\r\n                          \"minute\": 40,\r\n                          \"second\": 0,\r\n                          \"nano\": 0\r\n                        }\r\n                      },\r\n                      \"date\": \"1400/10/05|17:40\"\r\n                    },\r\n                    \"deadline\": {\r\n                      \"localDate\": {\r\n                        \"date\": {\r\n                          \"year\": 1400,\r\n                          \"month\": 10,\r\n                          \"day\": 30\r\n                        },\r\n                        \"time\": {\r\n                          \"hour\": 17,\r\n                          \"minute\": 40,\r\n                          \"second\": 0,\r\n                          \"nano\": 0\r\n                        }\r\n                      },\r\n                      \"date\": \"1400/10/30|17:40\"\r\n                    },\r\n                    \"assignedUser\": [],\r\n                    \"team\": \"@root.users.1.userTeams.5\",\r\n                    \"comments\": []\r\n                  },\r\n                  \"@root.users.1.userTeams.5.roadMap.creationDates.1-key.dateOfCreation\"\r\n                ]\r\n              ]\r\n            },\r\n            \"allTasks\": [\r\n              \"@root.users.1.userTeams.5.roadMap.creationDates.1-key\",\r\n              \"@root.users.1.userTeams.5.roadMap.creationDates.0-key\"\r\n            ],\r\n            \"notifications\": [],\r\n            \"creationDate\": \"@root.users.1.userTeams.5.teamMembers.0.joiningDate.0-val\"\r\n          },\r\n          \"@.5\"\r\n        ],\r\n        \"joiningDate\": {\r\n          \"@root.users.1.userTeams.5\": \"@root.users.1.userTeams.5.teamMembers.0.joiningDate.0-val\",\r\n          \"@root.users.1.userTeams.2\": \"@root.users.1.userTeams.2.creationDate\",\r\n          \"@root.users.1.userTeams.1\": \"@root.users.1.userTeams.1.creationDate\",\r\n          \"@root.users.1.userTeams.0\": \"@root.users.1.userTeams.0.creationDate\",\r\n          \"@root.users.1.userTeams.4\": \"@root.users.1.userTeams.4.creationDate\",\r\n          \"@root.users.1.userTeams.3\": \"@root.users.1.userTeams.3.creationDate\"\r\n        }\r\n      },\r\n      \"@root.users.1.userTeams.5.teamLeader\",\r\n      \"@root.users.1.userTeams.5.teamMembers.0\",\r\n      {\r\n        \"creationId\": 6,\r\n        \"userName\": \"Zeinab\",\r\n        \"password\": \"2020\",\r\n        \"email\": \"Zeinab@gmail.com\",\r\n        \"role\": \"Member\",\r\n        \"score\": 0,\r\n        \"allLogs\": [],\r\n        \"allTasksForUser\": [],\r\n        \"notifications\": [],\r\n        \"userTeams\": [],\r\n        \"joiningDate\": {}\r\n      }\r\n    ],\r\n    \"teams\": [\r\n      \"@root.users.1.userTeams.5\",\r\n      \"@root.users.1.userTeams.0\",\r\n      \"@root.users.1.userTeams.1\",\r\n      \"@root.users.1.userTeams.2\",\r\n      \"@root.users.1.userTeams.3\",\r\n      \"@root.users.1.userTeams.4\"\r\n    ],\r\n    \"pending\": [],\r\n    \"accepted\": [\r\n      \"@root.users.1.userTeams.5\",\r\n      \"@root.users.1.userTeams.0\",\r\n      \"@root.users.1.userTeams.1\",\r\n      \"@root.users.1.userTeams.2\",\r\n      \"@root.users.1.userTeams.3\"\r\n    ],\r\n    \"tasks\": [\r\n      \"@root.users.1.userTeams.5.roadMap.creationDates.1-key\",\r\n      \"@root.users.1.userTeams.5.roadMap.creationDates.0-key\"\r\n    ],\r\n    \"boards\": [],\r\n    \"uI\": 7,\r\n    \"tI\": 7,\r\n    \"taI\": 3,\r\n    \"bI\": 1\r\n  }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/target/classes/json/Database.json b/target/classes/json/Database.json
+--- a/target/classes/json/Database.json	(revision b95bb119cedb42f89bd879d1bea567ccf75f115c)
++++ b/target/classes/json/Database.json	(date 1641842096654)
+@@ -1,478 +1,1 @@
+-{
+-  "@type": "controller.Database",
+-  "@val": {
+-    "users": [
+-      {
+-        "creationId": 1,
+-        "userName": "mirzaeimahdi409",
+-        "password": "138014",
+-        "email": "mirzaeimahdi409@gmail.com",
+-        "role": "System Admin",
+-        "score": 0,
+-        "allLogs": [
+-          {
+-            "user": "@root.users.0",
+-            "date": "2021/12/28 01:30:42"
+-          },
+-          {
+-            "user": "@root.users.0",
+-            "date": "2021/12/28 01:32:38"
+-          },
+-          {
+-            "user": "@root.users.0",
+-            "date": "2021/12/28 22:37:52"
+-          }
+-        ],
+-        "allTasksForUser": [],
+-        "notifications": [
+-          {
+-            "text": "Hello everyone",
+-            "sender": "@root.users.0",
+-            "type": 0
+-          }
+-        ],
+-        "userTeams": [],
+-        "joiningDate": {}
+-      },
+-      {
+-        "creationId": 2,
+-        "userName": "AmirReza",
+-        "password": "138014",
+-        "email": "AmirReza@gmail.com",
+-        "role": "Member",
+-        "score": 0,
+-        "allLogs": [
+-          {
+-            "user": "@root.users.1",
+-            "date": "2021/12/28 01:31:27"
+-          },
+-          {
+-            "user": "@root.users.1",
+-            "date": "2021/12/28 22:40:34"
+-          },
+-          {
+-            "user": "@root.users.1",
+-            "date": "2021/12/28 23:17:11"
+-          },
+-          {
+-            "user": "@root.users.1",
+-            "date": "2021/12/28 23:55:14"
+-          }
+-        ],
+-        "allTasksForUser": [],
+-        "notifications": [
+-          "@root.users.0.notifications.0"
+-        ],
+-        "userTeams": [
+-          {
+-            "teamNumber": 2,
+-            "teamName": "Yakuza2",
+-            "teamMembers": [],
+-            "suspendedMembers": [],
+-            "boards": [],
+-            "teamLeader": "@root.users.1",
+-            "scoreboard": {
+-              "team": "@root.users.1.userTeams.0",
+-              "scores": {}
+-            },
+-            "roadMap": {
+-              "team": "@root.users.1.userTeams.0",
+-              "tasksStatus": {},
+-              "creationDates": {}
+-            },
+-            "allTasks": [],
+-            "notifications": [],
+-            "creationDate": {
+-              "localDate": {
+-                "date": {
+-                  "year": 2021,
+-                  "month": 12,
+-                  "day": 28
+-                },
+-                "time": {
+-                  "hour": 1,
+-                  "minute": 31,
+-                  "second": 0,
+-                  "nano": 0
+-                }
+-              },
+-              "date": "2021/12/28|01:31"
+-            }
+-          },
+-          {
+-            "teamNumber": 3,
+-            "teamName": "Yakuza3",
+-            "teamMembers": [],
+-            "suspendedMembers": [],
+-            "boards": [],
+-            "teamLeader": "@root.users.1",
+-            "scoreboard": {
+-              "team": "@root.users.1.userTeams.1",
+-              "scores": {}
+-            },
+-            "roadMap": {
+-              "team": "@root.users.1.userTeams.1",
+-              "tasksStatus": {},
+-              "creationDates": {}
+-            },
+-            "allTasks": [],
+-            "notifications": [],
+-            "creationDate": {
+-              "localDate": {
+-                "date": {
+-                  "year": 2021,
+-                  "month": 12,
+-                  "day": 28
+-                },
+-                "time": {
+-                  "hour": 1,
+-                  "minute": 31,
+-                  "second": 0,
+-                  "nano": 0
+-                }
+-              },
+-              "date": "2021/12/28|01:31"
+-            }
+-          },
+-          {
+-            "teamNumber": 4,
+-            "teamName": "Yakuza4",
+-            "teamMembers": [],
+-            "suspendedMembers": [],
+-            "boards": [],
+-            "teamLeader": "@root.users.1",
+-            "scoreboard": {
+-              "team": "@root.users.1.userTeams.2",
+-              "scores": {}
+-            },
+-            "roadMap": {
+-              "team": "@root.users.1.userTeams.2",
+-              "tasksStatus": {},
+-              "creationDates": {}
+-            },
+-            "allTasks": [],
+-            "notifications": [],
+-            "creationDate": {
+-              "localDate": {
+-                "date": {
+-                  "year": 2021,
+-                  "month": 12,
+-                  "day": 28
+-                },
+-                "time": {
+-                  "hour": 1,
+-                  "minute": 32,
+-                  "second": 0,
+-                  "nano": 0
+-                }
+-              },
+-              "date": "2021/12/28|01:32"
+-            }
+-          },
+-          {
+-            "teamNumber": 5,
+-            "teamName": "Yakuza5",
+-            "teamMembers": [],
+-            "suspendedMembers": [],
+-            "boards": [],
+-            "teamLeader": "@root.users.1",
+-            "scoreboard": {
+-              "team": "@root.users.1.userTeams.3",
+-              "scores": {}
+-            },
+-            "roadMap": {
+-              "team": "@root.users.1.userTeams.3",
+-              "tasksStatus": {},
+-              "creationDates": {}
+-            },
+-            "allTasks": [],
+-            "notifications": [],
+-            "creationDate": {
+-              "localDate": {
+-                "date": {
+-                  "year": 2021,
+-                  "month": 12,
+-                  "day": 28
+-                },
+-                "time": {
+-                  "hour": 1,
+-                  "minute": 32,
+-                  "second": 0,
+-                  "nano": 0
+-                }
+-              },
+-              "date": "2021/12/28|01:32"
+-            }
+-          },
+-          {
+-            "teamNumber": 6,
+-            "teamName": "Yakuza6",
+-            "teamMembers": [],
+-            "suspendedMembers": [],
+-            "boards": [],
+-            "teamLeader": "@root.users.1",
+-            "scoreboard": {
+-              "team": "@root.users.1.userTeams.4",
+-              "scores": {}
+-            },
+-            "roadMap": {
+-              "team": "@root.users.1.userTeams.4",
+-              "tasksStatus": {},
+-              "creationDates": {}
+-            },
+-            "allTasks": [],
+-            "notifications": [],
+-            "creationDate": {
+-              "localDate": {
+-                "date": {
+-                  "year": 2021,
+-                  "month": 12,
+-                  "day": 28
+-                },
+-                "time": {
+-                  "hour": 1,
+-                  "minute": 32,
+-                  "second": 0,
+-                  "nano": 0
+-                }
+-              },
+-              "date": "2021/12/28|01:32"
+-            }
+-          },
+-          {
+-            "teamNumber": 1,
+-            "teamName": "Yakuza1",
+-            "teamMembers": [
+-              {
+-                "creationId": 4,
+-                "userName": "mehrad",
+-                "password": "2020",
+-                "email": "Mehrad@gmail.com",
+-                "role": "Member",
+-                "score": 0,
+-                "allLogs": [],
+-                "allTasksForUser": [],
+-                "notifications": [
+-                  "@root.users.0.notifications.0"
+-                ],
+-                "userTeams": [
+-                  "@root.users.1.userTeams.5"
+-                ],
+-                "joiningDate": {
+-                  "@root.users.1.userTeams.5": {
+-                    "localDate": {
+-                      "date": {
+-                        "year": 2021,
+-                        "month": 12,
+-                        "day": 28
+-                      },
+-                      "time": {
+-                        "hour": 1,
+-                        "minute": 31,
+-                        "second": 0,
+-                        "nano": 0
+-                      }
+-                    },
+-                    "date": "2021/12/28|01:31"
+-                  }
+-                }
+-              },
+-              "@root.users.1"
+-            ],
+-            "suspendedMembers": [],
+-            "boards": [],
+-            "teamLeader": {
+-              "creationId": 3,
+-              "userName": "Amir",
+-              "password": "2020",
+-              "email": "Amir@gmail.com",
+-              "role": "Leader",
+-              "score": 0,
+-              "allLogs": [
+-                {
+-                  "user": "@root.users.1.userTeams.5.teamLeader",
+-                  "date": "2021/12/28 23:56:28"
+-                },
+-                {
+-                  "user": "@root.users.1.userTeams.5.teamLeader",
+-                  "date": "2022/01/03 11:14:49"
+-                },
+-                {
+-                  "user": "@root.users.1.userTeams.5.teamLeader",
+-                  "date": "2022/01/09 12:35:04"
+-                }
+-              ],
+-              "allTasksForUser": [],
+-              "notifications": [
+-                "@root.users.0.notifications.0",
+-                {
+-                  "text": "Hi Amir",
+-                  "sender": "@root.users.0",
+-                  "type": 0
+-                }
+-              ],
+-              "userTeams": [],
+-              "joiningDate": {}
+-            },
+-            "scoreboard": {
+-              "team": "@root.users.1.userTeams.5",
+-              "scores": {
+-                "@root.users.1": 0,
+-                "@root.users.1.userTeams.5.teamMembers.0": 0
+-              }
+-            },
+-            "roadMap": {
+-              "team": "@root.users.1.userTeams.5",
+-              "tasksStatus": {},
+-              "creationDates": [
+-                [
+-                  {
+-                    "creationId": 2,
+-                    "title": "Task2",
+-                    "description": "",
+-                    "priority": "Lowest",
+-                    "dateOfCreation": {
+-                      "localDate": {
+-                        "date": {
+-                          "year": 1400,
+-                          "month": 10,
+-                          "day": 5
+-                        },
+-                        "time": {
+-                          "hour": 17,
+-                          "minute": 40,
+-                          "second": 0,
+-                          "nano": 0
+-                        }
+-                      },
+-                      "date": "1400/10/05|17:40"
+-                    },
+-                    "deadline": {
+-                      "localDate": {
+-                        "date": {
+-                          "year": 1400,
+-                          "month": 10,
+-                          "day": 30
+-                        },
+-                        "time": {
+-                          "hour": 17,
+-                          "minute": 40,
+-                          "second": 0,
+-                          "nano": 0
+-                        }
+-                      },
+-                      "date": "1400/10/30|17:40"
+-                    },
+-                    "assignedUser": [],
+-                    "team": "@root.users.1.userTeams.5",
+-                    "comments": []
+-                  },
+-                  "@root.users.1.userTeams.5.roadMap.creationDates.0-key.dateOfCreation"
+-                ],
+-                [
+-                  {
+-                    "creationId": 1,
+-                    "title": "Task1",
+-                    "description": "",
+-                    "priority": "Lowest",
+-                    "dateOfCreation": {
+-                      "localDate": {
+-                        "date": {
+-                          "year": 1400,
+-                          "month": 10,
+-                          "day": 5
+-                        },
+-                        "time": {
+-                          "hour": 17,
+-                          "minute": 40,
+-                          "second": 0,
+-                          "nano": 0
+-                        }
+-                      },
+-                      "date": "1400/10/05|17:40"
+-                    },
+-                    "deadline": {
+-                      "localDate": {
+-                        "date": {
+-                          "year": 1400,
+-                          "month": 10,
+-                          "day": 30
+-                        },
+-                        "time": {
+-                          "hour": 17,
+-                          "minute": 40,
+-                          "second": 0,
+-                          "nano": 0
+-                        }
+-                      },
+-                      "date": "1400/10/30|17:40"
+-                    },
+-                    "assignedUser": [],
+-                    "team": "@root.users.1.userTeams.5",
+-                    "comments": []
+-                  },
+-                  "@root.users.1.userTeams.5.roadMap.creationDates.1-key.dateOfCreation"
+-                ]
+-              ]
+-            },
+-            "allTasks": [
+-              "@root.users.1.userTeams.5.roadMap.creationDates.1-key",
+-              "@root.users.1.userTeams.5.roadMap.creationDates.0-key"
+-            ],
+-            "notifications": [],
+-            "creationDate": "@root.users.1.userTeams.5.teamMembers.0.joiningDate.0-val"
+-          },
+-          "@.5"
+-        ],
+-        "joiningDate": {
+-          "@root.users.1.userTeams.5": "@root.users.1.userTeams.5.teamMembers.0.joiningDate.0-val",
+-          "@root.users.1.userTeams.2": "@root.users.1.userTeams.2.creationDate",
+-          "@root.users.1.userTeams.1": "@root.users.1.userTeams.1.creationDate",
+-          "@root.users.1.userTeams.0": "@root.users.1.userTeams.0.creationDate",
+-          "@root.users.1.userTeams.4": "@root.users.1.userTeams.4.creationDate",
+-          "@root.users.1.userTeams.3": "@root.users.1.userTeams.3.creationDate"
+-        }
+-      },
+-      "@root.users.1.userTeams.5.teamLeader",
+-      "@root.users.1.userTeams.5.teamMembers.0",
+-      {
+-        "creationId": 6,
+-        "userName": "Zeinab",
+-        "password": "2020",
+-        "email": "Zeinab@gmail.com",
+-        "role": "Member",
+-        "score": 0,
+-        "allLogs": [],
+-        "allTasksForUser": [],
+-        "notifications": [],
+-        "userTeams": [],
+-        "joiningDate": {}
+-      }
+-    ],
+-    "teams": [
+-      "@root.users.1.userTeams.5",
+-      "@root.users.1.userTeams.0",
+-      "@root.users.1.userTeams.1",
+-      "@root.users.1.userTeams.2",
+-      "@root.users.1.userTeams.3",
+-      "@root.users.1.userTeams.4"
+-    ],
+-    "pending": [],
+-    "accepted": [
+-      "@root.users.1.userTeams.5",
+-      "@root.users.1.userTeams.0",
+-      "@root.users.1.userTeams.1",
+-      "@root.users.1.userTeams.2",
+-      "@root.users.1.userTeams.3"
+-    ],
+-    "tasks": [
+-      "@root.users.1.userTeams.5.roadMap.creationDates.1-key",
+-      "@root.users.1.userTeams.5.roadMap.creationDates.0-key"
+-    ],
+-    "boards": [],
+-    "uI": 7,
+-    "tI": 7,
+-    "taI": 3,
+-    "bI": 1
+-  }
+-}
+\ No newline at end of file
++{"@type":"controller.Database","@val":{"users":[{"creationId":1,"userName":"mirzaeimahdi409","password":"138014","email":"mirzaeimahdi409@gmail.com","role":"System Admin","score":0,"allLogs":[{"user":"@root.users.0","date":"2021/12/28 01:30:42"},{"user":"@root.users.0","date":"2021/12/28 01:32:38"},{"user":"@root.users.0","date":"2021/12/28 22:37:52"}],"allTasksForUser":[],"notifications":[{"text":"Hello everyone","sender":"@root.users.0","type":0}],"userTeams":[],"joiningDate":{}},{"creationId":2,"userName":"AmirReza","password":"138014","email":"AmirReza@gmail.com","role":"Member","score":0,"allLogs":[{"user":"@root.users.1","date":"2021/12/28 01:31:27"},{"user":"@root.users.1","date":"2021/12/28 22:40:34"},{"user":"@root.users.1","date":"2021/12/28 23:17:11"},{"user":"@root.users.1","date":"2021/12/28 23:55:14"}],"allTasksForUser":[],"notifications":["@root.users.0.notifications.0"],"userTeams":[{"teamNumber":2,"teamName":"Yakuza2","teamMembers":[],"suspendedMembers":[],"boards":[],"teamLeader":"@root.users.1","scoreboard":{"team":"@root.users.1.userTeams.0","scores":{}},"roadMap":{"team":"@root.users.1.userTeams.0","tasksStatus":{},"creationDates":{}},"allTasks":[],"notifications":[],"creationDate":{"localDate":{"date":{"year":2021,"month":12,"day":28},"time":{"hour":1,"minute":31,"second":0,"nano":0}},"date":"2021/12/28|01:31"}},{"teamNumber":3,"teamName":"Yakuza3","teamMembers":[],"suspendedMembers":[],"boards":[],"teamLeader":"@root.users.1","scoreboard":{"team":"@root.users.1.userTeams.1","scores":{}},"roadMap":{"team":"@root.users.1.userTeams.1","tasksStatus":{},"creationDates":{}},"allTasks":[],"notifications":[],"creationDate":{"localDate":{"date":{"year":2021,"month":12,"day":28},"time":{"hour":1,"minute":31,"second":0,"nano":0}},"date":"2021/12/28|01:31"}},{"teamNumber":4,"teamName":"Yakuza4","teamMembers":[],"suspendedMembers":[],"boards":[],"teamLeader":"@root.users.1","scoreboard":{"team":"@root.users.1.userTeams.2","scores":{}},"roadMap":{"team":"@root.users.1.userTeams.2","tasksStatus":{},"creationDates":{}},"allTasks":[],"notifications":[],"creationDate":{"localDate":{"date":{"year":2021,"month":12,"day":28},"time":{"hour":1,"minute":32,"second":0,"nano":0}},"date":"2021/12/28|01:32"}},{"teamNumber":5,"teamName":"Yakuza5","teamMembers":[],"suspendedMembers":[],"boards":[],"teamLeader":"@root.users.1","scoreboard":{"team":"@root.users.1.userTeams.3","scores":{}},"roadMap":{"team":"@root.users.1.userTeams.3","tasksStatus":{},"creationDates":{}},"allTasks":[],"notifications":[],"creationDate":{"localDate":{"date":{"year":2021,"month":12,"day":28},"time":{"hour":1,"minute":32,"second":0,"nano":0}},"date":"2021/12/28|01:32"}},{"teamNumber":6,"teamName":"Yakuza6","teamMembers":[],"suspendedMembers":[],"boards":[],"teamLeader":"@root.users.1","scoreboard":{"team":"@root.users.1.userTeams.4","scores":{}},"roadMap":{"team":"@root.users.1.userTeams.4","tasksStatus":{},"creationDates":{}},"allTasks":[],"notifications":[],"creationDate":{"localDate":{"date":{"year":2021,"month":12,"day":28},"time":{"hour":1,"minute":32,"second":0,"nano":0}},"date":"2021/12/28|01:32"}},{"teamNumber":1,"teamName":"Yakuza1","teamMembers":[{"creationId":4,"userName":"mehrad","password":"2020","email":"Mehrad@gmail.com","role":"Member","score":0,"allLogs":[],"allTasksForUser":[],"notifications":["@root.users.0.notifications.0"],"userTeams":["@root.users.1.userTeams.5"],"joiningDate":{"@root.users.1.userTeams.5":{"localDate":{"date":{"year":2021,"month":12,"day":28},"time":{"hour":1,"minute":31,"second":0,"nano":0}},"date":"2021/12/28|01:31"}}},"@root.users.1"],"suspendedMembers":[],"boards":[],"teamLeader":{"creationId":3,"userName":"Amir","password":"2020","email":"Amir@gmail.com","role":"Leader","score":0,"allLogs":[{"user":"@root.users.1.userTeams.5.teamLeader","date":"2021/12/28 23:56:28"},{"user":"@root.users.1.userTeams.5.teamLeader","date":"2022/01/03 11:14:49"},{"user":"@root.users.1.userTeams.5.teamLeader","date":"2022/01/09 12:35:04"}],"allTasksForUser":[],"notifications":["@root.users.0.notifications.0",{"text":"Hi Amir","sender":"@root.users.0","type":0}],"userTeams":[],"joiningDate":{}},"scoreboard":{"team":"@root.users.1.userTeams.5","scores":{"@root.users.1":0,"@root.users.1.userTeams.5.teamMembers.0":0}},"roadMap":{"team":"@root.users.1.userTeams.5","tasksStatus":{},"creationDates":[[{"creationId":1,"title":"Task1","description":"","priority":"Lowest","dateOfCreation":{"localDate":{"date":{"year":1400,"month":10,"day":5},"time":{"hour":17,"minute":40,"second":0,"nano":0}},"date":"1400/10/05|17:40"},"deadline":{"localDate":{"date":{"year":1400,"month":10,"day":30},"time":{"hour":17,"minute":40,"second":0,"nano":0}},"date":"1400/10/30|17:40"},"assignedUser":[],"team":"@root.users.1.userTeams.5","comments":[]},"@root.users.1.userTeams.5.roadMap.creationDates.0-key.dateOfCreation"],[{"creationId":2,"title":"Task2","description":"","priority":"Lowest","dateOfCreation":{"localDate":{"date":{"year":1400,"month":10,"day":5},"time":{"hour":17,"minute":40,"second":0,"nano":0}},"date":"1400/10/05|17:40"},"deadline":{"localDate":{"date":{"year":1400,"month":10,"day":30},"time":{"hour":17,"minute":40,"second":0,"nano":0}},"date":"1400/10/30|17:40"},"assignedUser":[],"team":"@root.users.1.userTeams.5","comments":[]},"@root.users.1.userTeams.5.roadMap.creationDates.1-key.dateOfCreation"]]},"allTasks":["@root.users.1.userTeams.5.roadMap.creationDates.0-key","@root.users.1.userTeams.5.roadMap.creationDates.1-key"],"notifications":[],"creationDate":"@root.users.1.userTeams.5.teamMembers.0.joiningDate.0-val"},"@.5"],"joiningDate":{"@root.users.1.userTeams.0":"@root.users.1.userTeams.0.creationDate","@root.users.1.userTeams.2":"@root.users.1.userTeams.2.creationDate","@root.users.1.userTeams.3":"@root.users.1.userTeams.3.creationDate","@root.users.1.userTeams.4":"@root.users.1.userTeams.4.creationDate","@root.users.1.userTeams.5":"@root.users.1.userTeams.5.teamMembers.0.joiningDate.0-val","@root.users.1.userTeams.1":"@root.users.1.userTeams.1.creationDate"}},"@root.users.1.userTeams.5.teamLeader","@root.users.1.userTeams.5.teamMembers.0",{"creationId":6,"userName":"Zeinab","password":"2020","email":"Zeinab@gmail.com","role":"Member","score":0,"allLogs":[],"allTasksForUser":[],"notifications":[],"userTeams":[],"joiningDate":{}}],"teams":["@root.users.1.userTeams.5","@root.users.1.userTeams.0","@root.users.1.userTeams.1","@root.users.1.userTeams.2","@root.users.1.userTeams.3","@root.users.1.userTeams.4"],"pending":[],"accepted":["@root.users.1.userTeams.5","@root.users.1.userTeams.0","@root.users.1.userTeams.1","@root.users.1.userTeams.2","@root.users.1.userTeams.3"],"tasks":["@root.users.1.userTeams.5.roadMap.creationDates.0-key","@root.users.1.userTeams.5.roadMap.creationDates.1-key"],"boards":[],"uI":7,"tI":7,"taI":3,"bI":1}}
+\ No newline at end of file
