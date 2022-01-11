@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -27,6 +28,8 @@ public class BoardMenuSecondPageForLeaderView {
     public AnchorPane pane;
     public Label response;
     public HBox hBox;
+    public Label condition;
+    public TextField categoryName;
     private User user;
     private Board board;
 
@@ -37,6 +40,7 @@ public class BoardMenuSecondPageForLeaderView {
     }
 
     private void updateHBOX() {
+        if(board.isCreated())condition.setText("board construction is done");
         hBox.getChildren().clear();
         ArrayList<Category> categories  = board.getAllCategories();
         Node[] nodes = new Node[categories.size()];
@@ -72,12 +76,18 @@ public class BoardMenuSecondPageForLeaderView {
             stage.show();
         }
     }
+    public void addCategory(ActionEvent actionEvent) {
+        String categoryNameText = categoryName.getText();
+        int response = Controller.controller.addCategory(user,board.getTeam(),board.getBoardName(),categoryNameText);
+        if(response==2) this.response.setText("already exist a category with this name");
+        if(response==3) this.response.setText("category successfully added");
+        updateHBOX();
+    }
+
     public void back(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/BoardMenuFirstPage.fxml"));
         ((Stage) ((Node) actionEvent.getSource()).getScene().getWindow()).setScene(new Scene(root));
     }
-
-
 
 
 }
