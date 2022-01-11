@@ -1,6 +1,7 @@
 package view;
 
 import controller.JsonController;
+import controller.LoggedController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,12 +29,16 @@ public class TaskListForLeaderView implements Initializable {
     public AnchorPane pane;
     public Button btnCreateTask;
     public ImageView exit;
+    private Team SelectTeam;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Team team = Team.getTeamByName("Yakuza1", Team.getAllTeams());
-        ArrayList<Task> tasks = team.getAllTasks();
+        for (Team team : Team.getAllTeams()) {
+            if (team.getTeamLeader().getUserName().equals(LoggedController.getInstance().getLoggedInUser().getUserName()))
+                SelectTeam = team;
+        }
+        ArrayList<Task> tasks = SelectTeam.getAllTasks();
         Node[] nodes = new Node[tasks.size()];
         for (int i = 0; i < nodes.length; i++) {
             try {

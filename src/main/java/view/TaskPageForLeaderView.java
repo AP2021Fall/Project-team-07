@@ -2,6 +2,7 @@ package view;
 
 import controller.Controller;
 import controller.JsonController;
+import controller.LoggedController;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -25,7 +26,7 @@ import java.text.ParseException;
 import java.util.ResourceBundle;
 
 public class TaskPageForLeaderView implements Initializable {
-    private final Task selectTask = Task.getSelectTask();
+    private final Task selectTask = LoggedController.getInstance().getSelectedTask();
     public AnchorPane pane;
     public TextField deadlineFiled;
     public TextField descriptionField;
@@ -80,12 +81,13 @@ public class TaskPageForLeaderView implements Initializable {
     }
 
     public void goToCreateTask(ActionEvent actionEvent) throws IOException {
-        Task.setSelectTask(null);
+        LoggedController.getInstance().setSelectedTask(null);
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/CreateTaskPageForLeader.fxml"));
         ((Stage) pane.getScene().getWindow()).setScene(new Scene(root));
     }
 
     public void exit(MouseEvent mouseEvent) {
+        LoggedController.getInstance().setSelectedTask(null);
         JsonController.getInstance().updateJson();
         System.exit(0);
     }

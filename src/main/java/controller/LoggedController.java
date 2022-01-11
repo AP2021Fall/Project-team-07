@@ -1,6 +1,7 @@
 package controller;
 
 import model.Board;
+import model.Task;
 import model.Team;
 import model.User;
 
@@ -9,6 +10,9 @@ public class LoggedController {
     private User loggedInUser;
     private Team loggedTeam;
     private Board selectedBoard;
+    private Task selectedTask;
+    private Team selectedTeam;
+
 
     private LoggedController() {
 
@@ -42,5 +46,21 @@ public class LoggedController {
 
     public void setSelectedBoard(Board selectedBoard) {
         this.selectedBoard = selectedBoard;
+    }
+
+    public Task getSelectedTask() {
+        return selectedTask;
+    }
+
+    public void setSelectedTask(Task selectedTask) {
+        this.selectedTask = selectedTask;
+    }
+
+    public Team getSelectedTeam() {
+        return selectedTeam;
+    }
+
+    public void setSelectedTeam(Team selectedTeam) {
+        this.selectedTeam = selectedTeam;
     }
 }

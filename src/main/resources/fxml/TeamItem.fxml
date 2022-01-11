@@ -5,11 +5,11 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="45.0"
-            prefWidth="478.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity"
+            minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="45.0" prefWidth="478.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
     <center>
-        <Label fx:id="lblTaskPriority" alignment="CENTER" prefHeight="18.0" prefWidth="153.0" text="Priority"
+        <Label fx:id="lblStatus" alignment="CENTER" prefHeight="18.0" prefWidth="153.0" text="status"
                BorderPane.alignment="CENTER"/>
     </center>
     <right>
@@ -22,7 +22,7 @@
         </Button>
     </right>
     <left>
-        <Label fx:id="lblTaskTitle" prefHeight="18.0" prefWidth="219.0" text="Title Task" BorderPane.alignment="CENTER">
+        <Label fx:id="lblTeamTitle" prefHeight="18.0" prefWidth="219.0" text="TeamTitle" BorderPane.alignment="CENTER">
             <BorderPane.margin>
                 <Insets left="10.0"/>
             </BorderPane.margin>
