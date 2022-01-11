@@ -5,12 +5,19 @@ import controller.LoggedController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import model.Board;
 import model.Team;
 import model.User;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -32,11 +39,11 @@ public class BoardMenuFirstPageView {
     private void makeBoardsTable() {
         ObservableList<Board> list = FXCollections.observableArrayList(team.getBoards());
         TableView<Board> tableView = new TableView<>();
-        tableView.setLayoutX(76.0);
+        tableView.setLayoutX(50);
         tableView.setLayoutY(58.0);
         TableColumn<Board, String> boardName = new TableColumn<>("BoardName");
-        boardName.setPrefWidth(45);
-        tableView.setPrefWidth(320);
+        boardName.setPrefWidth(200);
+        tableView.setPrefWidth(200);
         boardName.setCellValueFactory(new PropertyValueFactory<>("boardName"));
         tableView.getColumns().addAll(boardName);
         tableView.setItems(list);
@@ -52,7 +59,7 @@ public class BoardMenuFirstPageView {
 //        }
 //        return done;
 //    }
-    public void loginBoard(ActionEvent actionEvent){
+    public void loginBoard(ActionEvent actionEvent) throws IOException {
         String boardNameText = boardName.getText();
         Board board = Board.getBoardByName(team.getBoards(),boardNameText);
         if(board==null){
@@ -68,7 +75,12 @@ public class BoardMenuFirstPageView {
         if (user.getRole().equals("Member")){}
             //go to MemberPage
         else{
-            //go to LeaderPage
+            Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource
+                    ("/fxml/BoardMenuSecondPageForLeader.fxml")));
+            Scene scene = new Scene(parent);
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
         }
 
     }

@@ -1,21 +1,28 @@
 package view;
 
 import controller.JsonController;
+import controller.LoggedController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import model.Team;
+import model.User;
 
 public class SampleRun extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/Login.fxml"));
+        JsonController.getInstance().readFromJson();
+        Team team = Team.getTeamByName("Yakuza1",Team.getAllTeams());
+        User user = team.getTeamLeader();
+        LoggedController.getInstance().setLoggedInUser(user);
+        LoggedController.getInstance().setLoggedTeam(team);
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/BoardMenuFirstPage.fxml"));
         primaryStage.setTitle("phase2");
         primaryStage.setResizable(false);
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
-        JsonController.getInstance().readFromJson();
     }
 
     public static void main(String[] args) {
