@@ -16,7 +16,9 @@ public class MemberMenuView {
     public Button calenderInMemberMenu;
     public Button logOut;
 
-    public void goToProfile(ActionEvent actionEvent) {
+    public void goToProfile(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/Profile.fxml"));
+        ((Stage) profileInMemberMenu.getScene().getWindow()).setScene(new Scene(root));
     }
 
     public void goToTeamMenu(ActionEvent actionEvent) {

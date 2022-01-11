@@ -1,6 +1,7 @@
 package view;
 
 import controller.Controller;
+import controller.LoggedController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -263,6 +264,13 @@ public class AdminMenuView {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Error");
             alert.setContentText("You should fill the fields!");
+            alert.showAndWait();
+            return;
+        }
+        if (LoggedController.getInstance().getLoggedInUser().getRole().equals("Leader")){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setContentText("You aren't System Admin and you can't send messages to all!");
             alert.showAndWait();
             return;
         }

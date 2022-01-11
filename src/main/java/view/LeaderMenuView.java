@@ -17,7 +17,9 @@ public class LeaderMenuView {
     public Button logOut;
     public Button specialCommands;
 
-    public void goToProfile(ActionEvent actionEvent) {
+    public void goToProfile(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/Profile.fxml"));
+        ((Stage) profileInLeaderMenu.getScene().getWindow()).setScene(new Scene(root));
     }
 
     public void goToTeamMenu(ActionEvent actionEvent) {
