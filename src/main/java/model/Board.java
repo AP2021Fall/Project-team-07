@@ -5,14 +5,14 @@ import java.util.ArrayList;
 public class Board {
 
     private static ArrayList<Board> allBoards = new ArrayList<>();
+    private static ArrayList<Task> failed;
+    private static ArrayList<Task> done;
     private static int idCreator = 1;
     private int creationId;
     private boolean isCreated;
     private Team team;
     private String boardName;
     private ArrayList<Category> allCategories;
-    private ArrayList<Task> failed;
-    private ArrayList<Task> done;
     private ArrayList<User> membersOfBoards;
     private ArrayList<Task> boardTasks;
     private User creator;
@@ -77,11 +77,11 @@ public class Board {
         return boardName;
     }
 
-    public ArrayList<Task> getFailed() {
+    public static ArrayList<Task> getFailed() {
         return failed;
     }
 
-    public ArrayList<Task> getDone() {
+    public static ArrayList<Task> getDone() {
         return done;
     }
 

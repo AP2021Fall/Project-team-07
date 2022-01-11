@@ -12,9 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import model.Notification;
-import model.Team;
-import model.User;
+import model.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -194,8 +192,8 @@ public class AdminMenuView {
     public void refresh(ActionEvent actionEvent) {
         numberOfUsers.setText(Integer.toString(User.getUsers().size()));
         numberOfTeams.setText(Integer.toString(Team.getAllTeams().size()));
-        numberOfDoneTasks.setText("-");
-        numberOfFailedTasks.setText("-");
+        numberOfDoneTasks.setText(Integer.toString(Board.getDone().size()));
+        numberOfFailedTasks.setText(Integer.toString(Board.getFailed().size()));
     }
 
     public void showListOfPendingTeams(ActionEvent actionEvent) {
