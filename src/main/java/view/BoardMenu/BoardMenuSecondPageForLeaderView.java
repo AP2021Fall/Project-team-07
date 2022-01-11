@@ -1,4 +1,4 @@
-package view;
+package view.BoardMenu;
 
 import controller.Controller;
 import controller.LoggedController;
@@ -52,6 +52,7 @@ public class BoardMenuSecondPageForLeaderView {
                 CategoryItemView categoryItemView = loader.getController();
                 categoryItemView.setCategory(categories.get(i));
                 categoryItemView.updateCategory();
+                System.out.println("0");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -81,13 +82,19 @@ public class BoardMenuSecondPageForLeaderView {
         int response = Controller.controller.addCategory(user,board.getTeam(),board.getBoardName(),categoryNameText);
         if(response==2) this.response.setText("already exist a category with this name");
         if(response==3) this.response.setText("category successfully added");
+        Controller.controller.boardDone(user,board.getTeam(),board.getBoardName());
         updateHBOX();
+    }
+    public void addTask(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/BoardMenuAddTaskPage.fxml"));
+        ((Stage) ((Node) actionEvent.getSource()).getScene().getWindow()).setScene(new Scene(root));
     }
 
     public void back(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/BoardMenuFirstPage.fxml"));
         ((Stage) ((Node) actionEvent.getSource()).getScene().getWindow()).setScene(new Scene(root));
     }
+
 
 
 }
