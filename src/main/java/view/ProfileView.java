@@ -12,8 +12,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import model.Notification;
+import model.User;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class ProfileView {
     public ImageView pictureOfUser;
@@ -34,13 +37,18 @@ public class ProfileView {
     public Button back2;
     public Button team;
     public Button log;
+    public Button back3;
+    public TextField notifications;
+    public Button updateNotifications;
 
     public void editProfile(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/EditProfile.fxml"));
         ((Stage) editProfile.getScene().getWindow()).setScene(new Scene(root));
     }
 
-    public void goToNotification(ActionEvent actionEvent) {
+    public void goToNotification(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/ShowNotification.fxml"));
+        ((Stage) notification.getScene().getWindow()).setScene(new Scene(root));
     }
 
     public void backToMenu(ActionEvent actionEvent) throws IOException {
@@ -139,5 +147,24 @@ public class ProfileView {
     public void backToProfilePage(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/Profile.fxml"));
         ((Stage) back2.getScene().getWindow()).setScene(new Scene(root));
+    }
+
+    public void backToProfile(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/Profile.fxml"));
+        ((Stage) back3.getScene().getWindow()).setScene(new Scene(root));
+    }
+
+    public void updateNotifications(ActionEvent actionEvent) {
+        if (LoggedController.getInstance().getLoggedInUser().getNotifications().size() == 0){
+            notifications.setText("No notification for you!");
+            return;
+        }
+        ArrayList<String> allNotifications = new ArrayList<>();
+        int rank = 1;
+        for (Notification notification: LoggedController.getInstance().getLoggedInUser().getNotifications()){
+            allNotifications.add(rank + ". From " + notification.getSender() + ":\n" + notification.getText() + "\n");
+            rank++;
+        }
+        notifications.setText(allNotifications.toString());
     }
 }
