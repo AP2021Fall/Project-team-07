@@ -13,6 +13,7 @@ public class CategoryItemView {
     public VBox Vbox;
     public Label lblTaskTitle;
     private Category category;
+    private BoardMenuSecondPageForLeaderView parentController;
 
     public void setCategory(Category category){
         this.category = category;
@@ -29,9 +30,18 @@ public class CategoryItemView {
                 Vbox.getChildren().add(nodes[i]);
                 InCategoryItemsView inCategoryItemsView = loader.getController();
                 inCategoryItemsView.setTask(tasks.get(i));
+                inCategoryItemsView.setParentController(this);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    public BoardMenuSecondPageForLeaderView getParentController() {
+        return parentController;
+    }
+
+    public void setParentController(BoardMenuSecondPageForLeaderView parentController) {
+        this.parentController = parentController;
     }
 }

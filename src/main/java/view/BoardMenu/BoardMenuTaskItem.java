@@ -72,8 +72,7 @@ public class BoardMenuTaskItem implements Initializable {
                         alert.setAlertType(Alert.AlertType.INFORMATION);
                         alert.setContentText("task added to board successfully!");
                     }
-                    DialogPane dialogPane = alert.getDialogPane();
-                    System.out.println(parent.getClass().getResource("/CSS/DialogPane.css")==null);
+//                    DialogPane dialogPane = alert.getDialogPane();
 //                    dialogPane.getStylesheets().add(Objects.requireNonNull(parent.getClass().getResource("/CSS/DialogPane.css")).toExternalForm());
 //                    dialogPane.getStyleClass().add("DialogPane");
                     alert.showAndWait();

@@ -42,7 +42,7 @@ public class BoardMenuSecondPageForLeaderView {
         makeDoneColumn();
     }
 
-    private void updateHBOX() {
+    public void updateHBOX() {
         if(board.isCreated())condition.setText("board construction is done");
         hBox.getChildren().clear();
         ArrayList<Category> categories  = board.getAllCategories();
@@ -55,13 +55,13 @@ public class BoardMenuSecondPageForLeaderView {
                 CategoryItemView categoryItemView = loader.getController();
                 categoryItemView.setCategory(categories.get(i));
                 categoryItemView.updateCategory();
-                System.out.println("0");
+                categoryItemView.setParentController(this);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
-    private void makeDoneColumn() {
+    public void makeDoneColumn() {
         if(tableView!=null)pane.getChildren().remove(tableView);
         ObservableList<Task> list = FXCollections.observableArrayList(board.getDone());
         tableView = new TableView<>();
