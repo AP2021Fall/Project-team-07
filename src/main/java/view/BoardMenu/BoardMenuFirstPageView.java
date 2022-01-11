@@ -1,4 +1,4 @@
-package view;
+package view.BoardMenu;
 
 import controller.Controller;
 import controller.LoggedController;
@@ -28,6 +28,7 @@ public class BoardMenuFirstPageView {
     public Label response;
     private Team team;
     private User user;
+    private TableView<Board> tableView;
     public void initialize() {
         team = LoggedController.getInstance().getLoggedTeam();
         user = LoggedController.getInstance().getLoggedInUser();
@@ -37,8 +38,9 @@ public class BoardMenuFirstPageView {
     }
 
     private void makeBoardsTable() {
+        if(tableView!=null)pane.getChildren().remove(tableView);
         ObservableList<Board> list = FXCollections.observableArrayList(team.getBoards());
-        TableView<Board> tableView = new TableView<>();
+        tableView = new TableView<>();
         tableView.setLayoutX(50);
         tableView.setLayoutY(58.0);
         TableColumn<Board, String> boardName = new TableColumn<>("BoardName");
@@ -91,6 +93,7 @@ public class BoardMenuFirstPageView {
             response.setText("there is already a board with this name");
         if (controllerResponse==2)
             response.setText("board successfully created! now u can login to board");
+        makeBoardsTable();
     }
 
 

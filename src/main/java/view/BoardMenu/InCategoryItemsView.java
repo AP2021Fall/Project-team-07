@@ -1,4 +1,4 @@
-package view;
+package view.BoardMenu;
 
 import javafx.scene.control.Button;
 import model.Task;

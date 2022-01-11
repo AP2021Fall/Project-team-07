@@ -306,7 +306,7 @@ public class Controller {
         if (category != null)
             return 2;
         else {
-            new Category(board, categoryName);
+            category = new Category(board, categoryName);
             return 3;
         }
     }
