@@ -2,6 +2,7 @@ package view;
 
 import controller.Controller;
 import controller.JsonController;
+import controller.LoggedController;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -27,7 +28,7 @@ public class LoginView extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         JsonController.getInstance().readFromJson();
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/TaskListForLeader.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/Login.fxml"));
         primaryStage.setTitle("phase2");
         primaryStage.setResizable(false);
         primaryStage.setScene(new Scene(root));
@@ -43,31 +44,29 @@ public class LoginView extends Application {
         String username1 = username.getText();
         String password1 = password.getText();
         int response = Controller.controller.logIn(username1, password1);
-        if (username1.isEmpty() || password1.isEmpty()){
+        if (username1.isEmpty() || password1.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Error");
             alert.setContentText("You should fill the fields!");
             alert.showAndWait();
-        }
-        else if (response == 1){
+        } else if (response == 1) {
             errorLabel.setText("There is not any user with username: " + username1 + "!");
             username.clear();
             password.clear();
-        }
-        else if (response == 2){
+        } else if (response == 2) {
             errorLabel.setText("Username and password didn’t match!");
             username.clear();
             password.clear();
         }
-        LoginUser = User.getUserByUsername(username1);
-        if (response == 3){
+        LoggedController.getInstance().setLoggedInUser(User.getUserByUsername(username1));
+
+        if (response == 3) {
             Parent root = FXMLLoader.load(getClass().getResource("/fxml/MemberMenu.fxml"));
             ((Stage) errorLabel.getScene().getWindow()).setScene(new Scene(root));
-        }
-        else if (response == 4){
-            // go to leaderMenu page
-        }
-        else if (response == 5){
+        } else if (response == 4) {
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/LeaderMenu.fxml"));
+            ((Stage) errorLabel.getScene().getWindow()).setScene(new Scene(root));
+        } else if (response == 5) {
             Parent root = FXMLLoader.load(getClass().getResource("/fxml/AdminMenu.fxml"));
             ((Stage) errorLabel.getScene().getWindow()).setScene(new Scene(root));
         }

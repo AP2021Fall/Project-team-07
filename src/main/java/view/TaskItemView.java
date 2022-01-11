@@ -1,5 +1,6 @@
 package view;
 
+import controller.LoggedController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -31,7 +32,7 @@ public class TaskItemView implements Initializable {
         btnSelect.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Task.setSelectTask(selectTask);
+                LoggedController.getInstance().setSelectedTask(selectTask);
                 Parent root = null;
                 try {
                     root = FXMLLoader.load(getClass().getResource("/fxml/TaskPage.fxml"));

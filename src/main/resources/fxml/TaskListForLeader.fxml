@@ -10,8 +10,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
-            prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="view.TaskListForLeaderView">
     <children>
         <AnchorPane prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #949292;"
@@ -20,7 +20,7 @@
             <children>
                 <Label layoutX="25.0" layoutY="11.0" text="Task List"/>
                 <ImageView fx:id="exit" fitHeight="28.0" fitWidth="31.0" layoutX="573.0" layoutY="4.0"
-                           onDragDetected="#exit" pickOnBounds="true" preserveRatio="true"
+                           onMouseClicked="#exit" pickOnBounds="true" preserveRatio="true"
                            AnchorPane.rightAnchor="10.0">
                     <image>
                         <Image url="@../img/close_window_96px.png"/>

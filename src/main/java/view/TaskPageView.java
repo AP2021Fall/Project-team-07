@@ -1,5 +1,7 @@
 package view;
 
+import controller.JsonController;
+import controller.LoggedController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -24,12 +26,12 @@ public class TaskPageView implements Initializable {
     public Label lblTaskTitle;
     public Label lblDescription;
     public Label lblPriority;
-    private final Task selectTask = Task.getSelectTask();
+    private final Task selectTask = LoggedController.getInstance().getSelectedTask();
     public AnchorPane pane;
 
 
     public void goToTaskList(ActionEvent actionEvent) throws IOException {
-        Task.setSelectTask(null);
+        LoggedController.getInstance().setSelectedTask(null);
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/TaskList.fxml"));
         ((Stage) pane.getScene().getWindow()).setScene(new Scene(root));
     }
@@ -49,5 +51,8 @@ public class TaskPageView implements Initializable {
     }
 
     public void exit(MouseEvent mouseEvent) {
+        LoggedController.getInstance().setSelectedTask(null);
+        JsonController.getInstance().updateJson();
+        System.exit(0);
     }
 }
