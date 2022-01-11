@@ -2,20 +2,21 @@ package view.BoardMenu;
 
 import controller.Controller;
 import controller.LoggedController;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import model.Board;
 import model.Category;
+import model.Task;
 import model.User;
 
 import java.io.IOException;
@@ -32,11 +33,13 @@ public class BoardMenuSecondPageForLeaderView {
     public TextField categoryName;
     private User user;
     private Board board;
+    private TableView<Task> tableView;
 
     public void initialize() {
         user = LoggedController.getInstance().getLoggedInUser();
         board = LoggedController.getInstance().getSelectedBoard();
         updateHBOX();
+        makeDoneColumn();
     }
 
     private void updateHBOX() {
@@ -57,6 +60,22 @@ public class BoardMenuSecondPageForLeaderView {
                 e.printStackTrace();
             }
         }
+    }
+    private void makeDoneColumn() {
+        if(tableView!=null)pane.getChildren().remove(tableView);
+        ObservableList<Task> list = FXCollections.observableArrayList(board.getDone());
+        tableView = new TableView<>();
+        tableView.setLayoutX(286);
+        tableView.setLayoutY(52);
+        TableColumn<Task, String> taskName = new TableColumn<>("done");
+        taskName.setPrefWidth(76);
+        tableView.setPrefWidth(76);
+        tableView.setPrefHeight(250);
+        taskName.setCellValueFactory(new PropertyValueFactory<>("title"));
+        tableView.getColumns().addAll(taskName);
+        tableView.setItems(list);
+        tableView.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/CSS/Table.css")).toExternalForm());
+        pane.getChildren().add(tableView);
     }
 
     public void removeBoard(javafx.event.ActionEvent actionEvent) throws IOException {
