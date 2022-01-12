@@ -42,10 +42,15 @@ public class InCategoryItemsView implements Initializable {
         Optional<ButtonType> option = alert.showAndWait();
         if (option.get() == ButtonType.OK) confirmation = true;
         if(confirmation){
-            Controller.controller.goToNextCategory
+            int response = Controller.controller.goToNextCategory
                     (user,board.getTeam(),board.getBoardName(),task.getTitle());
-            parentController.getParentController().updateHBOX();
-            parentController.getParentController().makeDoneColumn();
+            if (response==0){
+                parentController.getParentController().response.setText("this task is not assigned to you so u cant move it");
+            }
+            else {
+                parentController.getParentController().updateHBOX();
+                parentController.getParentController().makeDoneColumn();
+            }
         }
     }
 

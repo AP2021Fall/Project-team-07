@@ -1,6 +1,7 @@
 package view.BoardMenu;
 
 import controller.Controller;
+import controller.JsonController;
 import controller.LoggedController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,6 +27,7 @@ public class BoardMenuFirstPageView {
     public AnchorPane pane;
     public Button makeBoardButton;
     public Label response;
+    public Button exitBtn;
     private Team team;
     private User user;
     private TableView<Board> tableView;
@@ -74,9 +76,6 @@ public class BoardMenuFirstPageView {
                 return;
             }
         LoggedController.getInstance().setSelectedBoard(board);
-        if (user.getRole().equals("Member")){}
-            //go to MemberPage
-        else{
             Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource
                     ("/fxml/BoardMenuSecondPageForLeader.fxml")));
             Scene scene = new Scene(parent);
@@ -85,7 +84,6 @@ public class BoardMenuFirstPageView {
             stage.show();
         }
 
-    }
     public void makeBoard(ActionEvent actionEvent){
         String boardNameText = boardName.getText();
         int controllerResponse = Controller.controller.makeBoard(user,team,boardNameText);
@@ -97,7 +95,10 @@ public class BoardMenuFirstPageView {
     }
 
 
-
-
+    public void exit(ActionEvent actionEvent) {
+//        LoggedController.getInstance().setSelectedTask(null);
+        JsonController.getInstance().updateJson();
+        System.exit(0);
+    }
 }
 

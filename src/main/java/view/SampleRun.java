@@ -15,7 +15,7 @@ public class SampleRun extends Application {
     public void start(Stage primaryStage) throws Exception {
         JsonController.getInstance().readFromJson();
         Team team = Team.getTeamByName("Yakuza1",Team.getAllTeams());
-        User user = team.getTeamLeader();
+        User user = team.getTeamMembers().get(0);
         LoggedController.getInstance().setLoggedInUser(user);
         LoggedController.getInstance().setLoggedTeam(team);
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/BoardMenuFirstPage.fxml"));

@@ -29,8 +29,11 @@ public class BoardMenuSecondPageForLeaderView {
     public HBox hBox;
     public Label condition;
     public TextField categoryName;
-    public ChoiceBox members;
-    public ListView membersList;
+//    public ChoiceBox members;
+//    public ListView membersList;
+    public Button remove;
+    public Button addCategoryBtn;
+    public Button addTaskBtn;
     private User user;
     private Board board;
     private TableView<Task> tableView;
@@ -38,6 +41,10 @@ public class BoardMenuSecondPageForLeaderView {
     public void initialize() {
         user = LoggedController.getInstance().getLoggedInUser();
         if (user.getRole().equals("Member")){
+            pane.getChildren().remove(categoryName);
+            pane.getChildren().remove(remove);
+            pane.getChildren().remove(addCategoryBtn);
+            pane.getChildren().remove(addTaskBtn);
 
         }
         board = LoggedController.getInstance().getSelectedBoard();

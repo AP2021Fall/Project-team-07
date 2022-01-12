@@ -31,9 +31,11 @@ public class BoardMenuReopenBTnVIew implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         btnSelect.setStyle("-fx-background-color: #ee4f4f; ");
         btnSelect.setText("reopen");
         user = LoggedController.getInstance().getLoggedInUser();
+        if (user.getRole().equals("Member"))pane.getChildren().remove(btnSelect);
         board = LoggedController.getInstance().getSelectedBoard();
         btnSelect.setOnAction(new EventHandler<ActionEvent>() {
             @Override
