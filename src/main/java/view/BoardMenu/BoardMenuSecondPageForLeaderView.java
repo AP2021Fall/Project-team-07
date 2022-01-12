@@ -53,7 +53,7 @@ public class BoardMenuSecondPageForLeaderView {
                 nodes[i] = loader.load();
                 hBox.getChildren().add(nodes[i]);
                 CategoryItemView categoryItemView = loader.getController();
-                categoryItemView.setCategory(categories.get(i));
+                categoryItemView.setCategory(categories.get(i),i);
                 categoryItemView.updateCategory();
                 categoryItemView.setParentController(this);
             } catch (Exception e) {

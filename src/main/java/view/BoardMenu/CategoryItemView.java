@@ -1,8 +1,11 @@
 package view.BoardMenu;
 
+import controller.Controller;
+import controller.LoggedController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.input.*;
 import javafx.scene.layout.VBox;
 import model.Category;
 import model.Task;
@@ -14,8 +17,10 @@ public class CategoryItemView {
     public Label lblTaskTitle;
     private Category category;
     private BoardMenuSecondPageForLeaderView parentController;
+    int column;
 
-    public void setCategory(Category category){
+    public void setCategory(Category category,int column){
+        this.column=column;
         this.category = category;
     }
     public void updateCategory(){
@@ -43,5 +48,31 @@ public class CategoryItemView {
 
     public void setParentController(BoardMenuSecondPageForLeaderView parentController) {
         this.parentController = parentController;
+    }
+
+    public void handleDragDetection(MouseEvent mouseEvent) {
+        Dragboard dragboard = lblTaskTitle.startDragAndDrop(TransferMode.ANY);
+        ClipboardContent clipboardContent = new ClipboardContent();
+        clipboardContent.putString(lblTaskTitle.getText());
+        dragboard.setContent(clipboardContent);
+        mouseEvent.consume();
+    }
+
+    public void handleDragOver(DragEvent dragEvent) {
+        if(dragEvent.getDragboard().hasString()){
+            dragEvent.acceptTransferModes(TransferMode.ANY);
+        }
+    }
+
+    public void handleDragDropping(DragEvent dragEvent) {
+        String categoryName = dragEvent.getDragboard().getString();
+        Controller.controller.changeColumn
+                (LoggedController.getInstance().getLoggedInUser()
+                        , LoggedController.getInstance().getSelectedBoard().getTeam()
+                        ,LoggedController.getInstance().getSelectedBoard().getBoardName(),categoryName,this.column);
+    }
+
+    public void handleDragDone(DragEvent dragEvent) {
+        parentController.updateHBOX();
     }
 }
