@@ -14,10 +14,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import model.Board;
-import model.Category;
-import model.Task;
-import model.User;
+import model.*;
+import view.LoginView;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,12 +29,17 @@ public class BoardMenuSecondPageForLeaderView {
     public HBox hBox;
     public Label condition;
     public TextField categoryName;
+    public ChoiceBox members;
+    public ListView membersList;
     private User user;
     private Board board;
     private TableView<Task> tableView;
 
     public void initialize() {
         user = LoggedController.getInstance().getLoggedInUser();
+        if (user.getRole().equals("Member")){
+
+        }
         board = LoggedController.getInstance().getSelectedBoard();
         updateHBOX();
         makeDoneColumn();
@@ -113,7 +116,23 @@ public class BoardMenuSecondPageForLeaderView {
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/BoardMenuFirstPage.fxml"));
         ((Stage) ((Node) actionEvent.getSource()).getScene().getWindow()).setScene(new Scene(root));
     }
+    public void gotoFailedTasksPage(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/BoardMenuFailedTaskPage.fxml"));
+        ((Stage) ((Node) actionEvent.getSource()).getScene().getWindow()).setScene(new Scene(root));
+    }
 
 
-
+//    public void assignMember(ActionEvent actionEvent) {
+//        if (membersList.getItems().contains(members.getValue().toString()))
+//            response.setText("Old added to list!");
+//        else {
+//            membersList.getItems().add(members.getValue().toString());
+//            int controller response = Controller.controller.boardAssignMember(user,board.getTeam(),)
+//            result = Controller.controller.assignMember(LoginView.LoginUser,
+//                    Team.getTeamByName("Yakuza1", Team.getAllTeams()),
+//                    String.valueOf(Task.getAllTasks().get(Task.getAllTasks().size() - 1).getCreationId()),
+//                    members.getValue().toString());
+//            response.setText("User successfully added!");
+//        }
+//    }
 }

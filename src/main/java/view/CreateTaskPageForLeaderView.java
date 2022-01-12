@@ -80,7 +80,10 @@ public class CreateTaskPageForLeaderView implements Initializable {
             lblError.setText("Old added to list!");
         else {
             membersList.getItems().add(members.getValue().toString());
-            result = Controller.controller.assignMember(LoginView.LoginUser, Team.getTeamByName("Yakuza1", Team.getAllTeams()), String.valueOf(Task.getAllTasks().get(Task.getAllTasks().size() - 1).getCreationId()), members.getValue().toString());
+            result = Controller.controller.assignMember(LoginView.LoginUser,
+                    Team.getTeamByName("Yakuza1", Team.getAllTeams()),
+                    String.valueOf(Task.getAllTasks().get(Task.getAllTasks().size() - 1).getCreationId()),
+                    members.getValue().toString());
             lblError.setText("User successfully added!");
         }
     }

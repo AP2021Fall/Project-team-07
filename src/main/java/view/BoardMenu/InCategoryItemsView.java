@@ -28,6 +28,7 @@ public class InCategoryItemsView implements Initializable {
     public void initialize(URL location, ResourceBundle resources){
         user = LoggedController.getInstance().getLoggedInUser();
         board = LoggedController.getInstance().getSelectedBoard();
+        btnSelect.setStyle("-fx-background-color: #eecd26; ");
     }
     public void setTask(Task task){
         this.task = task;

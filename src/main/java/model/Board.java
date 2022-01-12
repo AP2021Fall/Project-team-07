@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class Board {
 
     private static ArrayList<Board> allBoards = new ArrayList<>();
-    private static ArrayList<Task> failed;
-    private static ArrayList<Task> done;
+    private  ArrayList<Task> failed;
+    private  ArrayList<Task> done;
     private static int idCreator = 1;
     private int creationId;
     private boolean isCreated;
@@ -77,11 +77,11 @@ public class Board {
         return boardName;
     }
 
-    public static ArrayList<Task> getFailed() {
+    public  ArrayList<Task> getFailed() {
         return failed;
     }
 
-    public static ArrayList<Task> getDone() {
+    public  ArrayList<Task> getDone() {
         return done;
     }
 
