@@ -12,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import model.Log;
 import model.Notification;
 import model.User;
 
@@ -40,6 +41,9 @@ public class ProfileView {
     public Button back3;
     public TextField notifications;
     public Button updateNotifications;
+    public Button updateLog;
+    public Button back4;
+    public TextField logs;
 
     public void editProfile(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/EditProfile.fxml"));
@@ -166,5 +170,20 @@ public class ProfileView {
             rank++;
         }
         notifications.setText(allNotifications.toString());
+    }
+
+    public void updateLog(ActionEvent actionEvent) {
+        ArrayList<String> showLogs = new ArrayList<>();
+        int rank = 1;
+        for (Log log : LoggedController.getInstance().getLoggedInUser().getAllLogs()){
+            showLogs.add(rank + ". " + log.getDate() + "\n");
+            rank++;
+        }
+        logs.setText(showLogs.toString());
+    }
+
+    public void backToTheProfile(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/Profile.fxml"));
+        ((Stage) back4.getScene().getWindow()).setScene(new Scene(root));
     }
 }

@@ -192,9 +192,16 @@ public class AdminMenuView {
     public void refresh(ActionEvent actionEvent) {
         numberOfUsers.setText(Integer.toString(User.getUsers().size()));
         numberOfTeams.setText(Integer.toString(Team.getAllTeams().size()));
-        //this is about just one board not all boards !
-//        numberOfDoneTasks.setText(Integer.toString(Board.getDone().size()));
-//        numberOfFailedTasks.setText(Integer.toString(Board.getFailed().size()));
+        int doneTask = 0;
+        int failedTask = 0;
+        for (Team team: Team.getAllTeams()){
+            for (Board board: team.getBoards()){
+                doneTask += board.getDone().size();
+                failedTask += board.getFailed().size();
+            }
+        }
+        numberOfDoneTasks.setText(Integer.toString(doneTask));
+        numberOfFailedTasks.setText(Integer.toString(failedTask));
     }
 
     public void showListOfPendingTeams(ActionEvent actionEvent) {

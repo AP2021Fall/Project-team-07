@@ -18,7 +18,7 @@ public class SampleRun extends Application {
         User user = team.getTeamMembers().get(0);
         LoggedController.getInstance().setLoggedInUser(user);
         LoggedController.getInstance().setLoggedTeam(team);
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/BoardMenuFirstPage.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/ShowLog.fxml"));
         primaryStage.setTitle("phase2");
         primaryStage.setResizable(false);
         primaryStage.setScene(new Scene(root));

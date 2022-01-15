@@ -24,7 +24,7 @@ public class Controller {
         } else if (!getCommandMatcher("[A-Za-z0-9.]+(@gmail.com|@yahoo.com)", email).matches()) {
             return 4;
         }
-//        User user = new User(username, password1, email);
+        User user = new User(username, password1, email);
         return 0;
     }
 
@@ -37,7 +37,7 @@ public class Controller {
         //View.print("user logged in successfully!");
         DateTimeFormatter currentDate = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
-//        Log log = new Log(findUser(username), currentDate.format(now));
+        Log log = new Log(findUser(username), currentDate.format(now));
         String role = User.getUserByUsername(username).getRole();
         if (role.equals("Member")) {
             //View.runMemberMenu(User.getUserByUsername(username));
