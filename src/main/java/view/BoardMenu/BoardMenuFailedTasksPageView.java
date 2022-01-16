@@ -26,6 +26,7 @@ public class BoardMenuFailedTasksPageView {
     public AnchorPane pane;
     public VBox vTaskItem;
     public Label response;
+    public Label pFailed;
     private User user;
     private Board board;
 
@@ -52,6 +53,8 @@ public class BoardMenuFailedTasksPageView {
                 e.printStackTrace();
             }
         }
+        pFailed.setText("board failed tasks percentage : "+
+                Controller.controller.getBoardFailedPercentage(board));
     }
 
     public void back(ActionEvent actionEvent) throws IOException {

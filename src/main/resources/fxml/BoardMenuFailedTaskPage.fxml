@@ -15,5 +15,6 @@
         </ScrollPane>
         <Button layoutX="545.0" layoutY="360.0" mnemonicParsing="false" onAction="#back" text="back" />
         <Label fx:id="response" layoutX="14.0" layoutY="314.0" prefHeight="18.0" prefWidth="440.0" />
+      <Label fx:id="pFailed" layoutX="26.0" layoutY="350.0" prefHeight="18.0" prefWidth="273.0" text="board failed tasks percentage : " />
     </children>
 </AnchorPane>

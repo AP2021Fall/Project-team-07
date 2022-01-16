@@ -15,10 +15,10 @@ public class SampleRun extends Application {
     public void start(Stage primaryStage) throws Exception {
         JsonController.getInstance().readFromJson();
         Team team = Team.getTeamByName("Yakuza1",Team.getAllTeams());
-        User user = team.getTeamMembers().get(0);
+        User user = team.getTeamLeader();
         LoggedController.getInstance().setLoggedInUser(user);
         LoggedController.getInstance().setLoggedTeam(team);
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/ShowLog.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/BoardMenuFirstPage.fxml"));
         primaryStage.setTitle("phase2");
         primaryStage.setResizable(false);
         primaryStage.setScene(new Scene(root));

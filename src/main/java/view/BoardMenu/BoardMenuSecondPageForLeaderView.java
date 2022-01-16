@@ -34,6 +34,7 @@ public class BoardMenuSecondPageForLeaderView {
     public Button remove;
     public Button addCategoryBtn;
     public Button addTaskBtn;
+    public Label Completion;
     private User user;
     private Board board;
     private TableView<Task> tableView;
@@ -86,6 +87,8 @@ public class BoardMenuSecondPageForLeaderView {
         tableView.setItems(list);
         tableView.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/CSS/Table.css")).toExternalForm());
         pane.getChildren().add(tableView);
+        Completion.setText("board completion percentage : "+
+                Controller.controller.getBoardCompletionPercentage(board));
     }
 
     public void removeBoard(javafx.event.ActionEvent actionEvent) throws IOException {
