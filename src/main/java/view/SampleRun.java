@@ -14,11 +14,11 @@ public class SampleRun extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         JsonController.getInstance().readFromJson();
-        Team team = Team.getTeamByName("Yakuza1",Team.getAllTeams());
-        User user = team.getTeamLeader();
+//        Team team = Team.getTeamByName("Yakuza1",Team.getAllTeams());
+        User user = User.getUserByUsername("AmirReza");
         LoggedController.getInstance().setLoggedInUser(user);
-        LoggedController.getInstance().setLoggedTeam(team);
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/BoardMenuFirstPage.fxml"));
+//        LoggedController.getInstance().setLoggedTeam(team);
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/TeamMenuFirstPage.fxml"));
         primaryStage.setTitle("phase2");
         primaryStage.setResizable(false);
         primaryStage.setScene(new Scene(root));
