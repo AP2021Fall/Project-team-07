@@ -18,6 +18,7 @@ import model.Task;
 import model.User;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -30,13 +31,13 @@ public class BoardMenuFailedTasksPageView {
     private User user;
     private Board board;
 
-    public void initialize() {
+    public void initialize() throws ParseException {
         user = LoggedController.getInstance().getLoggedInUser();
         board = LoggedController.getInstance().getSelectedBoard();
         makeTasksVbox();
 
     }
-    private void makeTasksVbox() {
+    private void makeTasksVbox() throws ParseException {
         vTaskItem.getChildren().clear();
         Controller.controller.updateFailed(board);
         ArrayList<Task> tasks = board.getFailed();

@@ -34,10 +34,11 @@ public class TaskListForLeaderView implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        for (Team team : Team.getAllTeams()) {
-            if (team.getTeamLeader().getUserName().equals(LoggedController.getInstance().getLoggedInUser().getUserName()))
-                SelectTeam = team;
-        }
+//        for (Team team : Team.getAllTeams()) {
+//            if (team.getTeamLeader().getUserName().equals(LoggedController.getInstance().getLoggedInUser().getUserName()))
+//                SelectTeam = team;
+//        }
+        SelectTeam = Team.getTeamByName("Yakuza2", Team.getAllTeams());
         ArrayList<Task> tasks = SelectTeam.getAllTasks();
         Node[] nodes = new Node[tasks.size()];
         for (int i = 0; i < nodes.length; i++) {

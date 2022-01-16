@@ -43,10 +43,10 @@ public class CreateTaskPageForLeaderView implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         priorityChoice.getItems().addAll("Lowest", "Low", "High", "Highest");
         priorityChoice.setValue("Lowest");
-        for (User member : Team.getTeamByName("Yakuza1", Team.getAllTeams()).getTeamMembers()) {
+        for (User member : Team.getTeamByName("Yakuza2", Team.getAllTeams()).getTeamMembers()) {
             members.getItems().add(member.getUserName());
         }
-        members.setValue(Team.getTeamByName("Yakuza1", Team.getAllTeams()).getTeamMembers().get(0).getUserName());
+        members.setValue(Team.getTeamByName("Yakuza2", Team.getAllTeams()).getTeamMembers().get(0).getUserName());
     }
 
     public void goToTaskList(ActionEvent actionEvent) throws IOException {
@@ -59,7 +59,7 @@ public class CreateTaskPageForLeaderView implements Initializable {
         if (taskTitleField.getText() == null || priorityChoice.getValue().toString() == null || deadlineFiled.getText() == null)
             lblError.setText("Fill in all the fields");
         else {
-            result = Controller.controller.creatTask(LoginView.LoginUser, Team.getTeamByName("Yakuza1", Team.getAllTeams()), taskTitleField.getText(), startTimeField.getText(), deadlineFiled.getText(), descriptionField.getText(), priorityChoice.getValue().toString());
+            result = Controller.controller.creatTask(LoginView.LoginUser, Team.getTeamByName("Yakuza2", Team.getAllTeams()), taskTitleField.getText(), startTimeField.getText(), deadlineFiled.getText(), descriptionField.getText(), priorityChoice.getValue().toString());
             if (result == 1) {
                 lblError.setText("There is another task with this title!");
             } else if (result == 2) {
@@ -67,6 +67,7 @@ public class CreateTaskPageForLeaderView implements Initializable {
             } else if (result == 3) {
                 lblError.setText("Invalid deadline!");
             } else if (result == 4) {
+                membersList.getItems().clear();
                 lblError.setText("Task created successfully!");
             }
 
@@ -81,7 +82,7 @@ public class CreateTaskPageForLeaderView implements Initializable {
         else {
             membersList.getItems().add(members.getValue().toString());
             result = Controller.controller.assignMember(LoginView.LoginUser,
-                    Team.getTeamByName("Yakuza1", Team.getAllTeams()),
+                    Team.getTeamByName("Yakuza2", Team.getAllTeams()),
                     String.valueOf(Task.getAllTasks().get(Task.getAllTasks().size() - 1).getCreationId()),
                     members.getValue().toString());
             lblError.setText("User successfully added!");

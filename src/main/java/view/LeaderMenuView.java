@@ -22,7 +22,9 @@ public class LeaderMenuView {
         ((Stage) profileInLeaderMenu.getScene().getWindow()).setScene(new Scene(root));
     }
 
-    public void goToTeamMenu(ActionEvent actionEvent) {
+    public void goToTeamMenu(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/TeamMenuFirstPage.fxml"));
+        ((Stage) taskPageInLeaderMenu.getScene().getWindow()).setScene(new Scene(root));
     }
 
     public void goToTaskPage(ActionEvent actionEvent) throws IOException {

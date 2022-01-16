@@ -509,10 +509,10 @@ public class Controller {
         }
     }
 
-    public void updateFailed(Board board) {
+    public void updateFailed(Board board) throws ParseException {
         for (Task task : board.getBoardTask()) {
-            if (!board.getFailed().contains(task)) {
-                if (Date.getTimeBetween(Date.getNow(), task.getDeadline()) < 0) {
+            if (!board.getFailed().contains(task) && !board.getDone().contains(task)) {
+                if (task.getDeadline().getDate().before(Date.getNow().getDate())) {
                     removeFromCategories(task, board);
                     board.getFailed().add(task);
                     decreaseScore(board.getTeam(), task);
@@ -808,8 +808,8 @@ public class Controller {
             findUser(command).setRole("Leader");
             user.setRole("Member");
             team.getTeamMembers().remove(findUser(command));
-            findUser(command).getUserTeams().remove(team);
-            findUser(command).getJoiningDate().remove(team);
+//            findUser(command).getUserTeams().remove(team);
+//            findUser(command).getJoiningDate().remove(team);
             team.getScoreboard().getScores().remove(findUser(command));
             return 2;
         }
@@ -828,7 +828,7 @@ public class Controller {
         }
     }
 
-    public ArrayList<String> showScoreBoard(User user, Team team) {
+    public ArrayList<String> showScoreBoard(User user, Team team) throws ParseException {
         for (Board board : team.getBoards()) {
             updateFailed(board);
         }

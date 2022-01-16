@@ -66,7 +66,14 @@ public class TeamMenuFirstPageView {
         stage.show();
     }
 
-    public void back(ActionEvent actionEvent) {
-
+    public void back(ActionEvent actionEvent) throws IOException {
+        if (user.getRole().equals("Leader")){
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/LeaderMenu.fxml"));
+            ((Stage) pane.getScene().getWindow()).setScene(new Scene(root));
+        }
+        else {
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/MemberMenu.fxml"));
+            ((Stage) pane.getScene().getWindow()).setScene(new Scene(root));
+        }
     }
 }
