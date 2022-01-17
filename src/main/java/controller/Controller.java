@@ -514,6 +514,7 @@ public class Controller {
             if (!board.getFailed().contains(task) && !board.getDone().contains(task)) {
                 if (task.getDeadline().getDate().before(Date.getNow().getDate())) {
                     removeFromCategories(task, board);
+                    board.getBoardTask().remove(task);
                     board.getFailed().add(task);
                     decreaseScore(board.getTeam(), task);
                 }

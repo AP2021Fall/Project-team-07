@@ -11,11 +11,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.BorderPane;
 import model.Board;
-import model.Category;
 import model.Task;
 import model.User;
 
 import java.net.URL;
+import java.text.ParseException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -27,7 +27,7 @@ public class BoardMenuReopenBTnVIew implements Initializable {
     private Task selectTask;
     private User user;
     private Board board;
-    private BoardMenuAddTaskPageView parent;
+    private BoardMenuFailedTasksPageView parent;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -65,6 +65,11 @@ public class BoardMenuReopenBTnVIew implements Initializable {
 //                    dialogPane.getStylesheets().add(Objects.requireNonNull(parent.getClass().getResource("/CSS/DialogPane.css")).toExternalForm());
 //                    dialogPane.getStyleClass().add("DialogPane");
                     alert.showAndWait();
+                    try {
+                        parent.makeTasksVbox();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
                 }
 
             }
@@ -77,7 +82,7 @@ public class BoardMenuReopenBTnVIew implements Initializable {
         selectTask = task;
     }
 
-    public void setParent(BoardMenuAddTaskPageView parent) {
+    public void setParent(BoardMenuFailedTasksPageView parent) {
         this.parent = parent;
     }
 }

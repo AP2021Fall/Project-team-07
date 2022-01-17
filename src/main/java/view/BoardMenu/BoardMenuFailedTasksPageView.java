@@ -37,7 +37,7 @@ public class BoardMenuFailedTasksPageView {
         makeTasksVbox();
 
     }
-    private void makeTasksVbox() throws ParseException {
+    public void makeTasksVbox() throws ParseException {
         vTaskItem.getChildren().clear();
         Controller.controller.updateFailed(board);
         ArrayList<Task> tasks = board.getFailed();
@@ -47,6 +47,7 @@ public class BoardMenuFailedTasksPageView {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/TaskItem.fxml"));
                 BoardMenuReopenBTnVIew controller = new BoardMenuReopenBTnVIew();
                 loader.setController(controller);
+                controller.setParent(this);
                 nodes[i] = loader.load();
                 vTaskItem.getChildren().add(nodes[i]);
                 controller.setTask(tasks.get(i));
