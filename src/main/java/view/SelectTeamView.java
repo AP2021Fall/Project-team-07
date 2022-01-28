@@ -3,7 +3,6 @@ package view;
 import controller.JsonController;
 import controller.LoggedController;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -15,43 +14,35 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import model.Task;
+import model.Team;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class TaskListForLeaderView implements Initializable {
-    @FXML
-    public VBox vTaskItem;
+public class SelectTeamView implements Initializable {
     public AnchorPane pane;
-    public Button btnCreateTask;
     public ImageView exit;
-    public Button btnLeave;
-
+    public Button leave;
+    public VBox vTeamItem;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        ArrayList<Task> tasks = LoggedController.getInstance().getLoggedInUser().getAllTasksForUser();
-        Node[] nodes = new Node[tasks.size()];
+        ArrayList<Team> teams = new ArrayList<>(LoggedController.getInstance().getLoggedInUser().getUserTeams());
+        Node[] nodes = new Node[teams.size()];
         for (int i = 0; i < nodes.length; i++) {
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/TaskItem.fxml"));
-                TaskItemForLeaderView controller = new TaskItemForLeaderView();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/SelectItem.fxml"));
+                SelectItemView controller = new SelectItemView();
                 loader.setController(controller);
                 nodes[i] = loader.load();
-                vTaskItem.getChildren().add(nodes[i]);
-                controller.setTask(tasks.get(i));
+                vTeamItem.getChildren().add(nodes[i]);
+                controller.setTeam(teams.get(i));
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-    }
-
-    public void goToCreateTaskPage(ActionEvent actionEvent) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/CreateTaskPageForLeader.fxml"));
-        ((Stage) pane.getScene().getWindow()).setScene(new Scene(root));
     }
 
     public void exit(MouseEvent mouseEvent) {
@@ -60,8 +51,14 @@ public class TaskListForLeaderView implements Initializable {
     }
 
     public void leave(ActionEvent actionEvent) throws IOException {
-        LoggedController.getInstance().setSelectedTeam(null);
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/LeaderMenu.fxml"));
-        ((Stage) pane.getScene().getWindow()).setScene(new Scene(root));
+        if (LoggedController.getInstance().getLoggedInUser().getRole().equals("Leader")) {
+            LoggedController.getInstance().setSelectedTeam(null);
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/LeaderMenu.fxml"));
+            ((Stage) pane.getScene().getWindow()).setScene(new Scene(root));
+        } else {
+            LoggedController.getInstance().setSelectedTeam(null);
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/MemberMenu.fxml"));
+            ((Stage) pane.getScene().getWindow()).setScene(new Scene(root));
+        }
     }
 }

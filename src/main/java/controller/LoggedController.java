@@ -12,6 +12,7 @@ public class LoggedController {
     private Board selectedBoard;
     private Task selectedTask;
     private Team selectedTeam;
+    private Team selectedTeamForTask;
 
 
     private LoggedController() {
@@ -62,5 +63,13 @@ public class LoggedController {
 
     public void setSelectedTeam(Team selectedTeam) {
         this.selectedTeam = selectedTeam;
+    }
+
+    public Team getSelectedTeamForTask() {
+        return selectedTeamForTask;
+    }
+
+    public void setSelectedTeamForTask(Team selectedTeamForTask) {
+        this.selectedTeamForTask = selectedTeamForTask;
     }
 }

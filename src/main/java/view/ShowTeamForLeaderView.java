@@ -13,7 +13,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import model.Task;
 import model.Team;
 import model.User;
 
@@ -30,14 +29,12 @@ public class ShowTeamForLeaderView implements Initializable {
     public ChoiceBox members;
     public ListView membersList;
     public Button addMember;
-    public Button addMember1;
     public Button deleteMember;
     public Label lblError;
     private final Team selectTeam = LoggedController.getInstance().getSelectedTeam();
     public Button suspendMember;
     public Button leave;
     private int result;
-    private Team selectedTeam;
 
 
     public void exit(MouseEvent mouseEvent) {
@@ -52,7 +49,9 @@ public class ShowTeamForLeaderView implements Initializable {
         ((Stage) pane.getScene().getWindow()).setScene(new Scene(root));
     }
 
-    public void goToSUdoTask(ActionEvent actionEvent) {
+    public void goToSUdoTask(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/Sudo.fxml"));
+        ((Stage) pane.getScene().getWindow()).setScene(new Scene(root));
     }
 
     public void addMember(ActionEvent actionEvent) {
@@ -60,16 +59,19 @@ public class ShowTeamForLeaderView implements Initializable {
             lblError.setText("Old added to list!");
         else {
             membersList.getItems().add(members.getValue().toString());
-            result = Controller.controller.addMember(LoginView.LoginUser, selectTeam, members.getValue().toString());
+            result = Controller.controller.addMember(LoginView.LoginUser,
+                    LoggedController.getInstance().getSelectedTeam(),
+                    members.getValue().toString());
             lblError.setText("User successfully added!");
         }
     }
 
     public void deleteMember(ActionEvent actionEvent) {
         String selectedItem = membersList.getSelectionModel().getSelectedItem().toString();
-        result = Controller.controller.deleteMember(LoggedController.getInstance().getLoggedInUser(), selectedTeam, selectedItem);
-        membersList = null;
-        for (User user : selectedTeam.getTeamMembers()) {
+        result = Controller.controller.deleteMember(LoggedController.getInstance().getLoggedInUser(), LoggedController.getInstance().getSelectedTeam(), selectedItem);
+        lblError.setText("User successfully removed");
+        membersList.getItems().clear();
+        for (User user : LoggedController.getInstance().getLoggedTeam().getTeamMembers()) {
             membersList.getItems().add(user.getUserName());
         }
     }
@@ -95,5 +97,12 @@ public class ShowTeamForLeaderView implements Initializable {
     }
 
     public void suspendMember(ActionEvent actionEvent) {
+        String selectedItem = membersList.getSelectionModel().getSelectedItem().toString();
+        result = Controller.controller.suspendMember(LoggedController.getInstance().getLoggedInUser(), LoggedController.getInstance().getSelectedTeam(), selectedItem);
+        lblError.setText("User successfully suspended");
+        membersList.getItems().clear();
+        for (User user : LoggedController.getInstance().getLoggedTeam().getTeamMembers()) {
+            membersList.getItems().add(user.getUserName());
+        }
     }
 }

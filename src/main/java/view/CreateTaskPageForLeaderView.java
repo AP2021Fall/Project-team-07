@@ -2,6 +2,7 @@ package view;
 
 import controller.Controller;
 import controller.JsonController;
+import controller.LoggedController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -37,6 +38,7 @@ public class CreateTaskPageForLeaderView implements Initializable {
     public ListView membersList;
     public Button addMember;
     public ImageView exit;
+    public Button btnLeave;
     private int result;
 
     @Override
@@ -59,7 +61,7 @@ public class CreateTaskPageForLeaderView implements Initializable {
         if (taskTitleField.getText() == null || priorityChoice.getValue().toString() == null || deadlineFiled.getText() == null)
             lblError.setText("Fill in all the fields");
         else {
-            result = Controller.controller.creatTask(LoginView.LoginUser, Team.getTeamByName("Yakuza2", Team.getAllTeams()), taskTitleField.getText(), startTimeField.getText(), deadlineFiled.getText(), descriptionField.getText(), priorityChoice.getValue().toString());
+            result = Controller.controller.creatTask(LoginView.LoginUser, LoggedController.getInstance().getSelectedTeamForTask(), taskTitleField.getText(), startTimeField.getText(), deadlineFiled.getText(), descriptionField.getText(), priorityChoice.getValue().toString());
             if (result == 1) {
                 lblError.setText("There is another task with this title!");
             } else if (result == 2) {
@@ -92,5 +94,11 @@ public class CreateTaskPageForLeaderView implements Initializable {
     public void exit(MouseEvent mouseEvent) {
         JsonController.getInstance().updateJson();
         System.exit(0);
+    }
+
+    public void leave(ActionEvent actionEvent) throws IOException {
+        LoggedController.getInstance().setSelectedTeam(null);
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/LeaderMenu.fxml"));
+        ((Stage) pane.getScene().getWindow()).setScene(new Scene(root));
     }
 }

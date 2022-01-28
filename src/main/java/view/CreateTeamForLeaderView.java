@@ -5,6 +5,7 @@ import controller.JsonController;
 import controller.LoggedController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -17,8 +18,10 @@ import model.Team;
 import model.User;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class CreateTeamForLeaderView {
+public class CreateTeamForLeaderView implements Initializable {
     public ImageView exit;
     public Button showTeams;
     public TextField teamTitleField;
@@ -32,7 +35,7 @@ public class CreateTeamForLeaderView {
     public Label error;
     public Button leave;
     public Button suspendMember;
-    private Team selectedTeam;
+    private Team selectedTeam = null;
     private int result;
 
     public void exit(MouseEvent mouseEvent) {
@@ -59,7 +62,10 @@ public class CreateTeamForLeaderView {
     }
 
     public void addMember(ActionEvent actionEvent) {
-        if (membersList.getItems().contains(members.getValue().toString()))
+
+        if (selectedTeam == null) {
+            error.setText("firs create team!");
+        } else if (membersList.getItems().contains(members.getValue().toString()))
             error.setText("Old added to list!");
         else {
             membersList.getItems().add(members.getValue().toString());
@@ -73,7 +79,8 @@ public class CreateTeamForLeaderView {
     public void deleteMember(ActionEvent actionEvent) {
         String selectedItem = membersList.getSelectionModel().getSelectedItem().toString();
         result = Controller.controller.deleteMember(LoggedController.getInstance().getLoggedInUser(), selectedTeam, selectedItem);
-        membersList = null;
+        error.setText("User successfully removed");
+        membersList.getItems().clear();
         for (User user : selectedTeam.getTeamMembers()) {
             membersList.getItems().add(user.getUserName());
         }
@@ -88,9 +95,18 @@ public class CreateTeamForLeaderView {
     public void suspendMember(ActionEvent actionEvent) {
         String selectedItem = membersList.getSelectionModel().getSelectedItem().toString();
         result = Controller.controller.suspendMember(LoggedController.getInstance().getLoggedInUser(), selectedTeam, selectedItem);
-        membersList = null;
+        error.setText("User successfully suspended");
+        membersList.getItems().clear();
         for (User user : selectedTeam.getTeamMembers()) {
             membersList.getItems().add(user.getUserName());
         }
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        for (User member : User.getUsers()) {
+            members.getItems().add(member.getUserName());
+        }
+        members.setValue(User.getUsers().get(0).getUserName());
     }
 }

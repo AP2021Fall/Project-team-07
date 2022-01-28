@@ -25,7 +25,6 @@ import java.util.ResourceBundle;
 public class ShowTeamsForLeaderView implements Initializable {
     public AnchorPane pane;
     public ImageView exit;
-    public Button showTeams;
     public VBox vTeamItem;
     public Button createTeam;
     public Button leave;
@@ -36,11 +35,6 @@ public class ShowTeamsForLeaderView implements Initializable {
         System.exit(0);
     }
 
-    public void goToShowTeams(ActionEvent actionEvent) throws IOException {
-        LoggedController.getInstance().setSelectedTask(null);
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/ShowTeamsForLeader.fxml"));
-        ((Stage) pane.getScene().getWindow()).setScene(new Scene(root));
-    }
 
     public void goCreateTeam(ActionEvent actionEvent) throws IOException {
         LoggedController.getInstance().setSelectedTask(null);

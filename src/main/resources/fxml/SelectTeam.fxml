@@ -10,12 +10,12 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.TaskListForLeaderView">
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.SelectTeamView">
     <children>
         <AnchorPane prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #949292;" AnchorPane.bottomAnchor="360.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <Label layoutX="25.0" layoutY="11.0" text="Task List" />
-                <ImageView fx:id="exit" fitHeight="28.0" fitWidth="31.0" layoutX="573.0" layoutY="4.0" onMouseClicked="#exit" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="10.0">
+                <Label layoutX="17.0" layoutY="11.0" text="Select Team" />
+                <ImageView fx:id="exit" fitHeight="28.0" fitWidth="31.0" layoutX="565.0" layoutY="6.0" onMouseClicked="#exit" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../img/close_window_96px.png" />
                     </image>
@@ -34,21 +34,11 @@
                                 <Font size="10.0" />
                             </font>
                         </Button>
-                        <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="80.0" text="Task Page">
+                        <Button fx:id="leave" mnemonicParsing="false" onAction="#leave" prefHeight="50.0" prefWidth="80.0" text="leave">
                             <font>
                                 <Font size="10.0" />
                             </font>
                         </Button>
-                        <Button fx:id="btnCreateTask" mnemonicParsing="false" onAction="#goToCreateTaskPage" prefHeight="50.0" prefWidth="80.0" text="Create Task">
-                            <font>
-                                <Font size="10.0" />
-                            </font>
-                        </Button>
-                  <Button fx:id="btnLeave" mnemonicParsing="false" onAction="#leave" prefHeight="50.0" prefWidth="80.0" text="leave">
-                     <font>
-                        <Font size="10.0" />
-                     </font>
-                  </Button>
                     </children>
                 </VBox>
             </children>
@@ -57,7 +47,7 @@
             <children>
                 <ScrollPane prefHeight="340.0" prefWidth="480.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <content>
-                        <VBox fx:id="vTaskItem" prefHeight="338.0" prefWidth="478.0" />
+                        <VBox fx:id="vTeamItem" prefHeight="338.0" prefWidth="478.0" />
                     </content>
                 </ScrollPane>
             </children>

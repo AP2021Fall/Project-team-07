@@ -28,7 +28,7 @@ public class LeaderMenuView {
     }
 
     public void goToTaskPage(ActionEvent actionEvent) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/TaskListForLeader.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/SelectTeam.fxml"));
         ((Stage) taskPageInLeaderMenu.getScene().getWindow()).setScene(new Scene(root));
     }
 
