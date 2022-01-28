@@ -2,14 +2,22 @@ package view;
 
 import controller.JsonController;
 import controller.LoggedController;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import model.Task;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -17,6 +25,9 @@ import java.util.ResourceBundle;
 public class TaskListView implements Initializable {
     @FXML
     public VBox vTaskItem;
+    public ImageView exit;
+    public Button leave;
+    public AnchorPane pane;
 
 
     @Override
@@ -40,5 +51,11 @@ public class TaskListView implements Initializable {
     public void exit(MouseEvent mouseEvent) {
         JsonController.getInstance().updateJson();
         System.exit(0);
+    }
+
+    public void leave(ActionEvent actionEvent) throws IOException {
+        LoggedController.getInstance().setSelectedTeam(null);
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/LeaderMenu.fxml"));
+        ((Stage) pane.getScene().getWindow()).setScene(new Scene(root));
     }
 }

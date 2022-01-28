@@ -40,6 +40,7 @@ public class TaskPageForLeaderView implements Initializable {
     public Button btnCreateTask;
     public ImageView exit;
     public Button DeleteMember;
+    public Button leave;
     private int result;
 
     public void goToTaskList(ActionEvent actionEvent) throws IOException {
@@ -99,5 +100,11 @@ public class TaskPageForLeaderView implements Initializable {
         for (User user : selectTask.getAssignedUser()) {
             membersList.getItems().add(user.getUserName());
         }
+    }
+
+    public void leave(ActionEvent actionEvent) throws IOException {
+        LoggedController.getInstance().setSelectedTeam(null);
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/LeaderMenu.fxml"));
+        ((Stage) pane.getScene().getWindow()).setScene(new Scene(root));
     }
 }

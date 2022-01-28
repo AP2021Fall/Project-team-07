@@ -49,13 +49,8 @@
                                 <Font size="10.0"/>
                             </font>
                         </Button>
-                        <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="80.0" text="Show Team">
-                            <font>
-                                <Font size="10.0"/>
-                            </font>
-                        </Button>
-                        <Button fx:id="sudoTask" mnemonicParsing="false" onAction="#goToSUdoTask" prefHeight="50.0"
-                                prefWidth="80.0" text="Sudo Task">
+                        <Button fx:id="leave" mnemonicParsing="false" onAction="#leave" prefHeight="50.0"
+                                prefWidth="80.0" text="leave">
                             <font>
                                 <Font size="10.0"/>
                             </font>

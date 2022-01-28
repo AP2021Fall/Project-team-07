@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -28,6 +29,8 @@ public class TaskPageView implements Initializable {
     public Label lblPriority;
     private final Task selectTask = LoggedController.getInstance().getSelectedTask();
     public AnchorPane pane;
+    public ImageView exit;
+    public Button leave;
 
 
     public void goToTaskList(ActionEvent actionEvent) throws IOException {
@@ -54,5 +57,11 @@ public class TaskPageView implements Initializable {
         LoggedController.getInstance().setSelectedTask(null);
         JsonController.getInstance().updateJson();
         System.exit(0);
+    }
+
+    public void leave(ActionEvent actionEvent) throws IOException {
+        LoggedController.getInstance().setSelectedTeam(null);
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/LeaderMenu.fxml"));
+        ((Stage) pane.getScene().getWindow()).setScene(new Scene(root));
     }
 }

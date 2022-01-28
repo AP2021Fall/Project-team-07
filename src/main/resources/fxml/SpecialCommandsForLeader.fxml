@@ -50,13 +50,8 @@
                                 <Font size="10.0"/>
                             </font>
                         </Button>
-                        <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="80.0" text="Show Team">
-                            <font>
-                                <Font size="10.0"/>
-                            </font>
-                        </Button>
-                        <Button fx:id="sudoTask" mnemonicParsing="false" onAction="#goToSUdoTask" prefHeight="50.0"
-                                prefWidth="80.0" text="Sudo Task">
+                        <Button fx:id="leave" mnemonicParsing="false" onAction="#leave" prefHeight="50.0"
+                                prefWidth="80.0" text="leave">
                             <font>
                                 <Font size="10.0"/>
                             </font>
@@ -69,7 +64,7 @@
                     style="-fx-background-color: #E7E2E1;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="110.0"
                     AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
             <children>
-                <TextField fx:id="taskTitleField" alignment="CENTER" layoutX="157.0" layoutY="8.0" prefHeight="35.0"
+                <TextField fx:id="teamTitleField" alignment="CENTER" layoutX="155.0" layoutY="14.0" prefHeight="35.0"
                            prefWidth="166.0" promptText="Team Title">
                     <font>
                         <Font size="24.0"/>
@@ -81,10 +76,12 @@
                 <ListView fx:id="membersList" layoutX="14.0" layoutY="174.0" prefHeight="126.0" prefWidth="156.0"/>
                 <Button fx:id="addMember" layoutX="264.0" layoutY="186.0" mnemonicParsing="false" onAction="#addMember"
                         prefHeight="26.0" prefWidth="118.0" text="add member"/>
-                <Button fx:id="addMember1" layoutX="264.0" layoutY="262.0" mnemonicParsing="false" onAction="#addMember"
-                        prefHeight="26.0" prefWidth="117.0" text="suspend Member"/>
+                <Button fx:id="suspendMember" layoutX="264.0" layoutY="262.0" mnemonicParsing="false"
+                        onAction="#suspendMember" prefHeight="26.0" prefWidth="117.0" text="suspend Member"/>
                 <Button fx:id="deleteMember" layoutX="264.0" layoutY="225.0" mnemonicParsing="false"
                         onAction="#deleteMember" prefHeight="26.0" prefWidth="118.0" text="delete Member"/>
+                <Label fx:id="error" alignment="CENTER" contentDisplay="CENTER" layoutX="109.0" layoutY="118.0"
+                       prefHeight="18.0" prefWidth="250.0" textAlignment="CENTER" textFill="RED"/>
             </children>
         </AnchorPane>
     </children>

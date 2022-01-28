@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
             prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="view.TaskListView">
     <children>
@@ -37,6 +37,12 @@
                             <VBox.margin>
                                 <Insets top="7.0"/>
                             </VBox.margin>
+                            <font>
+                                <Font size="10.0"/>
+                            </font>
+                        </Button>
+                        <Button fx:id="leave" mnemonicParsing="false" onAction="#leave" prefHeight="50.0"
+                                prefWidth="80.0" text="leave">
                             <font>
                                 <Font size="10.0"/>
                             </font>

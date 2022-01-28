@@ -4,6 +4,7 @@ import controller.Controller;
 import controller.LoggedController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -17,9 +18,11 @@ import model.Notification;
 import model.User;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
-public class ProfileView {
+public class ProfileView  {
     public ImageView pictureOfUser;
     public Button editProfile;
     public Button notification;
@@ -148,6 +151,7 @@ public class ProfileView {
             alert.showAndWait();
         }
     }
+
     public void backToProfilePage(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/Profile.fxml"));
         ((Stage) back2.getScene().getWindow()).setScene(new Scene(root));
@@ -159,13 +163,13 @@ public class ProfileView {
     }
 
     public void updateNotifications(ActionEvent actionEvent) {
-        if (LoggedController.getInstance().getLoggedInUser().getNotifications().size() == 0){
+        if (LoggedController.getInstance().getLoggedInUser().getNotifications().size() == 0) {
             notifications.setText("No notification for you!");
             return;
         }
         ArrayList<String> allNotifications = new ArrayList<>();
         int rank = 1;
-        for (Notification notification: LoggedController.getInstance().getLoggedInUser().getNotifications()){
+        for (Notification notification : LoggedController.getInstance().getLoggedInUser().getNotifications()) {
             allNotifications.add(rank + ". From " + notification.getSender() + ":\n" + notification.getText() + "\n");
             rank++;
         }
@@ -175,7 +179,7 @@ public class ProfileView {
     public void updateLog(ActionEvent actionEvent) {
         ArrayList<String> showLogs = new ArrayList<>();
         int rank = 1;
-        for (Log log : LoggedController.getInstance().getLoggedInUser().getAllLogs()){
+        for (Log log : LoggedController.getInstance().getLoggedInUser().getAllLogs()) {
             showLogs.add(rank + ". " + log.getDate() + "\n");
             rank++;
         }
@@ -186,4 +190,5 @@ public class ProfileView {
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/Profile.fxml"));
         ((Stage) back4.getScene().getWindow()).setScene(new Scene(root));
     }
+
 }
