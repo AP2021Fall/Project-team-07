@@ -39,4 +39,13 @@ public class TeamMenuSecondPageView {
         stage.setScene(scene);
         stage.show();
     }
+
+    public void goToChatRoom(ActionEvent actionEvent) throws IOException {
+        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource
+                ("/fxml/ChatRoom.fxml")));
+        Scene scene = new Scene(parent);
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
+    }
 }

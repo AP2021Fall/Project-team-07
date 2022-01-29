@@ -42,6 +42,7 @@ public class Team {
         teamLeader.getJoiningDate().put(this, this.creationDate);
         teamLeader.getUserTeams().add(this);
         this.scoreboard = new Scoreboard(this);
+
     }
 
     public static Team getTeamByName(String teamName, ArrayList<Team> teams) {
