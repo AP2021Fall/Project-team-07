@@ -31,7 +31,9 @@ public class MemberMenuView {
         ((Stage) taskPageInMemberMenu.getScene().getWindow()).setScene(new Scene(root));
     }
 
-    public void goToCalenderMenu(ActionEvent actionEvent) {
+    public void goToCalenderMenu(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/Calender.fxml"));
+        ((Stage) taskPageInMemberMenu.getScene().getWindow()).setScene(new Scene(root));
     }
 
     public void backToLogInPage(ActionEvent actionEvent) throws IOException {
