@@ -6,6 +6,7 @@ import controller.LoggedController;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -14,6 +15,8 @@ import model.User;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.Objects;
+import java.util.Optional;
 
 public class LoginView extends Application {
 
@@ -24,6 +27,7 @@ public class LoginView extends Application {
     public Label errorLabel;
     public TextField welcomeText;
     public Button register;
+    public Button exit;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -75,6 +79,19 @@ public class LoginView extends Application {
     public void register(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/Register.fxml"));
         ((Stage) errorLabel.getScene().getWindow()).setScene(new Scene(root));
+    }
+
+    public void exit(ActionEvent actionEvent) {
+        boolean confirmation = false;
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Quit");
+        alert.setContentText("Do you want to exit?");
+        Optional<ButtonType> option = alert.showAndWait();
+        if (option.get() == ButtonType.OK) confirmation = true;
+        if (confirmation) {
+            JsonController.getInstance().updateJson();
+            System.exit(0);
+        }
     }
 }
 

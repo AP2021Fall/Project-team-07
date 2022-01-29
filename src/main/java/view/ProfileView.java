@@ -2,24 +2,28 @@ package view;
 
 import controller.Controller;
 import controller.LoggedController;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.Log;
 import model.Notification;
+import model.Team;
 import model.User;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Locale;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class ProfileView  {
@@ -42,11 +46,15 @@ public class ProfileView  {
     public Button team;
     public Button log;
     public Button back3;
-    public TextField notifications;
+    public Label notifications;
     public Button updateNotifications;
     public Button updateLog;
     public Button back4;
-    public TextField logs;
+    public Label logs;
+    public Button back5;
+    public Button updateTeam;
+    public AnchorPane pane;
+    private TableView<Team> tableView;
 
     public void editProfile(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/EditProfile.fxml"));
@@ -75,10 +83,14 @@ public class ProfileView  {
         scoreInProfilePage.setText(Integer.toString(LoggedController.getInstance().getLoggedInUser().getScore()));
     }
 
-    public void showTeams(ActionEvent actionEvent) {
+    public void showTeams(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/ShowTeamsInProfile.fxml"));
+        ((Stage) team.getScene().getWindow()).setScene(new Scene(root));
     }
 
-    public void showLogs(ActionEvent actionEvent) {
+    public void showLogs(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/ShowLog.fxml"));
+        ((Stage) log.getScene().getWindow()).setScene(new Scene(root));
     }
 
     public void changeUsername(ActionEvent actionEvent) {
@@ -170,20 +182,20 @@ public class ProfileView  {
         ArrayList<String> allNotifications = new ArrayList<>();
         int rank = 1;
         for (Notification notification : LoggedController.getInstance().getLoggedInUser().getNotifications()) {
-            allNotifications.add(rank + ". From " + notification.getSender() + ":\n" + notification.getText() + "\n");
+            allNotifications.add(rank + ". From " + notification.getSender().getUserName() + ":\n" + notification.getText() + "\n");
             rank++;
         }
-        notifications.setText(allNotifications.toString());
+        notifications.setText(allNotifications.toString().replaceAll("\\[", "").replaceAll("\\]", ""));
     }
 
     public void updateLog(ActionEvent actionEvent) {
         ArrayList<String> showLogs = new ArrayList<>();
         int rank = 1;
         for (Log log : LoggedController.getInstance().getLoggedInUser().getAllLogs()) {
-            showLogs.add(rank + ". " + log.getDate() + "\n");
+            showLogs.add(rank + ". " + log.getDate());
             rank++;
         }
-        logs.setText(showLogs.toString());
+        logs.setText(showLogs.toString().replaceAll(",", "\n").replaceAll("\\[", "").replaceAll("\\]", ""));
     }
 
     public void backToTheProfile(ActionEvent actionEvent) throws IOException {
@@ -191,4 +203,24 @@ public class ProfileView  {
         ((Stage) back4.getScene().getWindow()).setScene(new Scene(root));
     }
 
+    public void updateTeam(ActionEvent actionEvent) {
+        if(tableView!=null)pane.getChildren().remove(tableView);
+        ObservableList<Team> list = FXCollections.observableArrayList(LoggedController.getInstance().getLoggedInUser().getUserTeams());
+        tableView = new TableView<>();
+        tableView.setLayoutX(50);
+        tableView.setLayoutY(58.0);
+        TableColumn<Team, String> teamName = new TableColumn<>("TeamName");
+        teamName.setPrefWidth(200);
+        tableView.setPrefWidth(200);
+        teamName.setCellValueFactory(new PropertyValueFactory<>("teamName"));
+        tableView.getColumns().addAll(teamName);
+        tableView.setItems(list);
+        tableView.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/CSS/Table.css")).toExternalForm());
+        pane.getChildren().add(tableView);
+    }
+
+    public void backToTheProfile2(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/Profile.fxml"));
+        ((Stage) back5.getScene().getWindow()).setScene(new Scene(root));
+    }
 }
